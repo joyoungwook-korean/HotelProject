@@ -1,5 +1,6 @@
 package com.springboot.st.domain.posts;
 
+import com.springboot.st.domain.BaseTimeEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,7 +10,7 @@ import javax.persistence.*;
 @Getter // 게터 메소드 자동 생성 lombok
 @NoArgsConstructor // 기본 생성자 자동 추가 lombok
 @Entity // Entity 클래스 실제 DB와 연결  될 클래스
-public class Posts {
+public class Posts extends BaseTimeEntity {
 
     @Id // PK를 나타냄
     @GeneratedValue(strategy = GenerationType.IDENTITY) // PK 생성 규칙 IDENTITY 클래스를 추가 해야만 auto됨
