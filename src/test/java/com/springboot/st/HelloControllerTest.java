@@ -22,7 +22,6 @@ public class HelloControllerTest {
     @Test
     public void hello_return() throws Exception {
         String hello = "hello";
-
         mvc.perform(get("/hello")).andExpect(status().isOk()).andExpect(content().string(hello));
     }
 
