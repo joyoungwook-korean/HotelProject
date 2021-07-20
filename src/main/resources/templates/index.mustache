@@ -2,9 +2,20 @@
 
 <h1>스프링 부트로 시작하는 웹 서비스 Ver.2</h1>
 <div class="col-md-12">
+    <!-- 로그인 기능 영역-->
     <div class="row">
         <div class="col-md-6">
             <a href="/posts/save" role="button" class="btn btn-primary">글 등록</a>
+            {{#userName}} <!--머스테치의 if문 만약에 userName이 있으면 노출시키도록 구성-->
+                Logged in as: <span id="user">{{userName}}</span>
+                <a href="/logout" class="btn btn-info active" role="button">Logout</a>
+            {{/userName}}
+            {{^userName}}<!--머스테치의 !문 userName이 없다면 노출-->
+                <!-- 스프링에서 기본적으로 제공하는 로그인 URL-->
+                <a href="/oauth2/authorization/google" class="btn btn-success active" role="button">
+                    Google Login
+                </a>
+            {{/userName}}
         </div>
     </div>
     <br>
