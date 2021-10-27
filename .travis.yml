@@ -33,6 +33,16 @@ deploy:
       local_dir: deploy # before deploy로 생설한 디렉토리
       wait-until-deployed: true
 
+    - provider: codedeploy
+      access_key_id: $AWS_ACCESS_KEY
+      secret_access_key: $AWS_SECRET_KEY
+      bucket: rbwsn-springboot-build
+      key : rbwsn-springboot2-webservice.zip
+      bundle_type : zip
+      application: rbwsn-springboot2-webservice-group
+      region: ap-northeast-2
+      wait-until-deployed: true
+
 
 notifications:
   email:
