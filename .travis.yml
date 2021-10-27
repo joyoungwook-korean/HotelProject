@@ -39,7 +39,8 @@ deploy:
       bucket: rbwsn-springboot-build
       key : rbwsn-springboot2-webservice.zip
       bundle_type : zip
-      application: rbwsn-springboot2-webservice-group
+      application: rbwsn-springboot2-webservice
+      deployment-group: rbwsn-springboot2-webservice-group
       region: ap-northeast-2
       wait-until-deployed: true
 
