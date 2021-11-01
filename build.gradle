@@ -34,8 +34,10 @@ dependencies {
     compile('com.h2database:h2')
     compile('org.springframework.session:spring-session-jdbc')
     compile('org.springframework.boot:spring-boot-starter-oauth2-client')
-    compile('org.springframework.boot:spring-boot-starter-mustache')
     compile('org.mariadb.jdbc:mariadb-java-client:')
+    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-devtools
+    implementation group: 'org.springframework.boot', name: 'spring-boot-devtools'
+
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
     testCompile('org.springframework.boot:spring-boot-starter-test')

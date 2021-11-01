@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
 
@@ -19,7 +20,7 @@ public class IndexController {
 
 
     @GetMapping("/")
-    public String index(Model model){
+    public  String index(Model model){
         return "index";
         /*
         //CustiomOAuth2UserService에서 로그인 성공 시 세션에 SessionUser을 저장하도록 구성
