@@ -25,26 +25,26 @@ public class SignupIndexController {
 
     @GetMapping("/signup")
     public String signup_index(){
-        return "/signup/signup_index";
+        return "signup/signup_index";
     }
 
     @GetMapping("/signup/signupForm")
     public String signupForm(Model model){
         model.addAttribute("userFormDto", new UserFormDto());
-        return "/signup/signup_Joinform";
+        return "signup/signup_Joinform";
     }
 
 
     @PostMapping("/signup/joinform")
     public String join(@Valid UserFormDto userFormDto, BindingResult bindingResult, Model model){
         if(bindingResult.hasErrors()){
-            return "/signup/signup_Joinform";
+            return "signup/signup_Joinform";
         }
         try{
             userService.save(userFormDto);
         } catch (IllegalStateException e){
             model.addAttribute("errorMessage", e.getMessage());
-            return "/signup/signup_Joinform";
+            return "signup/signup_Joinform";
         } catch (Exception e) {
             e.printStackTrace();
         }
