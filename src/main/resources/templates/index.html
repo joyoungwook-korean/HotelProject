@@ -176,7 +176,7 @@
           </li>
           <li class="l-section section">
             <div class="hire">
-              <h2>You want us to do</h2>
+              <h2>職務選択</h2>
               <!-- checkout formspree.io for easy form setup -->
               <form class="work-request">
                 <div class="work-request--options">
@@ -250,12 +250,15 @@
                     <input id="name" type="text" spellcheck="false">
                     <label for="name">Name</label>
                   </div>
-                  <div class="information-email">
-                    <input id="email" type="email" spellcheck="false">
-                    <label for="email">Email</label>
+                  <div class="information-email" >
+                    <input id="password" type="password" spellcheck="false" >
+                    <label for="password" >Password</label>
                   </div>
+
                 </div>
-                <input type="submit" value="Send Request">
+                <input type="submit" value="Login">
+                <input type="button" value="Sign up Project" th:onclick="'location.href=\''+ @{/signup}+ '\''">
+
               </form>
             </div>
           </li>

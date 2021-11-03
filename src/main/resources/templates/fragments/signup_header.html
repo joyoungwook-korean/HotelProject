@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<div th:fragment="signup_header">
+
+    <header class="p-3 mb-3 border-bottom">
+
+        <div class="container">
+
+            <div class="d-flex flex-wrap align-items-center justify-content-between">
+                <ul class="nav col-lg-auto me-lg-auto ">
+                    <li class="nav-link px-2 link-secondary"><a href="/" class="nav-link px-2 link-dark">home</a></li>
+                    <li class="nav-link px-2 link-secondary" sec:authorize="isAuthenticated()"><a href="/user"
+                                                                                                  class="nav-link px-2 link-dark">user</a>
+                    </li>
+                    <li class="nav-link px-2 link-secondary"
+                        sec:authorize="hasAnyAuthority('ROLE_ADMIN, ROLE_MANAGER')"><a href="/"
+                                                                                       class="nav-link px-2 link-dark">manager</a>
+                    </li>
+                    <li class="nav-link px-2 link-secondary" sec:authorize="hasAnyAuthority('ROLE_ADMIN')"><a href="/admin"
+                                                                                                              class="nav-link px-2 link-dark">admin</a>
+                    </li>
+                </ul>
+
+
+                <div align="right" class="justify-content-end" style="float: right;" >
+
+
+                    <form class="col-lg-auto mb-3 mb-lg-0 me-lg-3" style="float: right ">
+                        <input type="search" class="form-control" placeholder="Search..." aria-label="Search">
+                    </form>
+
+                    <div class="text-end float-end" style="float: right" >
+                        <button type="button" class="btn btn-outline-primary me-2 float-end " onClick="location.href='/'"
+                                sec:authorize="isAnonymous()">
+                            Login
+                        </button>
+                        <span sec:authorize="isAuthenticated()"   style="margin-right: 20px" ></span>
+                        <button type="button" class="btn btn-outline-primary me-2 float-end " onClick="location.href='/logout'"
+                                sec:authorize="isAuthenticated()">
+                            Logout
+                        </button>
+                        <button type="button" class="btn btn-info float-end" onClick="location.href='/signup/signupForm'" sec:authorize="isAnonymous()">Sign
+                            up
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </header>
+
+</div>
+
+</html>

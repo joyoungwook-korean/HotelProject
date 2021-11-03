@@ -1,4 +1,4 @@
-package com.springboot.st.web;
+package com.springboot.st.web.controller;
 
 import com.springboot.st.service.posts.PostsService;
 import com.springboot.st.web.dto.PostsResponseDto;
