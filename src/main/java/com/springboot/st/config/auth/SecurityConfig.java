@@ -19,7 +19,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 and()
                 .authorizeRequests() // URL별 권한 관리 설정 시작점
                 .antMatchers("/", "/css/**", "/images/**",
-                        "/js/**", "/h2-console/**","/profile","/**","/signup/**").permitAll();
+                        "/js/**", "/h2-console/**","/profile","/**","/signup/**").permitAll()
+                .anyRequest().permitAll()
+                .and().formLogin().loginPage("/")
+                .loginProcessingUrl("/login")
+                .defaultSuccessUrl("/")
+                .usernameParameter("userid")
+                .passwordParameter("password")
+                .and()
+                .oauth2Login()
+                .loginPage("/")
+                ;
 
     }
 

@@ -8,4 +8,6 @@ public interface UserRepository extends JpaRepository<User,Long> {
 
     //email로 로그인 하는 계정중 이미 생성된 사용자 인지 처음 가입하는지 판단
     Optional<User> findByEmail(String email);
+
+    User findByUserid(String userid);
 }

@@ -10,6 +10,11 @@ body {
 a{
     text-decoration: none;
 }
+.check_userid{
+    color: blue;
+}
+
+
 
 .fieldError{
     padding-top: 10px;

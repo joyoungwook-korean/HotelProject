@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -14,9 +16,28 @@ public class UserService {
 
     private final UserRepository userRepository;
 
-    public Long save(UserFormDto userFormDto) throws Exception{
-        User user = userFormDto.toEntity();
-        return userRepository.save(user).getId();
+    public Long save(UserFormDto userFormDto) throws Exception {
+
+        if (check_id(userFormDto.getUserid()) == null) {
+            User user = userFormDto.toEntity();
+            return userRepository.save(user).getId();
+        } else {
+            throw new IllegalStateException("same user");
+        }
+    }
+
+    public String check_id_for_js(String userid){
+        if(userRepository.findByUserid(userid) !=null){
+            return "1";
+        }else{
+            return "0";
+        }
+
+    }
+
+    private User check_id(String id) {
+        User user = userRepository.findByUserid(id);
+        return user;
     }
 
 
