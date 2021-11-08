@@ -6,11 +6,12 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Getter
 @NoArgsConstructor
 @Entity
-public class User extends BaseTimeEntity {
+public class User extends BaseTimeEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,18 +37,15 @@ public class User extends BaseTimeEntity {
     private Role role;
 
     @Builder
-    public User(String userid,String name, String email, String password){
+    public User(String userid,String name, String email, String password,String provider){
         this.userid = userid;
         this.name = name;
         this.email = email;
         this.password = password;
+        this.provider = provider;
         this.role = Role.USER;
     }
 
-    public User update(String name){
-        this.name=name;
-        return this;
-    }
 
     public String getRoleKey(){
         return  this.role.getKey();

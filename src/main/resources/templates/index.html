@@ -178,7 +178,7 @@
             <div class="hire">
               <h2>職務選択</h2>
               <!-- checkout formspree.io for easy form setup -->
-              <form class="work-request">
+              <form class="work-request" action="/login" method="post">
                 <div class="work-request--options">
                   <span class="options-a">
                     <input id="opt-1" type="checkbox" value="app design">
@@ -247,16 +247,23 @@
                 </div>
                 <div class="work-request--information">
                   <div class="information-name">
-                    <input id="name" type="text" spellcheck="false">
-                    <label for="name">Name</label>
+                    <input id="userid" type="text" name="userid" spellcheck="false">
+                    <label for="userid">ID</label>
                   </div>
                   <div class="information-email" >
-                    <input id="password" type="password" spellcheck="false" >
+                    <input id="password" type="password" name="password" spellcheck="false" >
                     <label for="password" >Password</label>
                   </div>
 
                 </div>
+
+
                 <input type="submit" value="Login">
+                <div style="display: inherit; ">
+                  <input type="button" value="Google Login" th:onclick="'location.href=\''+ @{/oauth2/authorization/google}+ '\''">
+                  <input type="button" value="Kakao Login" th:onclick="'location.href=\''+ @{/oauth2/authorization/google}+ '\''">
+                  <input type="button" value="Naver Login" th:onclick="'location.href=\''+ @{/oauth2/authorization/google}+ '\''">
+                </div>
                 <input type="button" value="Sign up Project" th:onclick="'location.href=\''+ @{/signup}+ '\''">
 
               </form>

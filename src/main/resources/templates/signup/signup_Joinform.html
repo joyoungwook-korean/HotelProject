@@ -13,6 +13,7 @@
 
            var errorMessage = [[${errorMessage}]];
            if(errorMessage != null){
+               $('#userid').empty();
                alert(errorMessage)
            }
         });
@@ -42,7 +43,6 @@
         </div>
         <div class="form-floating">
 
-            <input type="text" class="form-control" placeholder="sss" >
             <input name="email" id="email" type="email" class="form-control" th:field="*{email}" placeholder="Email address">
             <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="fieldError"></p>
         </div>

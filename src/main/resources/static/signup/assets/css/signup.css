@@ -60,6 +60,10 @@ a:link {
     padding: 1rem .75rem;
 }
 
+.form-control::placeholder{
+    color: #858585 !important;
+}
+
 .form-floating > .form-control, .form-floating > .form-select {
     height: calc(3.5rem + 2px);
     line-height: 1.25;

@@ -7,10 +7,7 @@ var main = {
             _this.check_id();
         });
 
-        $('#btn-save').on('click', function () {
 
-            _this.save();
-        });
 
         $('#btn-update').on('click', function () {
             _this.update();
@@ -33,9 +30,11 @@ var main = {
             if(cnt==1){
                 $('#check_id_ok').hide();
                 $('#check_id_no').show();
+                $('#btn-save').attr('disabled',true);
             }else{
                 $('#check_id_ok').show();
                 $('#check_id_no').hide();
+                $('#btn-save').attr('disabled',false);
             }
         }).fail(function (error) {
             $('#check_id_no').hide();
@@ -43,9 +42,7 @@ var main = {
         });
     },
 
-    save: function () {
-        alert('aaaaaaa');
-    },
+
 
     update: function () {
         var data = {

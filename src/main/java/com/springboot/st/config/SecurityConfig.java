@@ -1,16 +1,24 @@
-package com.springboot.st.config.auth;
+package com.springboot.st.config;
 
+import com.springboot.st.config.oauth2.PrincipalOauth2UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+@Configuration
 @RequiredArgsConstructor
 @EnableWebSecurity // Spring security 설정 활성화
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+
+    @Autowired
+    public PrincipalOauth2UserService principalOauth2UserService;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -18,8 +26,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable().headers().frameOptions().disable().
                 and()
                 .authorizeRequests() // URL별 권한 관리 설정 시작점
+                .antMatchers("/user/**").authenticated()
                 .antMatchers("/", "/css/**", "/images/**",
                         "/js/**", "/h2-console/**","/profile","/**","/signup/**").permitAll()
+                .antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
                 .anyRequest().permitAll()
                 .and().formLogin().loginPage("/")
                 .loginProcessingUrl("/login")
@@ -29,6 +39,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .oauth2Login()
                 .loginPage("/")
+        .userInfoEndpoint()
+        .userService(principalOauth2UserService)
                 ;
 
     }
