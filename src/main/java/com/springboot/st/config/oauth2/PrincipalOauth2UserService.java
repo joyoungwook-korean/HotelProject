@@ -1,6 +1,9 @@
 package com.springboot.st.config.oauth2;
 
 import com.springboot.st.config.auth.PrincipalDetails;
+import com.springboot.st.config.oauth2.provider.GoogleOAuth2Provider;
+import com.springboot.st.config.oauth2.provider.NaverOAuth2Provider;
+import com.springboot.st.config.oauth2.provider.OAuth2UserInfo;
 import com.springboot.st.domain.user.Role;
 import com.springboot.st.domain.user.User;
 import com.springboot.st.domain.user.UserRepository;
@@ -13,6 +16,8 @@ import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
+
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -29,11 +34,21 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
 
         OAuth2User oAuth2User = super.loadUser(userRequest);
         String provider = userRequest.getClientRegistration().getRegistrationId();
-        String providerId = oAuth2User.getAttributes().get("sub").toString();
+
+        OAuth2UserInfo oAuth2UserInfo = null;
+        if(provider.equals("google")){
+            oAuth2UserInfo = new GoogleOAuth2Provider(oAuth2User.getAttributes());
+        }if(provider.equals("naver")){
+            System.out.println(1111);
+            oAuth2UserInfo = new NaverOAuth2Provider((Map) oAuth2User.getAttributes().get("response"));
+
+        }
+
+        String providerId = oAuth2UserInfo.getProviderId();
         String userid = provider + "_" + providerId;
-        String email = oAuth2User.getAttributes().get("email").toString();
-        String username = oAuth2User.getAttributes().get("name").toString();
-        String password = passwordEncoder.encode("google");
+        String email = oAuth2UserInfo.getEmail();
+        String username = oAuth2User.getName();
+        String password = passwordEncoder.encode("RBWSNboot");
 
 
         User user = userRepository.findByUserid(userid);
