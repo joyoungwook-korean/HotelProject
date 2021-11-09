@@ -35,6 +35,8 @@ dependencies {
     compile('org.springframework.session:spring-session-jdbc')
     compile('org.springframework.boot:spring-boot-starter-oauth2-client')
     compile('org.mariadb.jdbc:mariadb-java-client:')
+    // https://mvnrepository.com/artifact/org.thymeleaf.extras/thymeleaf-extras-springsecurity5
+    implementation group: 'org.thymeleaf.extras', name: 'thymeleaf-extras-springsecurity5', version: '3.0.4.RELEASE'
 
     compile('org.springframework.boot:spring-boot-starter-thymeleaf')
     compile('nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect')
