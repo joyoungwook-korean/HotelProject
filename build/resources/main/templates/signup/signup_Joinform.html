@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/signup_content}">
+
+
+<th:block layout:fragment="script">
+
+    <script th:inline="javascript">
+
+
+        $(document).ready(function () {
+
+           var errorMessage = [[${errorMessage}]];
+           if(errorMessage != null){
+               $('#userid').empty();
+               alert(errorMessage)
+           }
+        });
+    </script>
+
+
+</th:block>
+
+
+<div layout:fragment="signup_content" style="height: 700px;" >
+    <!--userFormDtoの形式でfieldを作ります。-->
+    <form class="loginformz" action="/signup/joinform" role="form" method="post" th:object="${userFormDto}" >　
+        <h1 class="border-bottom"> 登録ページ</h1>
+
+        <div class="form-floating">
+
+            <input  name="userid" id="userid" type="text" class="form-control userid"  th:field="*{userid}" placeholder="Userid">
+            <p th:if="${#fields.hasErrors('userid')}" th:errors="*{userid}" class="fieldError"></p>
+            <p id="check_id_ok" class="check_userid" style="size: 20px; margin-top: 10px; display: none" >使用可能のID</p>
+            <p id="check_id_no" class="check_userid" style="color: red;size: 20px; margin-top: 10px;display: none">使用不可のID</p>
+        </div>
+        <div class="form-floating">
+
+            <input name="name" id="name" type="text" th:field="*{username}" class="form-control" placeholder="Name">
+            <p th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="fieldError"></p>
+
+        </div>
+        <div class="form-floating">
+
+            <input name="email" id="email" type="email" class="form-control" th:field="*{email}" placeholder="Email address">
+            <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="fieldError"></p>
+        </div>
+        <div class="form-floating">
+
+            <input name="password" id="password" type="password" class="form-control" th:field="*{password}"  placeholder="password">
+            <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="fieldError"></p>
+        </div>
+
+        <button class="btn btn-primary" type="submit" id="btn-save" >登録</button>
+    </form>
+
+</div>
+
+</html>

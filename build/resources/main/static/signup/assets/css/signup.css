@@ -1,0 +1,93 @@
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    min-height: 100%;
+
+}
+a{
+    text-decoration: none;
+}
+.check_userid{
+    color: blue;
+}
+
+
+
+.fieldError{
+    padding-top: 10px;
+    color: red;
+}
+
+
+.content{
+    overflow: auto;
+}
+
+.footer {
+
+    width: 100%;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    position: absolute;
+    padding: 15px 0;
+    text-align: center;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+a:link {
+    text-decoration: none;
+}
+
+
+.content {
+
+    margin-top: 100px;
+
+}
+
+.form-floating > .form-control {
+    padding: 1rem .75rem;
+}
+
+.form-control::placeholder{
+    color: #858585 !important;
+}
+
+.form-floating > .form-control, .form-floating > .form-select {
+    height: calc(3.5rem + 2px);
+    line-height: 1.25;
+}
+
+
+.loginformz {
+    margin: 0 auto;
+    width: 700px;
+    height: 500px;
+    text-align: center;
+
+}
+
+.loginformz > h1 {
+    margin-bottom: 100px;
+    padding-bottom: 30px;
+
+}
+
+.loginformz > div {
+
+    margin-top: 30px;
+    margin-bottom: 15px;
+
+}
+

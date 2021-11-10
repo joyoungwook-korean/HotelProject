@@ -1,0 +1,107 @@
+.guest-house{
+    .single-location{
+         img{
+             width: 100%;
+         }
+         position: relative;
+         &::before{
+             position: absolute;
+             content: "";
+             left: 0;
+             bottom: 0;
+             right: 0;
+             width: 100%;
+             height: 100%;
+             background: rgba(25, 21, 20,.3);
+             z-index: 0;
+             @include transition(.4s);
+         }
+         .guest-contents{
+             position: absolute;
+             left: 0px;
+             right: 0;
+             padding: 0 15px;
+             text-align: center;
+             margin: 0 auto;
+             bottom: 25px;
+             z-index: 1;
+             @include transition(.4s);
+             opacity: 0;
+             visibility: hidden;
+             
+             h3{
+                 a{
+                     @include transition(.4s);
+                     color: #fff;
+                     display: inline-block;
+                     font-size: 32px;
+                     font-weight: 400;
+                     text-align: center;
+                     @media #{$lg}{
+                         font-size: 18px;
+                     }
+                     @media #{$md}{
+                         font-size: 18px;
+                     }
+                     @media #{$sm}{
+                         font-size: 26px;
+                     }
+                     @media #{$xs}{
+                         font-size: 22px;
+                     }
+                     &:hover{
+                        color: $theme-color;
+                     }
+                 }
+             }
+             p{
+                margin-bottom: 10px;
+                color: #fff;
+                font-weight: 300;
+                font-size: 16px;
+                @media #{$sm}{
+                    font-size: 14px;
+                }
+                br{
+                    @media #{$laptop}{
+                        display: none;
+                    }
+                    @media #{$lg}{
+                        display: none;
+                    }
+                    @media #{$md}{
+                        display: none;
+                    }
+                    @media #{$sm}{
+                        display: none;
+                    }
+                    @media #{$xs}{
+                        display: none;
+                    }
+                }
+             }
+             &.guest-contents2{
+                opacity: 1;
+                visibility: visible;
+                h3{
+                    text-align: center;
+                }
+             }
+         }
+         &:hover{
+            &::before{
+                background: rgba(25, 21, 20,.6);
+            }
+            .guest-contents{
+                opacity: 1;
+                visibility: visible;
+                &.guest-contents2{
+                    opacity: 0;
+                    visibility: hidden;
+                 }
+
+            }
+         }
+     }
+ }
+ 

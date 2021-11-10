@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html class="no-js" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://ultraq.net.nz/thymeleaf/layout">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" type="image/x-icon" th:href="@{/hotel/assets/img/icon/favicon.png}">
+
+    <!-- CSS here -->
+    <link rel="stylesheet" th:href="@{/hotel/assets/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/hotel/assets/css/owl.carousel.min.css}">
+    <link rel="stylesheet" th:href="@{/hotel/assets/css/slicknav.css}">
+    <link rel="stylesheet" th:href="@{/hotel/assets/css/gijgo.css}">
+    <link rel="stylesheet" th:href="@{/hotel/assets/css/animate.min.css}">
+    <link rel="stylesheet" th:href="@{/hotel/assets/css/magnific-popup.css}">
+    <link rel="stylesheet" th:href="@{/hotel/assets/css/fontawesome-all.min.css}">
+    <link rel="stylesheet" th:href="@{/hotel/assets/css/themify-icons.css}">
+    <link rel="stylesheet" th:href="@{/hotel/assets/css/slick.css}">
+    <link rel="stylesheet" th:href="@{/hotel/assets/css/nice-select.css}">
+    <link rel="stylesheet" th:href="@{/hotel/assets/css/style.css}">
+</head>
+<!--? Preloader Start -->
+<div id="preloader-active">
+    <div class="preloader d-flex align-items-center justify-content-center">
+        <div class="preloader-inner position-relative">
+            <div class="preloader-circle"></div>
+            <div class="preloader-img pere-text">
+                <img th:src="@{/hotel/assets/img/icon/loder.png}" alt="loder">
+            </div>
+        </div>
+    </div>
+</div>
+<body style="padding-right: 0 !important;">
+<div th:replace="fragments/hotel_header::header"></div>
+<div layout:fragment="content"></div>
+<div th:replace="fragments/hotel_footer::footer"></div>
+
+<!-- Scroll Up -->
+<div id="back-top">
+    <a class="wrapper" title="Go to Top" href="#">
+        <div class="arrows-container">
+            <div class="arrow arrow-one">
+            </div>
+            <div class="arrow arrow-two">
+            </div>
+        </div>
+    </a>
+</div>
+
+<!-- JS here -->
+<!-- Jquery, Popper, Bootstrap -->
+<script th:src="@{/hotel/assets/js/vendor/modernizr-3.5.0.min.js}"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<!--<script th:src="@{hotel/assets/js/vendor/jquery-1.12.4.min.js}"></script>-->
+<script th:src="@{/hotel/assets/js/popper.min.js}"></script>
+<script th:src="@{/hotel/assets/js/bootstrap.min.js}"></script>
+
+<th:block layout:fragment="script"></th:block>
+<th:block layout:fragment="css"></th:block>
+
+<!-- Slick-slider , Owl-Carousel ,slick-nav -->
+<script th:src="@{/hotel/assets/js/owl.carousel.min.js}"></script>
+<script th:src="@{/hotel/assets/js/slick.min.js}"></script>
+<script th:src="@{/hotel/assets/js/jquery.slicknav.min.js}"></script>
+
+<!--wow , counter , waypoint, Nice-select -->
+<script th:src="@{/hotel/assets/js/wow.min.js}"></script>
+<script th:src="@{/hotel/assets/js/jquery.magnific-popup.js}"></script>
+<script th:src="@{/hotel/assets/js/jquery.nice-select.min.js}"></script>
+<script th:src="@{/hotel/assets/js/jquery.counterup.min.js}"></script>
+<script th:src="@{/hotel/assets/js/waypoints.min.js}"></script>
+<script th:src="@{/hotel/assets/js/gijgo.min.js}"></script>
+
+<!-- contact js -->
+<script th:src="@{/hotel/assets/js/contact.js}"></script>
+<script th:src="@{/hotel/assets/js/jquery.form.js}"></script>
+<script th:src="@{/hotel/assets/js/jquery.validate.min.js}"></script>
+<script th:src="@{/hotel/assets/js/mail-script.js}"></script>
+<script th:src="@{/hotel/assets/js/jquery.ajaxchimp.min.js}"></script>
+
+<!--  Plugins, main-Jquery -->
+<script th:src="@{/hotel/assets/js/plugins.js}"></script>
+<script th:src="@{/hotel/assets/js/main.js}"></script>
+
+</body>
+</html>
