@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html class="no-js" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <style type="text/css">
+        a:link {text-decoration: none; color: #0b0b0b;}
+        a:visited {text-decoration: none; color: #0b0b0b;}
+        a:active {text-decoration: none; color: #0b0b0b;}
+        a:hover {text-decoration: underline; color: #0b0b0b;}
+        input{
+            background-color: white;
+            font-weight: bold;
+            font-family: "Jost",sans-serif !important;
+        }
+    </style>
+</head>
+<body>
+<div th:fragment="modal" class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <!-- Login Form -->
+            <form role="form" action="/login" method="post">
+                <div class="modal-header">
+                    <h4 style="font-weight: bold" class="modal-title">Welcome to Rolax Resort</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group mb-3">
+                        <label style="font-size: 13px" th:for="userid">Rolax ID</label>
+                        <input type="text" name="userid" class="form-control" placeholder="Enter ID">
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label style="font-size: 13px" th:for="password">Password</label>
+                        <input type="password" name="password" class="form-control" id="password" placeholder="Enter Password">
+                    </div>
+<!--                    <div class="mb-3">-->
+<!--                        <input class="form-check-input" type="checkbox" value="" id="remember" required>-->
+<!--                        <label class="form-check-label" for="remember">Remember Me</label>-->
+<!--                        <a href="#" class="float-end">Forgot Password</a>-->
+<!--                    </div>-->
+                </div>
+                <div class="modal-footer">
+<!--                    <p th:if="${loginErrorMsg}" class="error" th:text="${loginErrorMsg}"></p>-->
+                    <input type="submit" class="btn rounded-0 btn-outline-dark mx-auto w-100"  value="Sign In">
+                    <input type="button" class="btn rounded-0 btn-outline-dark mx-auto w-100" onclick="location.href='/hotel/signup'" value="Sign Up">
+
+                </div>
+                <p class="text-center pt-1">
+                    <a href="/oauth2/authorization/google"><img th:src="@{/hotel/assets/img/google_signin_buttons/web/1x/btn_google_signin_dark_normal_web.png}"></a>
+<!--                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">-->
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

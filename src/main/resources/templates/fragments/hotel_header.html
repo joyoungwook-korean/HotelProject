@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html class="no-js" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<div th:fragment="header">
+    <div class="header-area header-transparent">
+        <div class="main-header ">
+            <div class="header-top">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <div class="d-flex justify-content-between flex-wrap align-items-center">
+                                <div class="header-info-left">
+                                    <ul>
+                                        <li>Call Us: +10 (89) 675 5456</li>
+                                        <li>info@rolax.com</li>
+                                    </ul>
+                                </div>
+                                <div class="header-info-right d-none d-sm-block">
+                                    <ul class="header-social">
+                                        <li><a href="#"><i class="fab fa-facebook"></i></a></li>
+                                        <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+                                        <li><a href="#"><i class="fab fa-linkedin-in"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="header-bottom header-sticky">
+                <div class="container-fluid">
+                    <div class="d-flex align-items-center justify-content-between flex-wrap">
+                        <!-- Logo -->
+                        <div class="logo">
+                            <a href="/"><img th:src="@{/img/logo/logo.png}" alt=""></a>
+                        </div>
+                        <div class="menu-wrapper d-flex align-items-center">
+                            <!-- Main-menu -->
+                            <div class="main-menu d-none d-lg-block">
+                                <nav>
+                                    <ul id="navigation">
+                                        <li><a href="/">Home</a></li>
+                                        <li><a href="/rooms">Rooms</a></li>
+                                        <li><a href="/about">About</a></li>
+                                        <li><a href="/blog">Blog</a>
+                                            <ul class="submenu">
+                                                <li><a href="">Blog</a></li>
+                                                <li><a href="../blog_details">Blog Details</a></li>
+                                                <li><a href="../elements">Element</a></li>
+                                            </ul>
+                                        </li>
+                                        <li><a href="../contact">Contact Us</a></li>
+                                        <li sec:authorize="isAnonymous()"><a href="" data-bs-toggle="modal"
+                                                                             data-bs-target="#exampleModal1">Sign In</a>
+                                        </li>
+                                        <li sec:authorize="isAuthenticated()"><a href="/logout">Sign Out</a>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </div>
+                            <!-- Quote btn  -->
+                            <!--                            <div class="header-right-btn f-right d-flex align-items-center">-->
+                            <!--                                <li sec:authorize="isAnonymous()">-->
+                            <!--                                    <button style="border: none" type="button" class="header-btn2 d-none d-lg-block"-->
+                            <!--                                            data-bs-toggle="modal" data-bs-target="#exampleModal1">Sign In-->
+                            <!--                                    </button>-->
+                            <!--                                </li>-->
+                            <!--                                <li sec:authorize="isAuthenticated()">-->
+                            <!--                                    <button style="border: none" type="button" class="header-btn2 d-none d-lg-block"-->
+                            <!--                                            onclick="location.href='/members/logout'">Sign Out-->
+                            <!--                                    </button>-->
+                            <!--                                </li>-->
+                            <!--                            </div>-->
+                        </div>
+                    </div>
+                    <!-- Mobile Menu -->
+                    <div class=" col-12
+                            ">
+                        <div class="mobile_menu d-block d-lg-none"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <th:block th:replace="hotel/modal">modal</th:block>
+</div>
+</html>

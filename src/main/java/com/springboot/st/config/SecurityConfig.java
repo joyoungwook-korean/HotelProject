@@ -27,9 +27,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 and()
                 .authorizeRequests() // URL별 권한 관리 설정 시작점
                 .antMatchers("/user/**").authenticated()
+                .antMatchers("/manager/**").access("hasRole('ROLE_MANAGER')")
+                 .antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
                 .antMatchers("/", "/css/**", "/images/**",
                         "/js/**", "/h2-console/**","/profile","/**","/signup/**").permitAll()
-                .antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')")
                 .anyRequest().permitAll()
                 .and().formLogin().loginPage("/")
                 .loginProcessingUrl("/login")

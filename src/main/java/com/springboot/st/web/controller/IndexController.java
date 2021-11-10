@@ -2,6 +2,7 @@ package com.springboot.st.web.controller;
 
 
 import com.springboot.st.config.auth.PrincipalDetails;
+import com.springboot.st.signupProject.web.dto.UserFormDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -28,7 +29,11 @@ public class IndexController {
     }
 
     @GetMapping("/")
-    public  String index(Model model){
+    public  String index(@AuthenticationPrincipal PrincipalDetails principalDetails, Model model){
+
+        if(principalDetails!=null){
+            model.addAttribute("userDto",principalDetails);
+        }
         return "index";
         /*
         //CustiomOAuth2UserService에서 로그인 성공 시 세션에 SessionUser을 저장하도록 구성

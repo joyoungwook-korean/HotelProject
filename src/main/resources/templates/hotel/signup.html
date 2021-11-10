@@ -1,0 +1,145 @@
+<!doctype html>
+<html class="no-js" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/hotel_layout1}">
+<body>
+<th:block layout:fragment="script">
+    <script th:inline="javascript">
+        $(document).ready(function(){
+            var errorMessage = [[${errorMessage}]];
+            if (errorMessage != null) {
+                alert(errorMessage);
+            }
+        });
+    </script>
+</th:block>
+<div layout:fragment="content">
+    <main>
+        <!-- Hero Area Start-->
+        <div class="slider-area hero-bg1  hero-overly">
+            <div class="single-slider  slider-height3 d-flex align-items-center">
+                <div class="container">
+                    <div class="row justify-content-center ">
+                        <div class="col-xl-7 col-lg-11">
+                            <!-- Hero Caption -->
+                            <div class="hero-caption hero-caption3">
+                                <h1>Join Rolax</h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Hero Area End-->
+        <!--  Contact Area start  -->
+        <section class="contact-section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <h2 class="contact-title">Sign Up</h2>
+                    </div>
+                    <div class="col-lg-8">
+                        <form action="/signup/joinform" role="form" method="post" th:object="${memberFormDto}">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group first">
+                                        <label th:for="userid">Rolax ID</label>
+                                        <input type="text" th:field="*{userid}" class="form-control" placeholder="e.g. john100">
+                                        <p th:if="${#fields.hasErrors('userid')}"
+                                            th:errors="*{userid}" class="fieldError">Incorrect Data</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group first">
+                                    <label th:for="email">Email Address</label>
+                                    <input type="email" class="form-control" th:field="*{email}" placeholder="e.g. john100@rolax.com">
+                                        <p th:if="${#fields.hasErrors('email')}"
+                                           th:errors="*{email}" class="fieldError">Incorrect Data</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group first">
+                                        <label th:for="fname">First Name</label>
+                                        <input type="text" class="form-control" th:field="*{fname}" placeholder="e.g. John">
+                                        <p th:if="${#fields.hasErrors('fname')}"
+                                           th:errors="*{fname}" class="fieldError">Incorrect Data</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group first">
+                                        <label th:for="lname">Last Name</label>
+                                        <input type="text" class="form-control" th:field="*{lname}" placeholder="e.g. Smith">
+                                        <p th:if="${#fields.hasErrors('lname')}"
+                                           th:errors="*{lname}" class="fieldError">Incorrect Data</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+
+                                    <div class="form-group last mb-3">
+                                        <label th:for="password">Password</label>
+                                        <input type="password" class="form-control" th:field="*{password}" placeholder="Your Password"
+                                        >
+                                        <p th:if="${#fields.hasErrors('password')}"
+                                           th:errors="*{password}" class="fieldError">Incorrect Data</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+
+                                    <div class="form-group last mb-3">
+                                        <label th:for="password_confirm">Password Confirm</label>
+                                        <input type="password" class="form-control" th:field="*{password_confirm}"
+                                               placeholder="Your Password">
+                                    </div>
+                                </div>
+                            </div>
+                        <div style="text-align: right;">
+                            <input type="submit" class="btn rounded-0 btn-outline-dark mx-auto w-25"  value="Sign Up">
+                        </div>
+                            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                        </form>
+                    </div>
+                    <div class="col-lg-3 offset-lg-1">
+                        <div class="media contact-info">
+                            <span class="contact-info__icon"><i class="ti-home"></i></span>
+                            <div class="media-body">
+                                <h3>Buttonwood, California.</h3>
+                                <p>Rosemead, CA 91770</p>
+                            </div>
+                        </div>
+                        <div class="media contact-info">
+                            <span class="contact-info__icon"><i class="ti-tablet"></i></span>
+                            <div class="media-body">
+                                <h3>+1 253 565 2365</h3>
+                                <p>Mon to Fri 9am to 6pm</p>
+                            </div>
+                        </div>
+                        <div class="media contact-info">
+                            <span class="contact-info__icon"><i class="ti-email"></i></span>
+                            <div class="media-body">
+                                <h3>support@colorlib.com</h3>
+                                <p>Send us your query anytime!</p>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+            </div>
+        </section>
+        <!-- Contact Area End -->
+    </main>
+    <!-- Scroll Up -->
+    <div id="back-top">
+        <a class="wrapper" title="Go to Top" href="#">
+            <div class="arrows-container">
+                <div class="arrow arrow-one">
+                </div>
+                <div class="arrow arrow-two">
+                </div>
+            </div>
+        </a>
+    </div>
+</div>
+</body>
+</html>

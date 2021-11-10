@@ -1,6 +1,7 @@
 package com.springboot.st.config.auth;
 
 import com.springboot.st.domain.user.User;
+import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.core.user.OAuth2User;
@@ -9,9 +10,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
 
+@Data
 public class PrincipalDetails implements UserDetails, OAuth2User {
 
     private User user;
+
 
     private Map<String, Object> attributes;
 
@@ -56,6 +59,8 @@ public class PrincipalDetails implements UserDetails, OAuth2User {
     public String getName() {
         return user.getName();
     }
+
+
 
     @Override
     public Map<String, Object> getAttributes() {

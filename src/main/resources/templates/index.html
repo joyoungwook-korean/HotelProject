@@ -82,21 +82,21 @@
               <div class="work--lockup">
                 <ul class="slider">
                   <li class="slider--item slider--item-left">
-                    <a href="#0">
+                    <a th:href="@{/signup}">
                       <div class="slider--item-image">
                         <img src="/main_index/assets/img/work-victory.jpg" alt="Victory">
                       </div>
-                      <p class="slider--item-title">Victory</p>
-                      <p class="slider--item-description">Lorem ipsum dolor sit amet, consectetur adipisicing elit sed do.</p>
+                      <p class="slider--item-title">SingUp Project</p>
+                      <p class="slider--item-description">ユーザーCRUD & 管理者ページとマネージャーのホテル管理ページ</p>
                     </a>
                   </li>
                   <li class="slider--item slider--item-center">
-                    <a href="#0">
+                    <a th:href="@{/hotel/index}">
                       <div class="slider--item-image">
                         <img src="/main_index/assets/img/work-metiew-smith.jpg" alt="Metiew and Smith">
                       </div>
-                      <p class="slider--item-title">Metiew &amp; Smith</p>
-                      <p class="slider--item-description">Lorem ipsum dolor sit amet, consectetur adipisicing elit sed do.</p>
+                      <p class="slider--item-title">Hotel Project</p>
+                      <p class="slider--item-description">ホテルプロジェクトパージ</p>
                     </a>
                   </li>
                   <li class="slider--item slider--item-right">
@@ -246,19 +246,21 @@
                     </label>
                   </span>
                 </div>
-                <div class="work-request--information">
+                <div class="work-request--information" sec:authorize="isAnonymous()">
                   <div class="information-name">
                     <input id="userid" type="text" name="userid" spellcheck="false">
                     <label for="userid">ID</label>
                   </div>
-                  <div class="information-email" >
+                  <div class="information-email"  >
                     <input id="password" type="password" name="password" spellcheck="false" >
                     <label for="password" >Password</label>
                   </div>
 
                 </div>
-                <input sec:authorize="isAnonymous()" type="submit" value="Login">
+                <h1 th:if="${userDto!=null}" sec:authorize="isAuthenticated()" th:text="${userDto.name} + '님 어서오세요 !'"></h1>
+                <input sec:authorize="isAuthenticated()" type="button" value="Logout" th:onclick="'location.href=\''+ @{/logout}+ '\''">
 
+                <input sec:authorize="isAnonymous()" type="submit" value="Login">
                 <div sec:authorize="isAnonymous()" style="display: inherit; ">
                   <input type="button" value="Google Login" th:onclick="'location.href=\''+ @{/oauth2/authorization/google}+ '\''">
                   <input type="button" value="Naver Login" th:onclick="'location.href=\''+ @{/oauth2/authorization/naver}+ '\''">

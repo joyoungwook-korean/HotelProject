@@ -1,0 +1,97 @@
+<!doctype html>
+<html class="no-js" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/layout1}">
+<head>
+    <style type="text/css">
+        a:link {text-decoration: none; color: #0b0b0b;}
+        a:visited {text-decoration: none; color: #0b0b0b;}
+        a:active {text-decoration: none; color: #0b0b0b;}
+        a:hover {text-decoration: underline; color: #0b0b0b;}
+        input{
+            background-color: white;
+            font-weight: bold;
+            font-family: "Jost",sans-serif !important;
+        }
+    </style>
+</head>
+<body>
+<div layout:fragment="content">
+    <main>
+        <!-- Hero Area Start-->
+        <div class="slider-area hero-bg1  hero-overly">
+            <div class="single-slider  slider-height3 d-flex align-items-center">
+                <div class="container">
+                    <div class="row justify-content-center ">
+                        <div class="col-xl-7 col-lg-11">
+                            <!-- Hero Caption -->
+                            <div class="hero-caption hero-caption3">
+                                <h1>Enjoy Rolax</h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Hero Area End-->
+        <!--  Contact Area start  -->
+        <section class="contact-section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <h2 class="contact-title">Sign In</h2>
+                    </div>
+                    <div class="col-lg-8">
+                        <form action="/members/login" role="form" method="post">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group first">
+                                        <label style="font-size: 13px" th:for="userid">Rolax ID</label>
+                                        <input type="text" name="userid" class="form-control" placeholder="Enter ID">
+                                    </div>
+                                </div>
+                            </div>
+                                <div class="col-md-6">
+                                    <div class="form-group first">
+                                        <label style="font-size: 13px" th:for="password">Password</label>
+                                        <input type="password" name="password" class="form-control" id="password"
+                                               placeholder="Enter Password">
+                                    </div>
+                                <p th:if="${loginErrorMsg}" class="error" th:text="${loginErrorMsg}"></p>
+                                </div>
+                            <div style="text-align: left;">
+                                <input type="submit" class="btn rounded-0 btn-outline-dark mx-auto w-25"  value="Sign In">
+                                <br><br><p>Or sign in using:<br>
+                                <a href="/oauth2/authorization/google"><img th:src="@{/img/google_signin_buttons/web/1x/btn_google_signin_dark_normal_web.png}"></a>
+                            </div>
+                            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+                        </form>
+                    </div>
+                    <div class="col-lg-3 offset-lg-1">
+                        <div class="media-body">
+                            <p><a href="/contact">Get help</a> Signing in</p>
+                        </div>
+                        <div class="media contact-info">
+                            <div class="media-body">
+                                <p>Not a member? <a href="/members/new">Join Now</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Contact Area End -->
+    </main>
+    <!-- Scroll Up -->
+    <div id="back-top">
+        <a class="wrapper" title="Go to Top" href="#">
+            <div class="arrows-container">
+                <div class="arrow arrow-one">
+                </div>
+                <div class="arrow arrow-two">
+                </div>
+            </div>
+        </a>
+    </div>
+</div>
+</body>
+</html>
