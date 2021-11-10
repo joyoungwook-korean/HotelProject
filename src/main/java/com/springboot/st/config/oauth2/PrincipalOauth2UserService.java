@@ -9,11 +9,10 @@ import com.springboot.st.config.oauth2.provider.OAuth2UserInfo;
 import com.springboot.st.domain.user.Role;
 import com.springboot.st.domain.user.User;
 import com.springboot.st.domain.user.UserRepository;
-import com.springboot.st.signupProject.service.UserService;
+
 import com.springboot.st.signupProject.web.dto.UserFormDto;
 import lombok.RequiredArgsConstructor;
-import org.apache.catalina.Lifecycle;
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
