@@ -25,7 +25,6 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
 
-    private final UserService userService;
 
     private final PasswordEncoder passwordEncoder;
 
