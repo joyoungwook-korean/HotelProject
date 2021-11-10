@@ -1,5 +1,6 @@
 package com.springboot.st.config.oauth2;
 
+
 import com.springboot.st.config.auth.PrincipalDetails;
 import com.springboot.st.config.oauth2.provider.GoogleOAuth2Provider;
 import com.springboot.st.config.oauth2.provider.KakaoOAuth2UserInfo;
@@ -12,6 +13,8 @@ import com.springboot.st.signupProject.service.UserService;
 import com.springboot.st.signupProject.web.dto.UserFormDto;
 import lombok.RequiredArgsConstructor;
 import org.apache.catalina.Lifecycle;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
@@ -26,7 +29,7 @@ import java.util.Map;
 public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
 
 
-    private final PasswordEncoder passwordEncoder;
+
 
     private final UserRepository userRepository;
 
@@ -54,6 +57,7 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
         String userid = provider + "_" + providerId;
         String email = oAuth2UserInfo.getEmail();
         String username = oAuth2UserInfo.getName();
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         String password = passwordEncoder.encode("RBWSNboot");
 
 
