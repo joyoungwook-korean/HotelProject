@@ -16,9 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableWebSecurity // Spring security 설정 활성화
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-
-    @Autowired
-    public PrincipalOauth2UserService principalOauth2UserService;
+    private final PrincipalOauth2UserService principalOauth2UserService;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {

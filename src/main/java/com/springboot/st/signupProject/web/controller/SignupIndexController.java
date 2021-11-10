@@ -23,7 +23,6 @@ import javax.validation.Valid;
 @RequiredArgsConstructor
 public class SignupIndexController {
 
-    private final PasswordEncoder passwordEncoder;
 
     private final UserService userService;
 
