@@ -1,6 +1,6 @@
 <!doctype html>
 <html class="no-js" xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/layout1}">
+      xmlns:layout="http://ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/hotel_layout1}">
 <head>
     <style type="text/css">
         a:link {text-decoration: none; color: #0b0b0b;}
@@ -41,7 +41,7 @@
                         <h2 class="contact-title">Sign In</h2>
                     </div>
                     <div class="col-lg-8">
-                        <form action="/members/login" role="form" method="post">
+                        <form action="/login" role="form" method="post">
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group first">
@@ -63,7 +63,7 @@
                                 <br><br><p>Or sign in using:<br>
                                 <a href="/oauth2/authorization/google"><img th:src="@{/img/google_signin_buttons/web/1x/btn_google_signin_dark_normal_web.png}"></a>
                             </div>
-                            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+<!--                            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">-->
                         </form>
                     </div>
                     <div class="col-lg-3 offset-lg-1">

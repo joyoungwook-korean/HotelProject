@@ -41,6 +41,7 @@ public class SignupIndexController {
     public String join(@Valid UserFormDto userFormDto, BindingResult bindingResult, Model model){
 
         if(bindingResult.hasErrors()){
+
             return "signup/signup_Joinform";
         }
         userService.check_id_for_js(userFormDto.getUserid());
