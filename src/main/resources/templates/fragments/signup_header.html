@@ -15,7 +15,7 @@
                                                                                                   class="nav-link px-2 link-dark">user</a>
                     </li>
                     <li class="nav-link px-2 link-secondary"
-                        sec:authorize="hasAnyAuthority('ROLE_ADMIN, ROLE_MANAGER')"><a href="/"
+                        sec:authorize="hasAnyAuthority('ROLE_ADMIN, ROLE_MANAGER')"><a href="/manager"
                                                                                        class="nav-link px-2 link-dark">manager</a>
                     </li>
                     <li class="nav-link px-2 link-secondary" sec:authorize="hasAnyAuthority('ROLE_ADMIN')"><a
@@ -38,7 +38,7 @@
                                 sec:authorize="isAnonymous()">
                             Login
                         </button>
-                        <span th:if="${#authorization.authentication !=null}" sec:authorize="isAuthenticated()" style="margin-right: 20px; padding-top: 10px" th:text="${#authorization.authentication.getPrincipal().getAttributes().get('name') +'님 환영 합니다 !'}"></span>
+                        <span  sec:authorize="isAuthenticated()" style="margin-right: 20px; padding-top: 10px" th:text="${#authorization.authentication.principal.user.name+'님 환영 합니다 !'}"></span>
                         <button type="button" class="btn btn-outline-primary me-2 float-end "
                                 onClick="location.href='/logout'"
                                 sec:authorize="isAuthenticated()">

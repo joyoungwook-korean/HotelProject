@@ -7,7 +7,8 @@
 <html class="no-js lt-ie9" lang=""> <![endif]-->
 <!--[if gt IE 8]><!-->
 <html class="no-js" lang="" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -355,8 +356,9 @@
                                 </div>
                                 <div class="stat-content">
                                     <div class="text-left dib">
-                                        <div class="stat-text"><span class="count" th:text="${userCount}"></span></div>
-                                        <div class="stat-heading">Clients</div>
+                                        <div class="stat-text"><span class="count" th:text="${hotelroomCount}"></span>
+                                        </div>
+                                        <div class="stat-heading">HotelRoom</div>
                                     </div>
                                 </div>
                             </div>
@@ -426,9 +428,11 @@
                     <div class="col-xl-8">
                         <div class="card">
                             <div class="card-body">
-                                <h4 class="box-title nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">Users </h4>
+                                <h4 class="box-title nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                                    Hotel Rooms </h4>
                                 <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
-                                    <input id="find_user" type="search" class="form-control form-control-dark" placeholder="Search..." aria-label="Search">
+                                    <input id="find_user" type="search" class="form-control form-control-dark"
+                                           placeholder="Search..." aria-label="Search">
                                 </form>
                             </div>
                             <div class="card-body--">
@@ -437,24 +441,19 @@
                                         <thead>
                                         <tr>
                                             <th class="serial">#</th>
-                                            <th>Provider</th>
-                                            <th>Name</th>
-                                            <th>Email</th>
-                                            <th>Hotel</th>
-                                            <th>Region</th>
-                                            <th>Auth</th>
+                                            <th>RoomName</th>
+                                            <th>Min</th>
+                                            <th>Max</th>
+                                            <th>ImgSize</th>
                                         </tr>
                                         </thead>
-                                        <tbody id="user_tbody" >
-                                        <tr th:each="user, i : ${userDto}" id="user_tr" onclick="alert('aaa')" >
+                                        <tbody id="hotel_tbody">
+                                        <tr th:each="hotelroom, i : ${hotelroom}" id="user_tr">
                                             <td class="serial" th:id="${i.index}" th:text="${i.index}"></td>
-                                            <td th:text="${user.provider}"></td>
-                                            <td><span class="name" th:text="${user.name}"></span></td>
-                                            <td><span class="" th:text="${user.email}"></span></td>
-                                            <td><span class="text" th:text="아직없음"></span></td>
-                                            <td><span class="text" th:text="도쿄"></span></td>
-                                            <td>
-                                                <span class="badge badge-complete" th:text="${user.role}" role="button" ></span>
+                                            <td th:text="${hotelroom.roomName}"></td>
+                                            <td><span class="name" th:text="${hotelroom.min_People}"></span></td>
+                                            <td><span class="" th:text="${hotelroom.max_People}"></span></td>
+                                            <td><span class="text" th:text="${hotelroom.hotel_room_img.size()}"></span>
                                             </td>
                                         </tr>
 
@@ -464,301 +463,193 @@
                             </div>
                         </div> <!-- /.card -->
                     </div>  <!-- /.col-lg-8 -->
+                    <form class="card" method="post" role="form" action="/admin/hotel_crud" th:object="${hotelroomDto}">
+                        <div class="card-header"><strong>Hotel Room</strong><small> Create</small></div>
+                        <div class="card-body card-block">
+                            <div class="form-group"><label for="roomname1"
+                                                           class=" form-control-label">Room Name</label>
+                                <input type="text"
+                                       th:field="*{roomname}"
+                                       id="roomname1"
+                                       placeholder="Enter Room name"
+                                       class="form-control">
+                                <p th:if="${#fields.hasErrors('roomname')}" th:errors="*{roomname}"
+                                   class="fieldError"></p>
+                            </div>
+                            <div class="form-group"><label for="minpeople" class=" form-control-label">MinPeople</label><input
+                                    type="text" id="minpeople" placeholder="Enter Min" class="form-control"
+                                    th:field="*{minpeople}"></div>
+                            <p th:if="${#fields.hasErrors('minpeople')}" th:errors="*{minpeople}"
+                               class="fieldError"></p>
+                            <div class="form-group"><label for="maxpeople" class=" form-control-label">MaxPeople</label><input
+                                    type="text" id="maxpeople" placeholder="Enter Max" class="form-control"
+                                    th:field="*{maxpeople}"></div>
+                            <p th:if="${#fields.hasErrors('maxpeople')}" th:errors="*{maxpeople}"
+                               class="fieldError"></p>
+                            <div class="form-group"><label for="content"
+                                                           class=" form-control-label">Content</label>
+                                <textarea id="content" class="form-control" th:field="*{content}"></textarea>
+                            </div>
+                        </div>
+                        <input type="submit" role="button" class="btn btn-primary" value="Create">
+                    </form>
 
 
-                    <div class="col-xl-4">
-                        <div class="row">
-                            <div class="col-lg-6 col-xl-12">
-                                <div class="card br-0">
-                                    <form class="form-group" action="admin">
-                                        <label for="update_id">id</label>
-                                        <input class="form-control" type="text" id="update_id" readonly>
-                                        <label   for="update_name">Name</label>
-                                        <input class="form-control" type="text" id="update_name">
-                                        <label for="update_email">Email</label>
-                                        <input class="form-control" type="text" id="update_email">
-                                        <label for="update_hotel">Hotel</label>
-                                        <input class="form-control" type="text" id="update_hotel">
-                                        <input type="submit" value="update">
-                                    </form>
-                                </div><!-- /.card -->
-                            </div>
-
-<!--                            <div class="col-lg-6 col-xl-12">-->
-<!--                                <div class="card bg-flat-color-3  ">-->
-<!--                                    <div class="card-body">-->
-<!--                                        <h4 class="card-title m-0  white-color ">August 2018</h4>-->
-<!--                                    </div>-->
-<!--                                    <div class="card-body">-->
-<!--                                        <div id="flotLine5" class="flot-line"></div>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </div>-->
-                        </div>
-                    </div> <!-- /.col-md-4 -->
+                    <!--                            <div class="col-lg-6 col-xl-12">-->
+                    <!--                                <div class="card bg-flat-color-3  ">-->
+                    <!--                                    <div class="card-body">-->
+                    <!--                                        <h4 class="card-title m-0  white-color ">August 2018</h4>-->
+                    <!--                                    </div>-->
+                    <!--                                    <div class="card-body">-->
+                    <!--                                        <div id="flotLine5" class="flot-line"></div>-->
+                    <!--                                    </div>-->
+                    <!--                                </div>-->
+                    <!--                            </div>-->
                 </div>
-            </div>
-            <!-- /.orders -->
-            <!-- To Do and Live Chat -->
-            <div class="row">
-                <div class="col-lg-6">
-                    <div class="card">
-                        <div class="card-body">
-                            <h4 class="card-title box-title">To Do List</h4>
-                            <div class="card-content">
-                                <div class="todo-list">
-                                    <div class="tdl-holder">
-                                        <div class="tdl-content">
-                                            <ul>
-                                                <li>
-                                                    <label>
-                                                        <input type="checkbox"><i class="check-box"></i><span>Conveniently fabricate interactive technology for ....</span>
-                                                        <a href='#' class="fa fa-times"></a>
-                                                        <a href='#' class="fa fa-pencil"></a>
-                                                        <a href='#' class="fa fa-check"></a>
-                                                    </label>
-                                                </li>
-                                                <li>
-                                                    <label>
-                                                        <input type="checkbox"><i class="check-box"></i><span>Creating component page</span>
-                                                        <a href='#' class="fa fa-times"></a>
-                                                        <a href='#' class="fa fa-pencil"></a>
-                                                        <a href='#' class="fa fa-check"></a>
-                                                    </label>
-                                                </li>
-                                                <li>
-                                                    <label>
-                                                        <input type="checkbox" checked><i class="check-box"></i><span>Follow back those who follow you</span>
-                                                        <a href='#' class="fa fa-times"></a>
-                                                        <a href='#' class="fa fa-pencil"></a>
-                                                        <a href='#' class="fa fa-check"></a>
-                                                    </label>
-                                                </li>
-                                                <li>
-                                                    <label>
-                                                        <input type="checkbox" checked><i class="check-box"></i><span>Design One page theme</span>
-                                                        <a href='#' class="fa fa-times"></a>
-                                                        <a href='#' class="fa fa-pencil"></a>
-                                                        <a href='#' class="fa fa-check"></a>
-                                                    </label>
-                                                </li>
-
-                                                <li>
-                                                    <label>
-                                                        <input type="checkbox" checked><i class="check-box"></i><span>Creating component page</span>
-                                                        <a href='#' class="fa fa-times"></a>
-                                                        <a href='#' class="fa fa-pencil"></a>
-                                                        <a href='#' class="fa fa-check"></a>
-                                                    </label>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div> <!-- /.todo-list -->
-                            </div>
-                        </div> <!-- /.card-body -->
-                    </div><!-- /.card -->
-                </div>
-
-                <div class="col-lg-6">
-                    <div class="card">
-                        <div class="card-body">
-                            <h4 class="card-title box-title">Live Chat</h4>
-                            <div class="card-content">
-                                <div class="messenger-box">
-                                    <ul>
-                                        <li>
-                                            <div class="msg-received msg-container">
-                                                <div class="avatar">
-                                                    <img src="/admin/images/avatar/64-1.jpg" alt="">
-                                                    <div class="send-time">11.11 am</div>
-                                                </div>
-                                                <div class="msg-box">
-                                                    <div class="inner-box">
-                                                        <div class="name">
-                                                            John Doe
-                                                        </div>
-                                                        <div class="meg">
-                                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                                                            Perspiciatis sunt placeat velit ad reiciendis ipsam
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div><!-- /.msg-received -->
-                                        </li>
-                                        <li>
-                                            <div class="msg-sent msg-container">
-                                                <div class="avatar">
-                                                    <img src="/admin/images/avatar/64-2.jpg" alt="">
-                                                    <div class="send-time">11.11 am</div>
-                                                </div>
-                                                <div class="msg-box">
-                                                    <div class="inner-box">
-                                                        <div class="name">
-                                                            John Doe
-                                                        </div>
-                                                        <div class="meg">
-                                                            Hay how are you doing?
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div><!-- /.msg-sent -->
-                                        </li>
-                                    </ul>
-                                    <div class="send-mgs">
-                                        <div class="yourmsg">
-                                            <input class="form-control" type="text">
-                                        </div>
-                                        <button class="btn msg-send-btn">
-                                            <i class="pe-7s-paper-plane"></i>
-                                        </button>
-                                    </div>
-                                </div><!-- /.messenger-box -->
-                            </div>
-                        </div> <!-- /.card-body -->
-                    </div><!-- /.card -->
-                </div>
-            </div>
-            <!-- /To Do and Live Chat -->
-            <!-- Calender Chart Weather  -->
-            <div class="row">
-                <div class="col-md-12 col-lg-4">
-                    <div class="card">
-                        <div class="card-body">
-                            <!-- <h4 class="box-title">Chandler</h4> -->
-                            <div class="calender-cont widget-calender">
-                                <div id="calendar"></div>
-                            </div>
-                        </div>
-                    </div><!-- /.card -->
-                </div>
-
-                <div class="col-lg-4 col-md-6">
-                    <div class="card ov-h">
-                        <div class="card-body bg-flat-color-2">
-                            <div id="flotBarChart" class="float-chart ml-4 mr-4"></div>
-                        </div>
-                        <div id="cellPaiChart" class="float-chart"></div>
-                    </div><!-- /.card -->
-                </div>
-                <div class="col-lg-4 col-md-6">
-                    <div class="card weather-box">
-                        <h4 class="weather-title box-title">Weather</h4>
-                        <div class="card-body">
-                            <div class="weather-widget">
-                                <div id="weather-one" class="weather-one"></div>
-                            </div>
-                        </div>
-                    </div><!-- /.card -->
-                </div>
-            </div>
-            <!-- /Calender Chart Weather -->
-            <!-- Modal - Calendar - Add New Event -->
-            <div class="modal fade none-border" id="event-modal">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                            <h4 class="modal-title"><strong>Add New Event</strong></h4>
-                        </div>
-                        <div class="modal-body"></div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close
-                            </button>
-                            <button type="button" class="btn btn-success save-event waves-effect waves-light">Create
-                                event
-                            </button>
-                            <button type="button" class="btn btn-danger delete-event waves-effect waves-light"
-                                    data-dismiss="modal">Delete
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- /#event-modal -->
-
-            <div class="modal fade non-border" id="modal-role">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        </div>
-                        <div class="modal-body">
-                            <form>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <label class="control-label">ChangeRole</label>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-                <!-- Modal - Calendar - Add Category -->
-                <div class="modal fade none-border" id="add-category">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;
-                                </button>
-                                <h4 class="modal-title"><strong>Add a category </strong></h4>
-                            </div>
-                            <div class="modal-body">
-                                <form>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <label class="control-label">Category Name</label>
-                                            <input class="form-control form-white" placeholder="Enter name" type="text"
-                                                   name="category-name"/>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <label class="control-label">Choose Category Color</label>
-                                            <select class="form-control form-white" data-placeholder="Choose a color..."
-                                                    name="category-color">
-                                                <option value="success">Success</option>
-                                                <option value="danger">Danger</option>
-                                                <option value="info">Info</option>
-                                                <option value="pink">Pink</option>
-                                                <option value="primary">Primary</option>
-                                                <option value="warning">Warning</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close
-                                </button>
-                                <button type="button" class="btn btn-danger waves-effect waves-light save-category"
-                                        data-dismiss="modal">Save
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- /#add-category -->
-            </div>
-            <!-- .animated -->
+            </div> <!-- /.col-md-4 -->
         </div>
-        <!-- /.content -->
-        <div class="clearfix"></div>
-        <!-- Footer -->
-        <footer class="site-footer">
-            <div class="footer-inner bg-white">
-                <div class="row">
-                    <div class="col-sm-6">
-                        Copyright &copy; 2021 Hotel Admin
+    </div>
+    <!-- /.orders -->
+
+    <!-- Calender Chart Weather  -->
+    <div class="row">
+        <div class="col-md-12 col-lg-4">
+            <div class="card">
+                <div class="card-body">
+                    <!-- <h4 class="box-title">Chandler</h4> -->
+                    <div class="calender-cont widget-calender">
+                        <div id="calendar"></div>
                     </div>
-                    <div class="col-sm-6 text-right">
-                        Designed by <a href="https://colorlib.com">YoungWook</a>
+                </div>
+            </div><!-- /.card -->
+        </div>
+
+        <div class="col-lg-4 col-md-6">
+            <div class="card ov-h">
+                <div class="card-body bg-flat-color-2">
+                    <div id="flotBarChart" class="float-chart ml-4 mr-4"></div>
+                </div>
+                <div id="cellPaiChart" class="float-chart"></div>
+            </div><!-- /.card -->
+        </div>
+        <div class="col-lg-4 col-md-6">
+            <div class="card weather-box">
+                <h4 class="weather-title box-title">Weather</h4>
+                <div class="card-body">
+                    <div class="weather-widget">
+                        <div id="weather-one" class="weather-one"></div>
+                    </div>
+                </div>
+            </div><!-- /.card -->
+        </div>
+    </div>
+    <!-- /Calender Chart Weather -->
+    <!-- Modal - Calendar - Add New Event -->
+    <div class="modal fade none-border" id="event-modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title"><strong>Add New Event</strong></h4>
+                </div>
+                <div class="modal-body"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close
+                    </button>
+                    <button type="button" class="btn btn-success save-event waves-effect waves-light">Create
+                        event
+                    </button>
+                    <button type="button" class="btn btn-danger delete-event waves-effect waves-light"
+                            data-dismiss="modal">Delete
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /#event-modal -->
+
+    <div class="modal fade non-border" id="modal-role">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label class="control-label">ChangeRole</label>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- Modal - Calendar - Add Category -->
+        <div class="modal fade none-border" id="add-category">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;
+                        </button>
+                        <h4 class="modal-title"><strong>Add a category </strong></h4>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label class="control-label">Category Name</label>
+                                    <input class="form-control form-white" placeholder="Enter name" type="text"
+                                           name="category-name"/>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="control-label">Choose Category Color</label>
+                                    <select class="form-control form-white" data-placeholder="Choose a color..."
+                                            name="category-color">
+                                        <option value="success">Success</option>
+                                        <option value="danger">Danger</option>
+                                        <option value="info">Info</option>
+                                        <option value="pink">Pink</option>
+                                        <option value="primary">Primary</option>
+                                        <option value="warning">Warning</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close
+                        </button>
+                        <button type="button" class="btn btn-danger waves-effect waves-light save-category"
+                                data-dismiss="modal">Save
+                        </button>
                     </div>
                 </div>
             </div>
-        </footer>
-        <!-- /.site-footer -->
-        <!-- Button trigger modal -->
-
+        </div>
+        <!-- /#add-category -->
     </div>
+    <!-- .animated -->
+</div>
+<!-- /.content -->
+<div class="clearfix"></div>
+<!-- Footer -->
+<footer class="site-footer">
+    <div class="footer-inner bg-white">
+        <div class="row">
+            <div class="col-sm-6">
+                Copyright &copy; 2021 Hotel Admin
+            </div>
+            <div class="col-sm-6 text-right">
+                Designed by <a href="https://colorlib.com">YoungWook</a>
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- /.site-footer -->
+<!-- Button trigger modal -->
+
+</div>
 
 </div>
 

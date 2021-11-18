@@ -2,6 +2,10 @@ $.noConflict();
 
 jQuery(document).ready(function ($) {
 
+    $('#user_tr').on('click',function () {
+       alert('aaa');
+    });
+
     "use strict";
 
     [].slice.call(document.querySelectorAll('select.cs-select')).forEach(function (el) {
@@ -94,13 +98,12 @@ jQuery(document).ready(function ($) {
                 $('#user_tbody').remove();
 
                 let $newTbody =null;
-                $newTbody = $("<tbody class='new-tbody' id='user_tbody'><tr>" +
-                    "<td></td>" +
-                    "</tr></tbody>");
+                $newTbody = $("<tbody class='new-tbody' id='user_tbody'>" +
+                    "</tbody>");
                 $('.table_user').append($newTbody);
 
                 for(var i=0; i<data.length; i++){
-                    let $aaaa = $("<tr>" +
+                    let $aaaa = $("<tr id='user_tr' >" +
                         "<td>"+i+"</td>" +
                         "<td>"+data[i].provider+"</td>" +
                         "<td>"+data[i].name+"</td>" +
@@ -112,13 +115,17 @@ jQuery(document).ready(function ($) {
                     +"</td>"+
                         "</tr>")
                     $newTbody.append($aaaa);
+
                 }
+
+
 
             }).fail(function (error) {
 
             });
 
         });
+
 
 
 });

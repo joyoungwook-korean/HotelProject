@@ -54,4 +54,9 @@ public class HotelController {
         return "hotel/signin";
     }
 
+    @GetMapping("/hotel/rooms")
+    public String rooms(){
+        return "hotel/rooms";
+    }
+
 }
