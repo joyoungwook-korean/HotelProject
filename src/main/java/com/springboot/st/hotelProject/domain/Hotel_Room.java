@@ -3,6 +3,7 @@ package com.springboot.st.hotelProject.domain;
 import com.springboot.st.domain.user.Role;
 import lombok.Builder;
 import lombok.Data;
+import net.minidev.json.annotate.JsonIgnore;
 
 import javax.persistence.*;
 import java.util.List;

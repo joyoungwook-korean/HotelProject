@@ -27,4 +27,9 @@ public class HotelRoomService {
         return save_id;
     }
 
+    public Hotel_Room find_By_Idx(String idx){
+        Long id = Long.parseLong(idx);
+        return hotel_roomRepository.findById(id).orElseThrow(IllegalArgumentException::new);
+    }
+
 }

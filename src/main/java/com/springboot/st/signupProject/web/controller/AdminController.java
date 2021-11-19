@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.jws.WebParam;
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Map;
 
 
 @Controller
@@ -46,6 +47,15 @@ public class AdminController {
         hotelRoomService.save(hotel_roomDto);
 
         return "redirect:/admin/hotel_crud";
+    }
+
+
+    @PostMapping("/admin/hotel_crud/set")
+    public @ResponseBody Hotel_Room set_Room(@RequestBody Map new_id){
+
+        System.out.println(new_id.get("new_id").toString());
+        Hotel_Room hotel_room = hotelRoomService.find_By_Idx(new_id.get("new_id").toString());
+        return hotel_room;
     }
 
     @GetMapping("/admin")
