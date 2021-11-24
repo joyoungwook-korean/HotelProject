@@ -1,5 +1,6 @@
 package com.springboot.st.hotelProject.domain;
 
+import com.springboot.st.domain.BaseTimeEntity;
 import com.springboot.st.domain.user.User;
 import lombok.Data;
 
@@ -7,7 +8,7 @@ import javax.persistence.*;
 
 @Entity
 @Data
-public class Hotel {
+public class Hotel extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

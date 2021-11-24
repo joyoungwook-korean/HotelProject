@@ -1,21 +1,25 @@
 package com.springboot.st.hotelProject.domain;
 
+import com.springboot.st.domain.BaseTimeEntity;
 import com.springboot.st.domain.user.Role;
 import lombok.Builder;
 import lombok.Data;
 import net.minidev.json.annotate.JsonIgnore;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Entity
 @Data
-public class Hotel_Room {
+public class Hotel_Room extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull
+    @Column(unique = true)
     private String roomName;
 
     private int min_People;

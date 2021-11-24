@@ -18,6 +18,8 @@ import java.util.List;
 @NoArgsConstructor
 public class Hotel_RoomDto {
 
+    private String id;
+
     @NotBlank(message = "roomNameは必修入力です")
     private String roomname;
 

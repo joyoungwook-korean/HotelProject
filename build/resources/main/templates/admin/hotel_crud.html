@@ -7,7 +7,7 @@
 <html class="no-js lt-ie9" lang=""> <![endif]-->
 <!--[if gt IE 8]><!-->
 <html class="no-js" lang="" xmlns:th="http://www.thymeleaf.org"
-      >
+>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -443,9 +443,10 @@
                                         </tr>
                                         </thead>
                                         <tbody id="hotel_tbody">
-                                        <tr th:each="hotel, i : ${hotelroom}"  th:onclick="'hotel_ajax_update('+ ${i.index}+ ');'">
-                                            <td class="serial" th:id="${i.index}" th:text="${i.index}" ></td>
-                                            <td th:text="${hotel.roomName}" ></td>
+                                        <tr th:each="hotel, i : ${hotelroom}"
+                                            th:onclick="'hotel_ajax_update('+ ${i.index}+ ');'">
+                                            <td class="serial" th:id="${i.index}" th:text="${i.index}"></td>
+                                            <td th:text="${hotel.roomName}"></td>
                                             <td><span class="name" th:text="${hotel.min_People}"></span></td>
                                             <td><span class="" th:text="${hotel.max_People}"></span></td>
                                             <td><span class="text" th:text="${hotel.hotel_room_img.size()}"></span>
@@ -488,7 +489,9 @@
                         </div>
                         <input type="submit" role="button" class="btn btn-primary" value="Create">
                     </form>
-                    <form class="card" method="post" role="form" action="/admin/hotel_crud/delete" th:object="${hotelroomDto}">
+                    <form class="card" method="post" role="form" action="/admin/hotel_crud/delete"
+                          th:object="${hotelroomDto}">
+                        <input type="hidden" id="id2" th:field="*{id}">
                         <div class="card-header"><strong>Hotel Room</strong><small> UpdateとDelete</small></div>
                         <div class="card-body card-block">
                             <div class="form-group"><label for="roomname1"
@@ -496,23 +499,24 @@
                                 <input type="text"
                                        th:field="*{roomname}"
                                        id="roomname2"
-                                       class="form-control">
+                                       class="form-control crud_change">
                             </div>
                             <div class="form-group"><label for="minpeople" class=" form-control-label">MinPeople</label><input
-                                    type="text" id="minpeople2" placeholder="Enter Min" class="form-control"
+                                    type="text" id="minpeople2" placeholder="Enter Min" class="form-control crud_change"
                                     th:field="*{minpeople}"></div>
 
                             <div class="form-group"><label for="maxpeople" class=" form-control-label">MaxPeople</label><input
-                                    type="text" id="maxpeople2" placeholder="Enter Max" class="form-control"
+                                    type="text" id="maxpeople2" placeholder="Enter Max" class="crud_change form-control"
                                     th:field="*{maxpeople}"></div>
 
                             <div class="form-group"><label for="content"
                                                            class=" form-control-label">Content</label>
-                                <textarea id="content2" class="form-control" th:field="*{content}"></textarea>
+                                <textarea id="content2" class="crud_change form-control"
+                                          th:field="*{content}"></textarea>
                             </div>
                         </div>
-                        <input type="button" role="button" class="btn btn-dark" value="Update">
-                        <input type="submit" role="button" class="btn btn-danger" value="Delete">
+                        <input type="button" role="button" class="btn btn-dark" value="Update" id="update_crud" onclick="update_curd()">
+                        <input type="submit" role="button" class="btn btn-danger" value="Delete" id="delete_crud">
                     </form>
 
 
@@ -678,24 +682,47 @@
 <!-- Scripts -->
 <script>
     function hotel_ajax_update(idx) {
-        var new_id = idx+1;
+        $('.crud_change').attr('disabled',false);
+        $('#update_crud').attr('disabled',false);
+        $('#delete_crud').attr('disabled',false);
+        var new_id = idx + 1;
         $.ajax({
-            url:'/admin/hotel_crud/set',
-            type:'post',
+            url: '/admin/hotel_crud/set',
+            type: 'post',
             data: JSON.stringify({
                 new_id
             }),
             contentType: 'application/json; charset=utf-8'
         }).done(function (rooms) {
+            $('#id2').val(rooms.id);
             $('#roomname2').val(rooms.roomName);
             $('#maxpeople2').val(rooms.max_People);
             $('#minpeople2').val(rooms.min_People);
             $('#content2').val(rooms.content);
 
         }).fail(function (error) {
-           alert(error);
+            alert(error);
         });
     }
+
+        function update_curd() {
+            var data = {
+                idx: $('#id2').val(),
+                roomname: $('#roomname2').val(),
+                max: $('#maxpeople2').val(),
+                min: $('#minpeople2').val(),
+                content: $('#content2').val()
+            };
+
+            $.ajax({
+                url: '/admin/hotel_crud/update',
+                type: 'post',
+                data: JSON.stringify(data),
+                contentType: 'application/json; charset=utf-8'
+            }).done(function () {
+                alert('update');
+            });
+        }
 </script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>

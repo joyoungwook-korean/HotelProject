@@ -32,4 +32,19 @@ public class HotelRoomService {
         return hotel_roomRepository.findById(id).orElseThrow(IllegalArgumentException::new);
     }
 
+    public void delete_Room(Hotel_RoomDto hotel_roomDto){
+        Hotel_Room hotel_room = find_By_Idx(hotel_roomDto.getId());
+        hotel_roomRepository.delete(hotel_room);
+    }
+
+    public void update_Room(Hotel_RoomDto hotel_roomDto){
+        Hotel_Room hotel_room = find_By_Idx(hotel_roomDto.getId());
+        hotel_room.setMax_People(hotel_roomDto.getMaxpeople());
+        hotel_room.setMin_People(hotel_roomDto.getMinpeople());
+        hotel_room.setContent(hotel_roomDto.getContent());
+        hotel_room.setRoomName(hotel_roomDto.getRoomname());
+        hotel_roomRepository.save(hotel_room);
+    }
+
+
 }

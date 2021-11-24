@@ -52,7 +52,6 @@ public class AdminController {
 
     @PostMapping("/admin/hotel_crud/set")
     public @ResponseBody Hotel_Room set_Room(@RequestBody Map new_id){
-
         System.out.println(new_id.get("new_id").toString());
         Hotel_Room hotel_room = hotelRoomService.find_By_Idx(new_id.get("new_id").toString());
         return hotel_room;
@@ -82,4 +81,28 @@ public class AdminController {
             return find_user_e;
         }
     }
+
+    // Delete
+    @PostMapping("/admin/hotel_crud/delete")
+    public String delete_Hotel_Room(Hotel_RoomDto hotel_roomDto){
+        hotelRoomService.delete_Room(hotel_roomDto);
+        return "redirect:/admin/hotel_crud";
+    }
+
+    //update
+    @PostMapping("/admin/hotel_crud/update")
+    public String update_Hotel_Room(@RequestBody Map hotel_room){
+        Hotel_RoomDto hotel_roomDto = new Hotel_RoomDto();
+        hotel_roomDto.setId((String) hotel_room.get("idx"));
+        hotel_roomDto.setMaxpeople(Integer.valueOf((String) hotel_room.get("max")));
+        hotel_roomDto.setMinpeople(Integer.valueOf((String) hotel_room.get("min")));
+        hotel_roomDto.setContent((String) hotel_room.get("content"));
+        hotel_roomDto.setRoomname((String)hotel_room.get("roomname"));
+
+        hotelRoomService.update_Room(hotel_roomDto);
+
+
+        return "redirect:/admin/hotel_crud";
+    }
+
 }
