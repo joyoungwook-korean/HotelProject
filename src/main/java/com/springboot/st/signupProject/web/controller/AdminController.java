@@ -104,7 +104,7 @@ public class AdminController {
         hotel_roomDto.setPrice(Integer.valueOf((String)hotel_room.get("price")));
         hotel_roomDto.setContent((String) hotel_room.get("content"));
         hotel_roomDto.setRoomname((String) hotel_room.get("roomname"));
-        hotel_roomDto.setRoomCount(Integer.valueOf((String)hotel_room.get("roomCount")));
+        hotel_roomDto.setRoomcount(Integer.valueOf((String)hotel_room.get("roomcount")));
 
         hotelRoomService.update_Room(hotel_roomDto,multipartFile);
 

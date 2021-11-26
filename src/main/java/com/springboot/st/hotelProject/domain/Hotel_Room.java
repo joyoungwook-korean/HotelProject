@@ -30,7 +30,7 @@ public class Hotel_Room extends BaseTimeEntity {
 
     private int price;
 
-    private int roomCount;
+    private int roomcount;
 
     @OneToMany
     private List<Hotel_Room_Img> hotel_room_img;
@@ -42,7 +42,7 @@ public class Hotel_Room extends BaseTimeEntity {
         this.max_People = max_People;
         this.content = content;
         this.price = price;
-        this.roomCount = roomCount;
+        this.roomcount = roomCount;
         this.hotel_room_img = hotel_room_img;
     }
 

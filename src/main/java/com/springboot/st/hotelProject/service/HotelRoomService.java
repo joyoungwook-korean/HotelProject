@@ -41,6 +41,7 @@ public class HotelRoomService {
         if(!multipartFile.isEmpty()){
             try {
                 List<Hotel_Room_Img> hotel_room_imgs =  img_Save(multipartFile);
+                System.out.println(hotel_roomDto.getRoomcount());
                  save_id = hotel_roomRepository.save(Hotel_RoomDto.create_room(hotel_roomDto,hotel_room_imgs)).getId();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -75,7 +76,7 @@ public class HotelRoomService {
         hotel_room.setPrice(hotel_roomDto.getPrice());
         hotel_room.setContent(hotel_roomDto.getContent());
         hotel_room.setRoomName(hotel_roomDto.getRoomname());
-        hotel_room.setRoomCount(hotel_roomDto.getRoomCount());
+        hotel_room.setRoomcount(hotel_roomDto.getRoomcount());
 
         if(!multipartFiles.isEmpty()){
             List<Hotel_Room_Img> hotel_room_imgList = img_Save(multipartFiles);
