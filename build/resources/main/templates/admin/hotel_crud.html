@@ -439,16 +439,18 @@
                                             <th>RoomName</th>
                                             <th>Min</th>
                                             <th>Max</th>
+                                            <th>Price</th>
                                             <th>ImgSize</th>
                                         </tr>
                                         </thead>
                                         <tbody id="hotel_tbody">
                                         <tr th:each="hotel, i : ${hotelroom}"
-                                            th:onclick="'hotel_ajax_update('+ ${i.index}+ ');'">
+                                            th:onclick="'hotel_ajax_update('+ ${hotel.id}+ ');'">
                                             <td class="serial" th:id="${i.index}" th:text="${i.index}"></td>
                                             <td th:text="${hotel.roomName}"></td>
                                             <td><span class="name" th:text="${hotel.min_People}"></span></td>
                                             <td><span class="" th:text="${hotel.max_People}"></span></td>
+                                            <td><span class="" th:text="${hotel.price}"></span></td>
                                             <td><span class="text" th:text="${hotel.hotel_room_img.size()}"></span>
                                             </td>
                                         </tr>
@@ -459,7 +461,8 @@
                             </div>
                         </div> <!-- /.card -->
                     </div>  <!-- /.col-lg-8 -->
-                    <form class="card" method="post" role="form" action="/admin/hotel_crud" th:object="${hotelroomDto}">
+                    <form class="card" method="post" role="form" action="/admin/hotel_crud" th:object="${hotelroomDto}"
+                          enctype="multipart/form-data">
                         <div class="card-header"><strong>Hotel Room</strong><small> Create</small></div>
                         <div class="card-body card-block">
                             <div class="form-group"><label for="roomname1"
@@ -472,6 +475,11 @@
                                 <p th:if="${#fields.hasErrors('roomname')}" th:errors="*{roomname}"
                                    class="fieldError"></p>
                             </div>
+                            <div class="form-group"><label for="price" class=" form-control-label">Price</label><input
+                                    type="text" id="price" placeholder="Enter Price" class="form-control"
+                                    th:field="*{price}"></div>
+                            <p th:if="${#fields.hasErrors('minpeople')}" th:errors="*{minpeople}"
+                               class="fieldError"></p>
                             <div class="form-group"><label for="minpeople" class=" form-control-label">MinPeople</label><input
                                     type="text" id="minpeople" placeholder="Enter Min" class="form-control"
                                     th:field="*{minpeople}"></div>
@@ -486,11 +494,14 @@
                                                            class=" form-control-label">Content</label>
                                 <textarea id="content" class="form-control" th:field="*{content}"></textarea>
                             </div>
+                            <div class="form-group">
+                                <input type="file" name="hotel_img" multiple>
+                            </div>
                         </div>
                         <input type="submit" role="button" class="btn btn-primary" value="Create">
                     </form>
-                    <form class="card" method="post" role="form" action="/admin/hotel_crud/delete"
-                          th:object="${hotelroomDto}">
+                    <form class="card" method="post" role="form" id="form_delete" action="/admin/hotel_crud/delete"
+                          th:object="${hotelroomDto}" enctype="multipart/form-data">
                         <input type="hidden" id="id2" th:field="*{id}">
                         <div class="card-header"><strong>Hotel Room</strong><small> UpdateとDelete</small></div>
                         <div class="card-body card-block">
@@ -501,6 +512,10 @@
                                        id="roomname2"
                                        class="form-control crud_change">
                             </div>
+                            <div class="form-group"><label for="price2" class=" form-control-label">Price</label><input
+                                    type="text" id="price2" placeholder="Enter Price" class="crud_change form-control"
+                                    th:field="*{price}"></div>
+
                             <div class="form-group"><label for="minpeople" class=" form-control-label">MinPeople</label><input
                                     type="text" id="minpeople2" placeholder="Enter Min" class="form-control crud_change"
                                     th:field="*{minpeople}"></div>
@@ -509,13 +524,20 @@
                                     type="text" id="maxpeople2" placeholder="Enter Max" class="crud_change form-control"
                                     th:field="*{maxpeople}"></div>
 
+
                             <div class="form-group"><label for="content"
                                                            class=" form-control-label">Content</label>
                                 <textarea id="content2" class="crud_change form-control"
                                           th:field="*{content}"></textarea>
                             </div>
+
+                            <div class="form-group"><label for="img_rooms" class=" form-control-label">img_rooms</label><input
+                                    type="file" id="img_rooms" class="form-control crud_change" multiple>
+                            </div>
+
                         </div>
-                        <input type="button" role="button" class="btn btn-dark" value="Update" id="update_crud" onclick="update_curd()">
+                        <input type="button" role="button" class="btn btn-dark" value="Update" id="update_crud"
+                               onclick="update_curd()">
                         <input type="submit" role="button" class="btn btn-danger" value="Delete" id="delete_crud">
                     </form>
 
@@ -682,10 +704,10 @@
 <!-- Scripts -->
 <script>
     function hotel_ajax_update(idx) {
-        $('.crud_change').attr('disabled',false);
-        $('#update_crud').attr('disabled',false);
-        $('#delete_crud').attr('disabled',false);
-        var new_id = idx + 1;
+        $('.crud_change').attr('disabled', false);
+        $('#update_crud').attr('disabled', false);
+        $('#delete_crud').attr('disabled', false);
+        var new_id = idx;
         $.ajax({
             url: '/admin/hotel_crud/set',
             type: 'post',
@@ -695,34 +717,47 @@
             contentType: 'application/json; charset=utf-8'
         }).done(function (rooms) {
             $('#id2').val(rooms.id);
+            $('#price2').val(rooms.price);
             $('#roomname2').val(rooms.roomName);
             $('#maxpeople2').val(rooms.max_People);
             $('#minpeople2').val(rooms.min_People);
             $('#content2').val(rooms.content);
+            // alert(rooms.hotel_room_img[0].img_Name);
 
         }).fail(function (error) {
             alert(error);
         });
     }
 
-        function update_curd() {
-            var data = {
-                idx: $('#id2').val(),
-                roomname: $('#roomname2').val(),
-                max: $('#maxpeople2').val(),
-                min: $('#minpeople2').val(),
-                content: $('#content2').val()
-            };
-
-            $.ajax({
-                url: '/admin/hotel_crud/update',
-                type: 'post',
-                data: JSON.stringify(data),
-                contentType: 'application/json; charset=utf-8'
-            }).done(function () {
-                alert('update');
-            });
+    function update_curd() {
+        var data = {
+            idx: $('#id2').val(),
+            roomname: $('#roomname2').val(),
+            price: $('#price2').val(),
+            max: $('#maxpeople2').val(),
+            min: $('#minpeople2').val(),
+            content: $('#content2').val()
+        };
+        var formData = new FormData($('#form_delete')[0]);
+        var img_size = document.getElementById('img_rooms').files.length;
+        for(var i = 0 ; i<img_size; i++){
+            formData.append('file[]',$('#img_rooms')[0].files[i]);
         }
+        formData.append('key', new Blob([JSON.stringify(data)], {type:"application/json"}))
+
+        $.ajax({
+            url: '/admin/hotel_crud/update',
+            type: 'post',
+            enctype:'multipart/form-data',
+            processData:false,
+            contentType: false,
+            cache:false,
+            data: formData,
+        }).done(function () {
+            alert('update');
+            location.reload();
+        });
+    }
 </script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>

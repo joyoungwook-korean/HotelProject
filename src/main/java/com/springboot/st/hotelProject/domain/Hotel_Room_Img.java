@@ -20,5 +20,7 @@ public class Hotel_Room_Img extends BaseTimeEntity {
 
     private String img_Server_Name;
 
+    private String img_Server_Path;
+
     private String img_UUID;
 }
