@@ -440,6 +440,7 @@
                                             <th>Min</th>
                                             <th>Max</th>
                                             <th>Price</th>
+                                            <th>roomCount</th>
                                             <th>ImgSize</th>
                                         </tr>
                                         </thead>
@@ -451,6 +452,7 @@
                                             <td><span class="name" th:text="${hotel.min_People}"></span></td>
                                             <td><span class="" th:text="${hotel.max_People}"></span></td>
                                             <td><span class="" th:text="${hotel.price}"></span></td>
+                                            <td><span class="" th:text="${hotel.roomcount}"></span></td>
                                             <td><span class="text" th:text="${hotel.hotel_room_img.size()}"></span>
                                             </td>
                                         </tr>
@@ -490,6 +492,10 @@
                                     th:field="*{maxpeople}"></div>
                             <p th:if="${#fields.hasErrors('maxpeople')}" th:errors="*{maxpeople}"
                                class="fieldError"></p>
+                            <div class="form-group"><label for="roomCount" class=" form-control-label">roomCount</label><input
+                                    type="text" id="roomCount" placeholder="Enter RoomCount" class="form-control"
+                                    th:field="*{roomcount}"></div>
+
                             <div class="form-group"><label for="content"
                                                            class=" form-control-label">Content</label>
                                 <textarea id="content" class="form-control" th:field="*{content}"></textarea>
@@ -523,6 +529,10 @@
                             <div class="form-group"><label for="maxpeople" class=" form-control-label">MaxPeople</label><input
                                     type="text" id="maxpeople2" placeholder="Enter Max" class="crud_change form-control"
                                     th:field="*{maxpeople}"></div>
+
+                            <div class="form-group"><label for="roomCount2" class=" form-control-label">roomCount</label><input
+                                    type="text" id="roomCount2" placeholder="Enter Count" class="crud_change form-control"
+                                    th:field="*{roomcount}"></div>
 
 
                             <div class="form-group"><label for="content"
@@ -722,6 +732,7 @@
             $('#maxpeople2').val(rooms.max_People);
             $('#minpeople2').val(rooms.min_People);
             $('#content2').val(rooms.content);
+            $('#roomCount2').val(rooms.roomcount);
             // alert(rooms.hotel_room_img[0].img_Name);
 
         }).fail(function (error) {
@@ -736,7 +747,8 @@
             price: $('#price2').val(),
             max: $('#maxpeople2').val(),
             min: $('#minpeople2').val(),
-            content: $('#content2').val()
+            content: $('#content2').val(),
+            roomcount: $('#roomCount2').val()
         };
         var formData = new FormData($('#form_delete')[0]);
         var img_size = document.getElementById('img_rooms').files.length;
