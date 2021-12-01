@@ -5,6 +5,7 @@ import com.springboot.st.hotelProject.domain.Hotel_RoomRepository;
 import com.springboot.st.hotelProject.domain.Hotel_Room_Img;
 import com.springboot.st.hotelProject.domain.Hotel_Room_ImgRepository;
 import com.springboot.st.hotelProject.domain.dto.Hotel_RoomDto;
+import com.springboot.st.signupProject.service.Room_Img_S3DBService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,6 +29,7 @@ public class HotelRoomService {
 
     private final Hotel_RoomRepository hotel_roomRepository;
     private final Hotel_Room_ImgRepository hotel_room_imgRepository;
+    private final Room_Img_S3DBService room_img_s3DBService;
 
     public List<Hotel_Room> all_find(){
         List<Hotel_Room> hotel_rooms = hotel_roomRepository.findAll();
@@ -40,8 +42,7 @@ public class HotelRoomService {
         Long save_id=null;
         if(!multipartFile.isEmpty()){
             try {
-                List<Hotel_Room_Img> hotel_room_imgs =  img_Save(multipartFile);
-                System.out.println(hotel_roomDto.getRoomcount());
+                List<Hotel_Room_Img> hotel_room_imgs =  room_img_s3DBService.saveImg_S3(multipartFile);
                  save_id = hotel_roomRepository.save(Hotel_RoomDto.create_room(hotel_roomDto,hotel_room_imgs)).getId();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -58,15 +59,27 @@ public class HotelRoomService {
         return hotel_roomRepository.findById(id).orElseThrow(IllegalArgumentException::new);
     }
 
+    //local
+//    public void delete_Room(Hotel_RoomDto hotel_roomDto){
+//        Hotel_Room hotel_room = find_By_Idx(hotel_roomDto.getId());
+//        List<Hotel_Room_Img> hotel_room_img = hotel_room.getHotel_room_img();
+//        hotel_roomRepository.delete(hotel_room);
+//        if(!hotel_room_img.isEmpty()){
+//
+//            img_Delete(hotel_room_img);
+//
+//        }
+//    }
+
+    //aws Delete
     public void delete_Room(Hotel_RoomDto hotel_roomDto){
         Hotel_Room hotel_room = find_By_Idx(hotel_roomDto.getId());
         List<Hotel_Room_Img> hotel_room_img = hotel_room.getHotel_room_img();
         hotel_roomRepository.delete(hotel_room);
         if(!hotel_room_img.isEmpty()){
-
-            img_Delete(hotel_room_img);
-
+            room_img_s3DBService.delete_S3Img(hotel_room_img);
         }
+
     }
 
     public void update_Room(Hotel_RoomDto hotel_roomDto, List<MultipartFile> multipartFiles) throws IOException {
@@ -79,65 +92,65 @@ public class HotelRoomService {
         hotel_room.setRoomcount(hotel_roomDto.getRoomcount());
 
         if(!multipartFiles.isEmpty()){
-            List<Hotel_Room_Img> hotel_room_imgList = img_Save(multipartFiles);
-            if(!hotel_room.getHotel_room_img().isEmpty()){
-                List<Hotel_Room_Img> hotel_room_imgs_delete = hotel_room.getHotel_room_img();
+            List<Hotel_Room_Img> hotel_room_imgs = hotel_room.getHotel_room_img();
+            if(!hotel_room_imgs.isEmpty()){
                 hotel_room.setHotel_room_img(null);
-                img_Delete(hotel_room_imgs_delete);
-                hotel_room.setHotel_room_img(hotel_room_imgList);
+                room_img_s3DBService.delete_S3Img(hotel_room_imgs);
+                hotel_room.setHotel_room_img(room_img_s3DBService.saveImg_S3(multipartFiles));
             }else{
-                hotel_room.setHotel_room_img(hotel_room_imgList);
+                hotel_room.setHotel_room_img(room_img_s3DBService.saveImg_S3(multipartFiles));
             }
         }
         hotel_roomRepository.save(hotel_room);
     }
 
-    private void img_Delete(List<Hotel_Room_Img> hotel_room_imgList){
-        for(Hotel_Room_Img hotel_room_img : hotel_room_imgList){
-            hotel_room_imgRepository.delete(hotel_room_img);
-            Path filePath = Paths.get(hotel_room_img.getImg_Server_Path());
-            try{
-                Files.delete(filePath);
-            }catch (NoSuchFileException e){
-                e.getStackTrace();
-            }catch (IOException e){
-                e.getStackTrace();
-            }
-
-
-        }
-    }
-
-    private List<Hotel_Room_Img> img_Save(List<MultipartFile> multipartFile) throws IOException {
-        List<Hotel_Room_Img> hotel_room_imgs = new ArrayList<>();
-
-        for(MultipartFile multipartFile1 : multipartFile){
-
-            String uuid = UUID.randomUUID().toString();
-            Hotel_Room_Img save_Img = new Hotel_Room_Img();
-            String origin_name = multipartFile1.getOriginalFilename();
-            String server_name = uuid+origin_name;
-            String path = "src\\main\\resources\\static\\hotel\\assets\\img\\rooms";
-            File file = new File(path);
-            String absolute_Path = new File("").getAbsolutePath()+"\\";
-            if(!file.exists()){
-                file.mkdirs();
-            }
-            file = new File(absolute_Path+path+"/"+server_name);
-            multipartFile1.transferTo(file);
-
-            save_Img.setImg_UUID(uuid);
-            save_Img.setImg_Server_Name(server_name);
-            save_Img.setImg_Server_Path(file.getPath());
-            save_Img.setImg_Name(origin_name);
-            Hotel_Room_Img hotel_room_img1 =hotel_room_imgRepository.save(save_Img);
-
-            hotel_room_imgs.add(hotel_room_img1);
-        }
-
-        return hotel_room_imgs;
-
-    }
+   // local
+//    private void img_Delete(List<Hotel_Room_Img> hotel_room_imgList){
+//        for(Hotel_Room_Img hotel_room_img : hotel_room_imgList){
+//            hotel_room_imgRepository.delete(hotel_room_img);
+//            Path filePath = Paths.get(hotel_room_img.getImg_Server_Path());
+//            try{
+//                Files.delete(filePath);
+//            }catch (NoSuchFileException e){
+//                e.getStackTrace();
+//            }catch (IOException e){
+//                e.getStackTrace();
+//            }
+//
+//
+//        }
+//    }
+//local
+//    private List<Hotel_Room_Img> img_Save(List<MultipartFile> multipartFile) throws IOException {
+//        List<Hotel_Room_Img> hotel_room_imgs = new ArrayList<>();
+//
+//        for(MultipartFile multipartFile1 : multipartFile){
+//
+//            String uuid = UUID.randomUUID().toString();
+//            Hotel_Room_Img save_Img = new Hotel_Room_Img();
+//            String origin_name = multipartFile1.getOriginalFilename();
+//            String server_name = uuid+origin_name;
+//            String path = "src\\main\\resources\\static\\hotel\\assets\\img\\rooms";
+//            File file = new File(path);
+//            String absolute_Path = new File("").getAbsolutePath()+"\\";
+//            if(!file.exists()){
+//                file.mkdirs();
+//            }
+//            file = new File(absolute_Path+path+"/"+server_name);
+//            multipartFile1.transferTo(file);
+//
+//            save_Img.setImg_UUID(uuid);
+//            save_Img.setImg_Server_Name(server_name);
+//            save_Img.setImg_Server_Path(file.getPath());
+//            save_Img.setImg_Name(origin_name);
+//            Hotel_Room_Img hotel_room_img1 =hotel_room_imgRepository.save(save_Img);
+//
+//            hotel_room_imgs.add(hotel_room_img1);
+//        }
+//
+//        return hotel_room_imgs;
+//
+//    }
 
 
 }

@@ -8,6 +8,7 @@ import com.springboot.st.hotelProject.domain.Hotel_Room_ImgRepository;
 import com.springboot.st.hotelProject.domain.dto.Hotel_RoomDto;
 import com.springboot.st.hotelProject.service.HotelRoomService;
 import com.springboot.st.signupProject.service.AdminService;
+import com.springboot.st.signupProject.service.Room_Img_S3DBService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,6 +29,7 @@ public class AdminController {
 
     private final AdminService adminService;
     private final HotelRoomService hotelRoomService;
+    private final Room_Img_S3DBService room_img_s3DBService;
 
     @GetMapping("/admin/hotel_crud")
     public String hotel_crud(Model model) {
@@ -46,7 +48,6 @@ public class AdminController {
             model.addAttribute("hotelroomCount", hotel_rooms.size());
             return "admin/hotel_crud";
         }
-
        hotelRoomService.save(hotel_roomDto,multipartFile);
 
         return "redirect:/admin/hotel_crud";
@@ -72,11 +73,11 @@ public class AdminController {
     public @ResponseBody
     List<User> post_index(@RequestBody String find_id, Model model) {
         if (find_id == null) {
-            System.out.println("aa");
+            System.out.println("null");
             return null;
         } else if (find_id.equals("")) {
 
-            System.out.println("bb");
+            System.out.println("equals null");
             return null;
         } else {
             List<User> find_user_e = adminService.find_user_ajax(find_id);
@@ -89,7 +90,6 @@ public class AdminController {
     @PostMapping("/admin/hotel_crud/delete")
     public String delete_Hotel_Room(Hotel_RoomDto hotel_roomDto) {
         hotelRoomService.delete_Room(hotel_roomDto);
-
         return "redirect:/admin/hotel_crud";
     }
 
@@ -109,6 +109,17 @@ public class AdminController {
         hotelRoomService.update_Room(hotel_roomDto,multipartFile);
 
         return "redirect:/admin/hotel_crud";
+    }
+
+    @GetMapping("/s3test")
+    public String s3test(){
+        return "s3test";
+    }
+
+    @PostMapping("/s3test")
+    public String s3testpost(@RequestParam("file2") List<MultipartFile> multipartFiles) throws IOException {
+        room_img_s3DBService.saveImg_S3(multipartFiles);
+        return "redirect:/s3test";
     }
 
 }

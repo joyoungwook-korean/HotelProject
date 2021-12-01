@@ -28,6 +28,7 @@ repositories {
 }
 
 dependencies {
+
     compile('org.projectlombok:lombok')
     compile('org.springframework.boot:spring-boot-starter-web')
     compile('org.springframework.boot:spring-boot-starter-data-jpa')
@@ -37,11 +38,12 @@ dependencies {
     compile('org.mariadb.jdbc:mariadb-java-client:')
     // https://mvnrepository.com/artifact/org.thymeleaf.extras/thymeleaf-extras-springsecurity5
     implementation group: 'org.thymeleaf.extras', name: 'thymeleaf-extras-springsecurity5', version: '3.0.4.RELEASE'
-
+    implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.5.RELEASE'
     compile('org.springframework.boot:spring-boot-starter-thymeleaf')
     compile('nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect')
     // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-devtools
     implementation group: 'org.springframework.boot', name: 'spring-boot-devtools'
+
 
     testCompile('org.springframework.boot:spring-boot-starter-test')
     testCompile('org.springframework.security:spring-security-test')

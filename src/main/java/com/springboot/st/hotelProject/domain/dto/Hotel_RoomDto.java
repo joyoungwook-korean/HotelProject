@@ -47,7 +47,7 @@ public class Hotel_RoomDto {
                 .hotel_room_img(hotel_roomDto.getHotel_room_imgs())
                 .content(hotel_roomDto.getContent())
                 .min_People(hotel_roomDto.getMinpeople())
-                .roomCount(hotel_roomDto.getRoomcount())
+                .roomcount(hotel_roomDto.getRoomcount())
                 .price(hotel_roomDto.getPrice())
                 .build();
         return hotel_room;
@@ -60,7 +60,7 @@ public class Hotel_RoomDto {
                 .min_People(hotel_roomDto.getMinpeople())
                 .hotel_room_img(hotel_room_imgs)
                 .price(hotel_roomDto.getPrice())
-                .roomCount(hotel_roomDto.getRoomcount())
+                .roomcount(hotel_roomDto.getRoomcount())
                 .build();
         return hotel_room;
     }

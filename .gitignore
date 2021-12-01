@@ -5,3 +5,5 @@ src/main/resources/application-oauth.properties
 /src/main/resources/application-real-db.properties
 /src/main/resources/application-oauth-test.properties.properties
 /src/main/resources/application-oauth-test.properties
+/src/main/resources/application-aws.properties
+*.class
