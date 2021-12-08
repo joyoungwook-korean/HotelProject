@@ -65,6 +65,4 @@ public class Hotel_RoomDto {
         return hotel_room;
     }
 
-
-
 }

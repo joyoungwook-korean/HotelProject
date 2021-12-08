@@ -8,7 +8,6 @@ import com.springboot.st.hotelProject.domain.Hotel_Room_ImgRepository;
 import com.springboot.st.hotelProject.domain.dto.Hotel_RoomDto;
 import com.springboot.st.hotelProject.service.HotelRoomService;
 import com.springboot.st.signupProject.service.AdminService;
-import com.springboot.st.signupProject.service.Room_Img_S3DBService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,7 +28,7 @@ public class AdminController {
 
     private final AdminService adminService;
     private final HotelRoomService hotelRoomService;
-    private final Room_Img_S3DBService room_img_s3DBService;
+
 
     @GetMapping("/admin/hotel_crud")
     public String hotel_crud(Model model) {
@@ -116,10 +115,12 @@ public class AdminController {
         return "s3test";
     }
 
-    @PostMapping("/s3test")
-    public String s3testpost(@RequestParam("file2") List<MultipartFile> multipartFiles) throws IOException {
-        room_img_s3DBService.saveImg_S3(multipartFiles);
-        return "redirect:/s3test";
+    @GetMapping("/payment")
+    public String payment_Test(Model model){
+        List<Hotel_Room> hotel_rooms= hotelRoomService.all_find();
+        model.addAttribute("test_hotel_room", hotel_rooms);
+        return "import_test";
     }
+
 
 }

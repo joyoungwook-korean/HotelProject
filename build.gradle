@@ -43,8 +43,9 @@ dependencies {
     compile('nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect')
     // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-devtools
     implementation group: 'org.springframework.boot', name: 'spring-boot-devtools'
-
-
+//    bootPay
+    compile group: 'org.apache.httpcomponents', name: 'httpclient', version: '+'
+    compile group: 'com.google.code.gson', name: 'gson', version: '+'
     testCompile('org.springframework.boot:spring-boot-starter-test')
     testCompile('org.springframework.security:spring-security-test')
 
