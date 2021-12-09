@@ -30,6 +30,9 @@ public class UserService {
             throw new IllegalStateException("same user");
         }
     }
+    public User get_user_for_userid(String userid){
+        return userRepository.findByUserid(userid);
+    }
 
     public String check_id_for_js(String userid){
         if(userRepository.findByUserid(userid) !=null){
@@ -44,6 +47,8 @@ public class UserService {
         User user = userRepository.findByUserid(id);
         return user;
     }
+
+
 
 
 }

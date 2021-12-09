@@ -1,0 +1,83 @@
+<html class="no-js" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{layout/hotel_layout1}">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="slider-area hero-bg1  hero-overly">
+        <div class="single-slider  slider-height2 d-flex align-items-center">
+            <div class="container">
+                <div class="row justify-content-center ">
+                    <div class="col-xl-7 col-lg-11">
+                        <!-- Hero Caption -->
+                        <div class="hero-caption hero-caption2 pt-10">
+                            <h1>Search</h1>
+                            <p></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="location-house section-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-4 col-lg-5 col-md-8">
+                    <!-- Section Tittle -->
+                    <div class="section-tittle mb-50">
+                        <h2>Our Rooms</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <form action="/hotel/reservation" method="post"  class="col-lg-4" th:each="hotel : ${hotel_room}">
+                    <input type="hidden" name="hotel_room_send"  th:value="${hotel.id}">
+                    <input type="hidden" th:if="${#authorization.authentication.isAuthenticated()}"
+                           name="user_send" th:value="${#authorization.authentication.name}">
+                    <input type="hidden" name="checkin" th:value="${reservation_checkin_date}">
+                    <input type="hidden" name="checkout" th:value="${reservation_checkout_date}">
+                    <input type="hidden" name="room" th:value="${hotel.roomName}">
+                    <input type="hidden" name="people" th:value="${people}">
+                    <!-- Single -->
+                    <div class="single-location single-location2 mb-30">
+                        <img th:src="${hotel.hotel_room_img.get(0).img_Server_Path}" alt="">
+                        <div class="location-contents">
+                            <h3><a href="#" th:text="${hotel.roomName}"> </a></h3>
+                            <p th:text="${hotel.max_People}+' Max People'"></p>
+                            <div class="price">
+                                <span>Started from<span th:text="'$'+${hotel.price}"></span></span>
+                                <input type="submit" class="btn btn-primary">
+                            </div>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="video-area section-img-bg2 d-flex align-items-center"
+         data-background="/hotel/assets/img/gallery/video-bg.jpg}">
+        <div class="container">
+            <div class="video-wrap position-relative">
+                <!-- Video icon -->
+                <div class="video-icon">
+                    <a class="popup-video btn-icon" href="https://www.youtube.com/watch?v=up68UAfH0d0">
+                        <img th:src="@{/hotel/assets/img/icon/video-icon.svg}" alt="">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<th:block layout:fragment="script">
+    <script>
+    </script>
+</th:block>
+</html>

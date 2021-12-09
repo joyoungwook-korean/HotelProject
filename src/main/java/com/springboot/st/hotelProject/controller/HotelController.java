@@ -1,16 +1,21 @@
 package com.springboot.st.hotelProject.controller;
 
+import com.springboot.st.config.auth.PrincipalDetails;
+import com.springboot.st.domain.user.User;
+import com.springboot.st.hotelProject.domain.Hotel_Room;
+import com.springboot.st.hotelProject.domain.dto.Hotel_RoomDto;
+import com.springboot.st.hotelProject.service.HotelRoomService;
 import com.springboot.st.signupProject.service.UserService;
 import com.springboot.st.signupProject.web.dto.UserFormDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
+import java.util.Map;
 
 
 @Controller
@@ -18,6 +23,7 @@ import javax.validation.Valid;
 public class HotelController {
 
     private final UserService userService;
+    private final HotelRoomService hotelRoomService;
 
     @GetMapping("/hotel/index")
     public String aaa(){
@@ -55,8 +61,55 @@ public class HotelController {
     }
 
     @GetMapping("/hotel/rooms")
-    public String rooms(){
+    public String rooms(Model model){
+        List<Hotel_Room> hotel_rooms= hotelRoomService.all_find();
+        model.addAttribute("hotel_room", hotel_rooms);
         return "hotel/rooms";
+    }
+    @GetMapping("/hotel/search")
+    public String search(){
+        return "hotel/search";
+    }
+
+    @PostMapping("/hotel/search")
+    public String search(Model model, @RequestParam("checkin_date") String checkin,
+                         @RequestParam("checkout_date") String checkout,@RequestParam("select1") String people){
+
+        List<Hotel_Room> hotel_rooms= hotelRoomService.all_find();
+        model.addAttribute("hotel_room", hotel_rooms);
+        model.addAttribute("hotel_send", new Hotel_Room());
+        model.addAttribute("reservation_checkin_date",checkin);
+        model.addAttribute("reservation_checkout_date",checkout);
+        model.addAttribute("people", people);
+        return "hotel/search";
+    }
+
+    @GetMapping("/hotel/reservation")
+    public String reservation(){
+        return "hotel/reservation";
+    }
+
+    @PostMapping("/hotel/reservation")
+    public String reservation(Model model,@RequestParam Map<String,String> reservation_all){
+        User user = userService.get_user_for_userid(reservation_all.get("user_send"));
+        model.addAttribute("reservation",reservation_all);
+        model.addAttribute("user", user);
+        return "hotel/reservation";
+    }
+
+    @PostMapping("/hotel/reservation/test")
+    public @ResponseBody String
+    add_reservation(@RequestBody Map<String,Object> test){
+        Map<String,Object> user_map= (Map<String, Object>) test.get("user");
+
+        return "予約成功しました";
+    }
+
+    @GetMapping("/hotel/aa")
+    public String aa(Model model){
+        List<Hotel_Room> hotel_rooms = hotelRoomService.all_find();
+        model.addAttribute("test_hotel_room",hotel_rooms);
+        return "import_test";
     }
 
 }

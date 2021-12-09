@@ -2,16 +2,17 @@ package com.springboot.st.hotelProject.domain;
 
 import com.springboot.st.domain.BaseTimeEntity;
 import com.springboot.st.domain.pay.Payment;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.springboot.st.domain.user.User;
+import lombok.*;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 public class Hotel_Reservation extends BaseTimeEntity {
 
     @Id
@@ -24,15 +25,31 @@ public class Hotel_Reservation extends BaseTimeEntity {
     @OneToOne
     private Hotel_Room re_hotel_room;
 
-    private Timestamp start_day;
+    @OneToOne
+    private User user;
 
-    private Timestamp finish_day;
+    private String another_user;
+
+    private int people;
+
+    private String start_day;
+
+    private String finish_day;
+
+    private String phone_num;
+
+    @OneToMany
+    private List<Hotel_Reservation_AllDay> hotel_reservation_allDays;
 
     @Builder
-    public Hotel_Reservation(Payment payment, Hotel_Room re_hotel_room, Timestamp start_day, Timestamp finish_day) {
+    public Hotel_Reservation(Payment payment, Hotel_Room re_hotel_room, User user, String another_user, int people, String start_day, String finish_day, List<Hotel_Reservation_AllDay> hotel_reservation_allDays) {
         this.payment = payment;
         this.re_hotel_room = re_hotel_room;
+        this.user = user;
+        this.another_user = another_user;
+        this.people = people;
         this.start_day = start_day;
         this.finish_day = finish_day;
+        this.hotel_reservation_allDays = hotel_reservation_allDays;
     }
 }

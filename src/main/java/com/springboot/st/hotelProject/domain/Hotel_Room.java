@@ -4,6 +4,8 @@ import com.springboot.st.domain.BaseTimeEntity;
 import com.springboot.st.domain.user.Role;
 import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import net.minidev.json.annotate.JsonIgnore;
 
 import javax.persistence.*;
@@ -11,7 +13,8 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Entity
-@Data
+@Setter
+@Getter
 public class Hotel_Room extends BaseTimeEntity {
 
 
