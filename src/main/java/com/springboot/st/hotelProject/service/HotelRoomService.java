@@ -1,9 +1,6 @@
 package com.springboot.st.hotelProject.service;
 
-import com.springboot.st.hotelProject.domain.Hotel_Room;
-import com.springboot.st.hotelProject.domain.Hotel_RoomRepository;
-import com.springboot.st.hotelProject.domain.Hotel_Room_Img;
-import com.springboot.st.hotelProject.domain.Hotel_Room_ImgRepository;
+import com.springboot.st.hotelProject.domain.*;
 import com.springboot.st.hotelProject.domain.dto.Hotel_RoomDto;
 import com.springboot.st.signupProject.service.Room_Img_S3DBService;
 import lombok.RequiredArgsConstructor;
@@ -30,31 +27,31 @@ public class HotelRoomService {
     private final Hotel_RoomRepository hotel_roomRepository;
     private final Hotel_Room_ImgRepository hotel_room_imgRepository;
     private final Room_Img_S3DBService room_img_s3DBService;
+    private final HotelReservationAllDayService hotelReservationAllDayService;
 
-    public List<Hotel_Room> all_find(){
+    public List<Hotel_Room> all_find() {
         List<Hotel_Room> hotel_rooms = hotel_roomRepository.findAll();
         return hotel_rooms;
     }
 
 
-
-    public Long save(Hotel_RoomDto hotel_roomDto, List<MultipartFile> multipartFile){
-        Long save_id=null;
-        if(!multipartFile.isEmpty()){
+    public Long save(Hotel_RoomDto hotel_roomDto, List<MultipartFile> multipartFile) {
+        Long save_id = null;
+        if (!multipartFile.isEmpty()) {
             try {
-                List<Hotel_Room_Img> hotel_room_imgs =  room_img_s3DBService.saveImg_S3(multipartFile);
-                 save_id = hotel_roomRepository.save(Hotel_RoomDto.create_room(hotel_roomDto,hotel_room_imgs)).getId();
+                List<Hotel_Room_Img> hotel_room_imgs = room_img_s3DBService.saveImg_S3(multipartFile);
+                save_id = hotel_roomRepository.save(Hotel_RoomDto.create_room(hotel_roomDto, hotel_room_imgs)).getId();
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }else{
+        } else {
             save_id = hotel_roomRepository.save(Hotel_RoomDto.create_room(hotel_roomDto)).getId();
         }
 
         return save_id;
     }
 
-    public Hotel_Room find_By_Idx(String idx){
+    public Hotel_Room find_By_Idx(String idx) {
         Long id = Long.parseLong(idx);
         return hotel_roomRepository.findById(id).orElseThrow(IllegalArgumentException::new);
     }
@@ -72,39 +69,83 @@ public class HotelRoomService {
 //    }
 
     //aws Delete
-    public void delete_Room(Hotel_RoomDto hotel_roomDto){
+    public void delete_Room(Hotel_RoomDto hotel_roomDto) {
         Hotel_Room hotel_room = find_By_Idx(hotel_roomDto.getId());
         List<Hotel_Room_Img> hotel_room_img = hotel_room.getHotel_room_img();
         hotel_roomRepository.delete(hotel_room);
-        if(!hotel_room_img.isEmpty()){
+        if (!hotel_room_img.isEmpty()) {
             room_img_s3DBService.delete_S3Img(hotel_room_img);
         }
 
     }
 
+    public List<Hotel_Room> minPeopleGreaterThan(int people) {
+        return hotel_roomRepository.findByMaxPeopleGreaterThanEqual(people);
+    }
+
+    public List<Hotel_Room> search_Room_for_day(List<Hotel_Room> nokoru_rooms, String checkin, String checkout) {
+        List<Hotel_Room> hotel_rooms = new ArrayList<>();
+        List<String> check_day_all = hotelReservationAllDayService.allDay_check(checkin, checkout);
+        List<Hotel_Reservation_AllDay> reservation_allDays =
+                hotelReservationAllDayService.find_all();
+        int check_cnt = 0;
+        for (Hotel_Room hotel_room : nokoru_rooms) {
+            for(String check_day : check_day_all){
+                if(hotel_day_check_room(hotel_room,check_day,reservation_allDays)){
+                    check_cnt++;
+                }
+            }
+            if(check_day_all.size()==check_cnt){
+                hotel_rooms.add(hotel_room);
+            }
+            check_cnt=0;
+        }
+        return hotel_rooms;
+
+    }
+
+    private boolean hotel_day_check_room(Hotel_Room hotel_room, String day, List<Hotel_Reservation_AllDay> hotel_reservation_allDays){
+        int cnt = 0;
+        for(Hotel_Reservation_AllDay hotel_reservation_allDay : hotel_reservation_allDays){
+            if(hotel_reservation_allDay.getRoomName().equals(hotel_room.getRoomName()) && hotel_reservation_allDay.getDay().equals(day)){
+                cnt++;
+            }
+        }
+        if(hotel_room.getRoomcount()> cnt){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+
+    public Hotel_Room find_room_name(String room_name) {
+        return hotel_roomRepository.findHotel_RoomByRoomName(room_name);
+    }
+
     public void update_Room(Hotel_RoomDto hotel_roomDto, List<MultipartFile> multipartFiles) throws IOException {
         Hotel_Room hotel_room = find_By_Idx(hotel_roomDto.getId());
-        hotel_room.setMax_People(hotel_roomDto.getMaxpeople());
-        hotel_room.setMin_People(hotel_roomDto.getMinpeople());
+        hotel_room.setMaxPeople(hotel_roomDto.getMaxpeople());
+        hotel_room.setMinPeople(hotel_roomDto.getMinpeople());
         hotel_room.setPrice(hotel_roomDto.getPrice());
         hotel_room.setContent(hotel_roomDto.getContent());
         hotel_room.setRoomName(hotel_roomDto.getRoomname());
         hotel_room.setRoomcount(hotel_roomDto.getRoomcount());
 
-        if(!multipartFiles.isEmpty()){
+        if (!multipartFiles.isEmpty()) {
             List<Hotel_Room_Img> hotel_room_imgs = hotel_room.getHotel_room_img();
-            if(!hotel_room_imgs.isEmpty()){
+            if (!hotel_room_imgs.isEmpty()) {
                 hotel_room.setHotel_room_img(null);
                 room_img_s3DBService.delete_S3Img(hotel_room_imgs);
                 hotel_room.setHotel_room_img(room_img_s3DBService.saveImg_S3(multipartFiles));
-            }else{
+            } else {
                 hotel_room.setHotel_room_img(room_img_s3DBService.saveImg_S3(multipartFiles));
             }
         }
         hotel_roomRepository.save(hotel_room);
     }
 
-   // local
+    // local
 //    private void img_Delete(List<Hotel_Room_Img> hotel_room_imgList){
 //        for(Hotel_Room_Img hotel_room_img : hotel_room_imgList){
 //            hotel_room_imgRepository.delete(hotel_room_img);

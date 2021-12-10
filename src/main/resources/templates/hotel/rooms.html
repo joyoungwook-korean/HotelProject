@@ -107,7 +107,7 @@
                             <img th:src="${hotel.hotel_room_img.get(0).img_Server_Path}" alt="">
                             <div class="location-contents">
                                 <h3><a href="#" th:text="${hotel.roomName}"> </a></h3>
-                                <p th:text="${hotel.max_People}+' Max People'"></p>
+                                <p th:text="${hotel.maxPeople}+' Max People'"></p>
                                 <div class="price">
                                     <span>Started from<span th:text="'$'+${hotel.price}"></span></span>
                                 </div>

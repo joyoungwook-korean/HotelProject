@@ -449,8 +449,8 @@
                                             th:onclick="'hotel_ajax_update('+ ${hotel.id}+ ');'">
                                             <td class="serial" th:id="${i.index}" th:text="${i.index}"></td>
                                             <td th:text="${hotel.roomName}"></td>
-                                            <td><span class="name" th:text="${hotel.min_People}"></span></td>
-                                            <td><span class="" th:text="${hotel.max_People}"></span></td>
+                                            <td><span class="name" th:text="${hotel.minPeople}"></span></td>
+                                            <td><span class="" th:text="${hotel.maxPeople}"></span></td>
                                             <td><span class="" th:text="${hotel.price}"></span></td>
                                             <td><span class="" th:text="${hotel.roomcount}"></span></td>
                                             <td><span class="text" th:text="${hotel.hotel_room_img.size()}"></span>
@@ -729,8 +729,8 @@
             $('#id2').val(rooms.id);
             $('#price2').val(rooms.price);
             $('#roomname2').val(rooms.roomName);
-            $('#maxpeople2').val(rooms.max_People);
-            $('#minpeople2').val(rooms.min_People);
+            $('#maxpeople2').val(rooms.maxPeople);
+            $('#minpeople2').val(rooms.minPeople);
             $('#content2').val(rooms.content);
             $('#roomCount2').val(rooms.roomcount);
             // alert(rooms.hotel_room_img[0].img_Name);

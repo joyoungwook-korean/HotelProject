@@ -42,12 +42,13 @@ public class Hotel_Reservation extends BaseTimeEntity {
     private List<Hotel_Reservation_AllDay> hotel_reservation_allDays;
 
     @Builder
-    public Hotel_Reservation(Payment payment, Hotel_Room re_hotel_room, User user, String another_user, int people, String start_day, String finish_day, List<Hotel_Reservation_AllDay> hotel_reservation_allDays) {
+    public Hotel_Reservation(Payment payment, String phone_num,Hotel_Room re_hotel_room, User user, String another_user, int people, String start_day, String finish_day, List<Hotel_Reservation_AllDay> hotel_reservation_allDays) {
         this.payment = payment;
         this.re_hotel_room = re_hotel_room;
         this.user = user;
         this.another_user = another_user;
         this.people = people;
+        this.phone_num = phone_num;
         this.start_day = start_day;
         this.finish_day = finish_day;
         this.hotel_reservation_allDays = hotel_reservation_allDays;

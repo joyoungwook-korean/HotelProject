@@ -31,52 +31,53 @@
                 </div>
             </div>
             <div class="container">
-                <form action="#" class="search-box pb-45">
+                <form action="/hotel/search" method="post"  class="search-box pb-45">
                     <div class="row align-items-end">
                         <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
                             <!-- select in date -->
                             <div class="date-pic mb-15">
-                                <script>
-                                    document.getElementById('datepicker1').value = new Date().toISOString().substring(0, 10);
-                                </script>
-                                <label>Check In Date*</label>
+                                <label for="#">Check In Date*</label>
                                 <div class="boking-datepicker">
-                                    <input type="text" id="datepicker1" placeholder="Check in"/>
+                                    <input id="datepicker1" name="checkin_date"  placeholder="Check in" />
                                 </div>
                             </div>
                         </div>
                         <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
                             <!-- select in date -->
                             <div class="date-pic mb-15">
-                                <label>Check Out Date*</label>
+                                <label for="#">Check Out Date*</label>
                                 <div class="boking-datepicker">
-                                    <input id="datepicker2" placeholder="Check out"/>
+                                    <input id="datepicker2" name="checkout_date"  placeholder="Check out" />
                                 </div>
                             </div>
                         </div>
                         <div class="col-xl-2 col-lg-4 col-md-4 col-sm-6">
                             <div class="select-form mb-15">
-                                <select name="select" id="select1">
-                                    <option value="">1 Adult</option>
-                                    <option value="">2 Adult</option>
-                                    <option value="">3 Adult</option>
-                                    <option value="">4 Adult</option>
+                                <select name="select1" id="select1">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
                                 </select>
                             </div>
                         </div>
                         <div class="col-xl-2 col-lg-4 col-md-4 col-sm-6">
-                            <div class="select-form mb-15">
-                                <select name="select" id="select2">
-                                    <option value="">0 Children</option>
-                                    <option value="">1 Children</option>
-                                    <option value="">2 Children</option>
-                                    <option value="">3 Children</option>
+                            <div class="select-form mb-15" >
+                                <select name="select2" id="select2" >
+                                    <option>東京都</option>
+                                    <option>北海道</option>
+                                    <option>大阪府</option>
+                                    <option>京都府</option>
                                 </select>
                             </div>
                         </div>
                         <div class="col-xl-2 col-lg-4 col-md-4 col-sm-6">
                             <div class="search-form">
-                                <a href="#">Search</a>
+                                <a href="#"><input type="submit" value="Search" style="text-decoration: none"></a>
                             </div>
                         </div>
                     </div>

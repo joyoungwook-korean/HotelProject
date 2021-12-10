@@ -26,9 +26,9 @@ public class Hotel_Room extends BaseTimeEntity {
     @Column(unique = true)
     private String roomName;
 
-    private int min_People;
+    private int minPeople;
 
-    private int max_People;
+    private int maxPeople;
 
     private String content;
 
@@ -40,10 +40,10 @@ public class Hotel_Room extends BaseTimeEntity {
     private List<Hotel_Room_Img> hotel_room_img;
 
     @Builder
-    public Hotel_Room(String roomName,int price ,int min_People,int roomcount, int max_People, String content, List<Hotel_Room_Img> hotel_room_img) {
+    public Hotel_Room(String roomName,int price ,int minPeople,int roomcount, int maxPeople, String content, List<Hotel_Room_Img> hotel_room_img) {
         this.roomName = roomName;
-        this.min_People = min_People;
-        this.max_People = max_People;
+        this.minPeople = minPeople;
+        this.maxPeople = maxPeople;
         this.content = content;
         this.price = price;
         this.roomcount = roomcount;

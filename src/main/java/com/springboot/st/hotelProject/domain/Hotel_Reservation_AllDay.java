@@ -26,5 +26,7 @@ public class Hotel_Reservation_AllDay extends BaseTimeEntity {
 
     private String day;
 
+    private String roomName;
+
 
 }

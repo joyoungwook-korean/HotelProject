@@ -22,7 +22,7 @@ public class HotelReservationAllDayService {
     Hotel_Reservation_AllDayRepository hotel_reservation_allDayRepository;
 
 
-    public List<Hotel_Reservation_AllDay> save(String startDay, String endDay){
+    public List<Hotel_Reservation_AllDay> save(String startDay, String endDay,String roomName){
         List<String> string_All_Date = allDay_check(startDay,endDay);
         List<Hotel_Reservation_AllDay> hotel_reservation_allDays = new ArrayList<>();
 
@@ -30,6 +30,7 @@ public class HotelReservationAllDayService {
             Hotel_Reservation_AllDay hotelReservationAllDay =
                     new Hotel_Reservation_AllDay();
             hotelReservationAllDay.setDay(date);
+            hotelReservationAllDay.setRoomName(roomName);
             Hotel_Reservation_AllDay hotelReservationAllDay1 =
                     hotel_reservation_allDayRepository.save(hotelReservationAllDay);
             hotel_reservation_allDays.add(hotelReservationAllDay1);
@@ -38,7 +39,9 @@ public class HotelReservationAllDayService {
         return hotel_reservation_allDays;
     }
 
-
+    public List<Hotel_Reservation_AllDay> find_all(){
+        return hotel_reservation_allDayRepository.findAll();
+    }
 
     public List<String> allDay_check(String checkin, String checkout){
         DateFormat df = new SimpleDateFormat("MM/dd/yyyy");

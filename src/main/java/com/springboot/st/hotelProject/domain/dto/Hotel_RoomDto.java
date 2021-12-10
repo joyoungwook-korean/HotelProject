@@ -43,10 +43,10 @@ public class Hotel_RoomDto {
 
     public static Hotel_Room create_room(Hotel_RoomDto hotel_roomDto){
         Hotel_Room hotel_room = Hotel_Room.builder().roomName(hotel_roomDto.getRoomname())
-                .max_People(hotel_roomDto.getMaxpeople())
+                .maxPeople(hotel_roomDto.getMaxpeople())
                 .hotel_room_img(hotel_roomDto.getHotel_room_imgs())
                 .content(hotel_roomDto.getContent())
-                .min_People(hotel_roomDto.getMinpeople())
+                .minPeople(hotel_roomDto.getMinpeople())
                 .roomcount(hotel_roomDto.getRoomcount())
                 .price(hotel_roomDto.getPrice())
                 .build();
@@ -54,10 +54,10 @@ public class Hotel_RoomDto {
     }
     public static Hotel_Room create_room(Hotel_RoomDto hotel_roomDto, List<Hotel_Room_Img> hotel_room_imgs){
         Hotel_Room hotel_room = Hotel_Room.builder().roomName(hotel_roomDto.getRoomname())
-                .max_People(hotel_roomDto.getMaxpeople())
+                .maxPeople(hotel_roomDto.getMaxpeople())
                 .hotel_room_img(hotel_roomDto.getHotel_room_imgs())
                 .content(hotel_roomDto.getContent())
-                .min_People(hotel_roomDto.getMinpeople())
+                .minPeople(hotel_roomDto.getMinpeople())
                 .hotel_room_img(hotel_room_imgs)
                 .price(hotel_roomDto.getPrice())
                 .roomcount(hotel_roomDto.getRoomcount())
