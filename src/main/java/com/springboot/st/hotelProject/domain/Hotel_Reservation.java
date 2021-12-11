@@ -23,34 +23,34 @@ public class Hotel_Reservation extends BaseTimeEntity {
     private Payment payment;
 
     @OneToOne
-    private Hotel_Room re_hotel_room;
+    private Hotel_Room reHotelRoom;
 
     @OneToOne
     private User user;
 
-    private String another_user;
+    private String anotherUser;
 
     private int people;
 
-    private String start_day;
+    private String startDay;
 
-    private String finish_day;
+    private String finishDay;
 
-    private String phone_num;
+    private String phoneNum;
 
     @OneToMany
     private List<Hotel_Reservation_AllDay> hotel_reservation_allDays;
 
     @Builder
-    public Hotel_Reservation(Payment payment, String phone_num,Hotel_Room re_hotel_room, User user, String another_user, int people, String start_day, String finish_day, List<Hotel_Reservation_AllDay> hotel_reservation_allDays) {
+    public Hotel_Reservation(Payment payment, String phoneNum,Hotel_Room re_hotel_room, User user, String another_user, int people, String startDay, String finishDay, List<Hotel_Reservation_AllDay> hotel_reservation_allDays) {
         this.payment = payment;
-        this.re_hotel_room = re_hotel_room;
+        this.reHotelRoom = re_hotel_room;
         this.user = user;
-        this.another_user = another_user;
+        this.anotherUser = another_user;
         this.people = people;
-        this.phone_num = phone_num;
-        this.start_day = start_day;
-        this.finish_day = finish_day;
+        this.phoneNum = phoneNum;
+        this.startDay = startDay;
+        this.finishDay = finishDay;
         this.hotel_reservation_allDays = hotel_reservation_allDays;
     }
 }

@@ -25,7 +25,9 @@ import java.util.Map;
 public class HotelController {
 
     private final UserService userService;
+
     private final HotelRoomService hotelRoomService;
+
     private final HotelReservationService hotelReservationService;
 
     @GetMapping("/hotel/index")

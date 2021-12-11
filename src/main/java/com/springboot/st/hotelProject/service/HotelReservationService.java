@@ -9,6 +9,9 @@ import com.springboot.st.signupProject.service.UserService;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,6 +25,7 @@ public class HotelReservationService {
 
     @Autowired
     Hotel_ReservationRepository hotel_reservationRepository;
+
     @Autowired
     UserService userService;
 
@@ -56,17 +60,35 @@ public class HotelReservationService {
         }
         hotel_reservation = new Hotel_Reservation().builder().another_user(another_user)
                 .people(Integer.parseInt((String)reservation_map.get("people")) )
-                .start_day((String) reservation_map.get("checkin"))
-                .finish_day((String) reservation_map.get("checkout"))
+                .startDay((String) reservation_map.get("checkin"))
+                .finishDay((String) reservation_map.get("checkout"))
                 .user(user)
                 .re_hotel_room(hotel_room)
-                .phone_num((String)reservation_map.get("phone"))
+                .phoneNum((String)reservation_map.get("phone"))
                 .payment(null)
                 .hotel_reservation_allDays(hotel_reservation_allDays)
                 .build();
         hotel_reservationRepository.save(hotel_reservation);
         return hotel_reservation;
     }
+
+    public Page<Hotel_Reservation> find_all_Reservation(Pageable pageable){
+        return hotel_reservationRepository.findAll(pageable);
+    }
+
+    //hotel ajax search logic
+//    public Page<Hotel_Reservation> find_By_Search_Phone(String searchName, Pageable pageable){
+//        Page<Hotel_Reservation> find;
+//        List<Hotel_Reservation> all = find_all_Reservation();
+//
+//        find = hotel_reservationRepository.findByPhoneNumContains(searchName, pageable);
+////        for(Hotel_Reservation hotel_reservation : all){
+////            if(searchName.equals(hotel_reservation.getReHotelRoom().getRoomName())){
+////                find.add(hotel_reservation);
+////            }
+////        }
+//        return find;
+//    }
 
 
 

@@ -2,13 +2,18 @@ package com.springboot.st.signupProject.web.controller;
 
 import com.springboot.st.domain.user.User;
 import com.springboot.st.domain.user.UserRepository;
+import com.springboot.st.hotelProject.domain.Hotel_Reservation;
 import com.springboot.st.hotelProject.domain.Hotel_Room;
 import com.springboot.st.hotelProject.domain.Hotel_Room_Img;
 import com.springboot.st.hotelProject.domain.Hotel_Room_ImgRepository;
 import com.springboot.st.hotelProject.domain.dto.Hotel_RoomDto;
+import com.springboot.st.hotelProject.service.HotelReservationService;
 import com.springboot.st.hotelProject.service.HotelRoomService;
 import com.springboot.st.signupProject.service.AdminService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -28,7 +33,7 @@ public class AdminController {
 
     private final AdminService adminService;
     private final HotelRoomService hotelRoomService;
-
+    private final HotelReservationService hotelReservationService;
 
     @GetMapping("/admin/hotel_crud")
     public String hotel_crud(Model model) {
@@ -115,6 +120,7 @@ public class AdminController {
         return "s3test";
     }
 
+    //Payment
     @GetMapping("/payment")
     public String payment_Test(Model model){
         List<Hotel_Room> hotel_rooms= hotelRoomService.all_find();
@@ -122,5 +128,34 @@ public class AdminController {
         return "import_test";
     }
 
+    //Hotel Admin Reservation
+    @GetMapping("admin/reservation")
+    public String reservation(Model model, @PageableDefault(size = 3)Pageable pageable){
+        Page<Hotel_Reservation> hotel_reservation = hotelReservationService.find_all_Reservation(pageable);
+        int pee = 0;
+        for(Hotel_Reservation hotel_reservation1 : hotel_reservation){
+            pee+= hotel_reservation1.getReHotelRoom().getPrice();
+        }
+        model.addAttribute("hotel_reservation", hotel_reservation);
+        model.addAttribute("hotel_reservation_count",hotel_reservation.getTotalElements());
+        model.addAttribute("all_pee",pee);
+        int startPage = Math.max(0,hotel_reservation.getPageable().getPageNumber() - 4);
+        int endPage = Math.min(hotel_reservation.getTotalPages(), hotel_reservation.getPageable().getPageNumber()+4);
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage",endPage);
+
+        return "admin/hotel_reservation";
+
+    }
+
+    //search ajax Controller
+//    @PostMapping("admin/reservation")
+//    public String reservation(Model model,@RequestBody Map<String, String> vv){
+//        Page<Hotel_Reservation> hotel_reservation = hotelReservationService.find_By_Search_Phone(vv.get("vv"));
+//        model.addAttribute("hotel_reservation", hotel_reservation);
+//        model.addAttribute("hotel_reservation_count",hotel_reservation.size());
+//        model.addAttribute("all_pee",1000);
+//        return "admin/hotel_reservation::#testReplace";
+//    }
 
 }
