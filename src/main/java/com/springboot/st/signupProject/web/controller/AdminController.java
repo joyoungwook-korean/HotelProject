@@ -130,15 +130,16 @@ public class AdminController {
 
     //Hotel Admin Reservation
     @GetMapping("admin/reservation")
-    public String reservation(Model model, @PageableDefault(size = 3)Pageable pageable){
+    public String reservation(Model model, @PageableDefault(size = 5)Pageable pageable){
         Page<Hotel_Reservation> hotel_reservation = hotelReservationService.find_all_Reservation(pageable);
         int pee = 0;
         for(Hotel_Reservation hotel_reservation1 : hotel_reservation){
             pee+= hotel_reservation1.getReHotelRoom().getPrice();
         }
+
         model.addAttribute("hotel_reservation", hotel_reservation);
         model.addAttribute("hotel_reservation_count",hotel_reservation.getTotalElements());
-        model.addAttribute("all_pee",pee);
+        model.addAttribute("all_pee",hotelReservationService.all_get_pee(hotel_reservation));
         int startPage = Math.max(0,hotel_reservation.getPageable().getPageNumber() - 4);
         int endPage = Math.min(hotel_reservation.getTotalPages(), hotel_reservation.getPageable().getPageNumber()+4);
         model.addAttribute("startPage", startPage);
@@ -149,13 +150,20 @@ public class AdminController {
     }
 
     //search ajax Controller
-//    @PostMapping("admin/reservation")
-//    public String reservation(Model model,@RequestBody Map<String, String> vv){
-//        Page<Hotel_Reservation> hotel_reservation = hotelReservationService.find_By_Search_Phone(vv.get("vv"));
-//        model.addAttribute("hotel_reservation", hotel_reservation);
-//        model.addAttribute("hotel_reservation_count",hotel_reservation.size());
-//        model.addAttribute("all_pee",1000);
-//        return "admin/hotel_reservation::#testReplace";
-//    }
+    @PostMapping("admin/reservation")
+    public String reservation(Model model,@RequestBody Map<String, String> vv,
+                              @PageableDefault(size = 5)Pageable pageable){
+        String ajax_string  = vv.get("vv");
+        Page<Hotel_Reservation> hotel_reservation =
+                hotelReservationService.find_By_Search_Phone(ajax_string, pageable);
+
+        int startPage = Math.max(0,hotel_reservation.getPageable().getPageNumber() - 4);
+        int endPage = Math.min(hotel_reservation.getTotalPages(), hotel_reservation.getPageable().getPageNumber()+4);
+        model.addAttribute("hotel_reservation", hotel_reservation);
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage",endPage);
+        return "admin/hotel_reservation::#testReplace";
+
+    }
 
 }

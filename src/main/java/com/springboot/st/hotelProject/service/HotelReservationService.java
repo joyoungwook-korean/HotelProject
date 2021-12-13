@@ -76,19 +76,32 @@ public class HotelReservationService {
         return hotel_reservationRepository.findAll(pageable);
     }
 
+    public int all_get_pee(Page<Hotel_Reservation> hotel_reservations){
+        int pee = 0;
+        for(Hotel_Reservation hotel_reservation: hotel_reservations){
+
+            int all_day = hotel_reservation.getHotel_reservation_allDays().size();
+            int room_pee = hotel_reservation.getReHotelRoom().getPrice();
+            pee+=all_day*room_pee;
+        }
+        return pee;
+
+    }
+
     //hotel ajax search logic
-//    public Page<Hotel_Reservation> find_By_Search_Phone(String searchName, Pageable pageable){
-//        Page<Hotel_Reservation> find;
-//        List<Hotel_Reservation> all = find_all_Reservation();
-//
-//        find = hotel_reservationRepository.findByPhoneNumContains(searchName, pageable);
-////        for(Hotel_Reservation hotel_reservation : all){
-////            if(searchName.equals(hotel_reservation.getReHotelRoom().getRoomName())){
-////                find.add(hotel_reservation);
-////            }
-////        }
-//        return find;
-//    }
+    //hotel ajax search logic PhoneNumber
+    public Page<Hotel_Reservation> find_By_Search_Phone(String search,Pageable pageable){
+        Page<Hotel_Reservation> find=null;
+        find=hotel_reservationRepository.findByPhoneNumContains(search, pageable);
+        if(search.length()>2){
+            if(search.charAt(2)=='/'){
+                find = hotel_reservationRepository.findByStartDayContains(search,pageable);
+            }
+        }
+        return find;
+    }
+
+
 
 
 

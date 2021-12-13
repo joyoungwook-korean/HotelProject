@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface Hotel_ReservationRepository extends JpaRepository<Hotel_Reservation,Long> {
-    List<Hotel_Reservation> findByStartDayContains(String searchReservation);
-    List<Hotel_Reservation> findByPhoneNumContains(String searchReservation);
+    Page<Hotel_Reservation> findByPhoneNumContains(String search, Pageable pageable);
+    Page<Hotel_Reservation> findByStartDayContains(String search, Pageable pageable);
+
 }

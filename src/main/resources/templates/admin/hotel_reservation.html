@@ -438,7 +438,7 @@
                     <input type="search" id="form1" class="form-control" placeholder="Search" />
                 </div>
               </div>
-              <div class="card-body--" id="testReplace">
+              <div class="card-body" id="testReplace">
                 <div class="table-stats order-table ov-h">
                   <table class="table table-hover table_user">
                     <thead>
@@ -477,14 +477,14 @@
                 <nav aria-label="Page navigation example">
                   <ul class="pagination justify-content-center">
                     <li class="page-item" th:classappend="${hotel_reservation.pageable.pageNumber==0} ? 'disabled'">
-                      <a class="page-link" tabindex="-1" th:href="@{/admin/reservation(page=${hotel_reservation.pageable.pageNumber -1})}" >Previous</a>
+                      <a class="page-link" tabindex="-1"
+                         th:href="@{/admin/reservation(page=${hotel_reservation.pageable.pageNumber -1})}" >Previous</a>
                     </li>
                     <li class="page-item" th:classappend="${i==hotel_reservation.pageable.pageNumber} ? 'active'"
                      th:each="i : ${#numbers.sequence(startPage,endPage -1) }">
                       <a class="page-link" th:href="@{/admin/reservation(page=${i})}" th:text="${i+1}"></a></li>
-
                     <li class="page-item">
-                      <a class="page-link" href="#">Next</a>
+                      <a class="page-link" th:href="@{/admin/reservation(page=${hotel_reservation.pageable.pageNumber +1})}">Next</a>
                     </li>
                   </ul>
                 </nav>
