@@ -7,6 +7,7 @@ import com.springboot.st.hotelProject.domain.Hotel_Room;
 import com.springboot.st.hotelProject.domain.dto.Hotel_RoomDto;
 import com.springboot.st.hotelProject.service.HotelReservationService;
 import com.springboot.st.hotelProject.service.HotelRoomService;
+import com.springboot.st.hotelProject.service.SMSService;
 import com.springboot.st.signupProject.service.UserService;
 import com.springboot.st.signupProject.web.dto.UserFormDto;
 import lombok.RequiredArgsConstructor;
@@ -29,6 +30,9 @@ public class HotelController {
     private final HotelRoomService hotelRoomService;
 
     private final HotelReservationService hotelReservationService;
+
+    private final SMSService smsService;
+
 
     @GetMapping("/hotel/index")
     public String aaa() {
@@ -96,11 +100,13 @@ public class HotelController {
         return "hotel/reservation";
     }
 
+
     @PostMapping("/hotel/reservation")
     public String reservation(Model model, @RequestParam Map<String, String> reservation_all) {
         User user = userService.get_user_for_userid(reservation_all.get("user_send"));
         model.addAttribute("reservation", reservation_all);
         model.addAttribute("user", user);
+
         return "hotel/reservation";
     }
 
@@ -109,7 +115,7 @@ public class HotelController {
     String
     add_reservation(@RequestBody Map<String, Object> test) {
         Hotel_Reservation hotel_reservation = hotelReservationService.save(test);
-        System.out.println(hotel_reservation.toString());
+        smsService.sms_Send(hotel_reservation);
         return "予約成功しました";
     }
 
