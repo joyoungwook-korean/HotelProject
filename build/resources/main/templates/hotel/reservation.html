@@ -1,0 +1,141 @@
+<html class="no-js" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{layout/hotel_layout1}">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="slider-area hero-bg1  hero-overly">
+        <div class="single-slider  slider-height2 d-flex align-items-center">
+            <div class="container">
+                <div class="row justify-content-center ">
+                    <div class="col-xl-7 col-lg-11">
+                        <!-- Hero Caption -->
+                        <div class="hero-caption hero-caption2 pt-10">
+                            <h1>Reservation</h1>
+                            <p></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="location-house section-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-4 col-lg-5 col-md-8">
+                    <!-- Section Tittle -->
+                    <div class="section-tittle mb-50">
+                        <h2>Reservation</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <form class="form-control">
+                    <input hidden="user_re" th:value="${user}">
+                    <div>
+                        <label>Name</label>
+                        <input readonly sec:authorize="isAuthenticated()" type="text"
+                               th:value="${user.name}" >
+                        <input sec:authorize="isAnonymous()" type="text" id="another_user" name="anonymous_name">
+                    </div>
+                    <div>
+                        <label for="roomname">Room</label>
+                        <input readonly id="roomname" type="text" class="form-group"
+                               th:value="${reservation.get('room')}">
+                    </div>
+                    <div>
+                        <label for="checkin">CheckIn</label>
+                        <input readonly id="checkin" type="text" class="form-group"
+                               th:value="${reservation.get('checkin')}">
+                    </div>
+                    <div>
+                        <label for="checkout">CheckOut</label>
+                        <input readonly id="checkout" type="text" class="form-group"
+                               th:value="${reservation.get('checkout')}">
+                    </div>
+                    <div>
+                        <label for="people">People</label>
+                        <input readonly id="people" type="text" class="form-group"
+                               th:value="${reservation.get('people')}">
+                    </div>
+                    <div>
+                        <label for="Pee">Pee</label>
+                        <input readonly id="pee" th:value="${allpee}" type="text">
+                    </div>
+                    <div>
+                        <label for="phone">Phone Number</label>
+                        <input id="phone" type="text" class="form-group">
+                    </div>
+                    <button type="button" th:onclick="test_reservation([[${user}]])" class="btn btn-primary">お支払い</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="video-area section-img-bg2 d-flex align-items-center"
+         data-background="/hotel/assets/img/gallery/video-bg.jpg}">
+        <div class="container">
+            <div class="video-wrap position-relative">
+                <!-- Video icon -->
+                <div class="video-icon">
+                    <a class="popup-video btn-icon" href="https://www.youtube.com/watch?v=up68UAfH0d0">
+                        <img th:src="@{/hotel/assets/img/icon/video-icon.svg}" alt="">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<th:block layout:fragment="script">
+    <script>
+        function test_reservation(user) {
+            var aa = JSON.stringify(user);
+            var user_re = JSON.parse(aa);
+            var reservation_info = null;
+
+            if(user_re===null){
+                reservation_info = {
+                    room : $('#roomname').val(),
+                    another_user :$('#another_user').val(),
+                    checkin : $('#checkin').val(),
+                    checkout : $('#checkout').val(),
+                    people : $('#people').val(),
+                    phone : $('#phone').val(),
+                    pee : $('#pee').val()
+                };
+            }else{
+                reservation_info = {
+                    room : $('#roomname').val(),
+                    user : user_re,
+                    checkin : $('#checkin').val(),
+                    checkout : $('#checkout').val(),
+                    people : $('#people').val(),
+                    phone : $('#phone').val(),
+                    pee : $('#pee').val()
+                };
+            };
+
+            $.ajax({
+                url: '/hotel/reservation/test',
+                data : JSON.stringify(reservation_info),
+                type : 'POST',
+                contentType: 'application/json; charset=utf-8'
+            }).done(function (data) {
+                alert(data);
+                location.href='index';
+            }).fail(function (error) {
+                alert(error);
+            });
+
+
+
+        }
+    </script>
+</th:block>
+</html>
