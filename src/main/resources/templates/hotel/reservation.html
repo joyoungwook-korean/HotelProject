@@ -171,7 +171,7 @@
 
             BootPay.request({
 
-                price: reservation_info.pee, //실제 결제되는 가격
+                price: parseInt(reservation_info.pee), //실제 결제되는 가격
                 application_id: "61b8040fe38c30001ed2c855",
                 name: reservation_info.room + ' Room', //결제창에서 보여질 이름
                 show_agree_window: 0, // 부트페이 정보 동의 창 보이기 여부
@@ -179,7 +179,7 @@
                     {
                         item_name: reservation_info.room + ' Room',
                         qty: 1, //수량
-                        price: reservation_info.pee, //상품 단가
+                        price: parseInt(reservation_info.pee), //상품 단가
                         unique : reservation_info.room,
                     }
                 ],
