@@ -88,6 +88,7 @@ public class HotelReservationService {
 
     }
 
+
     //hotel ajax search logic
     //hotel ajax search logic PhoneNumber
     public Page<Hotel_Reservation> find_By_Search_Phone(String search,Pageable pageable){
@@ -99,6 +100,11 @@ public class HotelReservationService {
             }
         }
         return find;
+    }
+
+    public String reservation_pee(String time, String price){
+
+        return "aa";
     }
 
 

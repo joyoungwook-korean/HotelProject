@@ -142,6 +142,8 @@ public class AdminController {
 //        return "OK";
 //    }
 
+
+    //payment submit
     @PostMapping("/payment/submit")
     @ResponseBody String payment_submit(@RequestBody Map<String,Object> request){
 

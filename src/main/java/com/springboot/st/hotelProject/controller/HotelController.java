@@ -5,6 +5,7 @@ import com.springboot.st.domain.user.User;
 import com.springboot.st.hotelProject.domain.Hotel_Reservation;
 import com.springboot.st.hotelProject.domain.Hotel_Room;
 import com.springboot.st.hotelProject.domain.dto.Hotel_RoomDto;
+import com.springboot.st.hotelProject.service.HotelReservationAllDayService;
 import com.springboot.st.hotelProject.service.HotelReservationService;
 import com.springboot.st.hotelProject.service.HotelRoomService;
 import com.springboot.st.hotelProject.service.SMSService;
@@ -32,6 +33,8 @@ public class HotelController {
     private final HotelReservationService hotelReservationService;
 
     private final SMSService smsService;
+
+    private final HotelReservationAllDayService hotelReservationAllDayService;
 
 
     @GetMapping("/hotel/index")
@@ -104,8 +107,13 @@ public class HotelController {
     @PostMapping("/hotel/reservation")
     public String reservation(Model model, @RequestParam Map<String, String> reservation_all) {
         User user = userService.get_user_for_userid(reservation_all.get("user_send"));
+        Hotel_Room hotel_room = hotelRoomService.find_By_Idx(reservation_all.get("hotel_room_send"));
+        List<String> all_day = hotelReservationAllDayService.allDay_check(reservation_all.get("checkin"),reservation_all.get("checkout"));
+        String pee = String.valueOf(all_day.size()*hotel_room.getPrice());
+
         model.addAttribute("reservation", reservation_all);
         model.addAttribute("user", user);
+        model.addAttribute("pee", pee);
 
         return "hotel/reservation";
     }
