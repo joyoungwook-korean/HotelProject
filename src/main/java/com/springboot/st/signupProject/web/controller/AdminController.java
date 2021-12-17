@@ -136,17 +136,21 @@ public class AdminController {
     }
 
 
-    @PostMapping("/payment/test")
-    public @ResponseBody String test_payment(Model model){
-        System.out.println("aaaa");
+//    @PostMapping("/payment/test")
+//    public @ResponseBody String test_payment(@RequestParam Map<String, String> request_json){
+//
+//        return "OK";
+//    }
+
+    @PostMapping("/payment/submit")
+    @ResponseBody String payment_submit(@RequestBody Map<String,Object> request){
+
+        System.out.println(request.toString());
+
         return "OK";
     }
 
-    @PostMapping("/payment/create")
-    public @ResponseBody String payment_cerate_test(Model model) {
-        System.out.println("test finish");
-        return "OK";
-    }
+
 
 
     //Hotel Admin Reservation
