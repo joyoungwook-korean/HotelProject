@@ -53,4 +53,8 @@ dependencies {
 
     //CoolSMS
     compile group: 'net.nurigo', name: 'javaSDK', version: '2.2'
+
+    //bootPay
+    compile group: 'org.apache.httpcomponents', name: 'httpclient', version: '+'
+    compile group: 'com.google.code.gson', name: 'gson', version: '+'
 }

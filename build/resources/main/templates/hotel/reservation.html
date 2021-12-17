@@ -4,7 +4,9 @@
       layout:decorate="~{layout/hotel_layout1}">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Hotel-reservation</title>
+    <script src="https://cdn.bootpay.co.kr/js/bootpay-3.3.2.min.js" type="application/javascript"></script>
+
 </head>
 <body>
 <div layout:fragment="content">
@@ -65,10 +67,6 @@
                                th:value="${reservation.get('people')}">
                     </div>
                     <div>
-                        <label for="Pee">Pee</label>
-                        <input readonly id="pee" th:value="${allpee}" type="text">
-                    </div>
-                    <div>
                         <label for="phone">Phone Number</label>
                         <input id="phone" type="text" class="form-group">
                     </div>
@@ -106,8 +104,7 @@
                     checkin : $('#checkin').val(),
                     checkout : $('#checkout').val(),
                     people : $('#people').val(),
-                    phone : $('#phone').val(),
-                    pee : $('#pee').val()
+                    phone : $('#phone').val()
                 };
             }else{
                 reservation_info = {
@@ -116,8 +113,7 @@
                     checkin : $('#checkin').val(),
                     checkout : $('#checkout').val(),
                     people : $('#people').val(),
-                    phone : $('#phone').val(),
-                    pee : $('#pee').val()
+                    phone : $('#phone').val()
                 };
             };
 

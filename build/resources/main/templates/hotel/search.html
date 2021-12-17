@@ -38,7 +38,6 @@
             <div class="row">
                 <form action="/hotel/reservation" method="post"  class="col-lg-4" th:each="hotel : ${hotel_room}">
                     <input type="hidden" name="hotel_room_send"  th:value="${hotel.id}">
-                    <input type="hidden" name="hotel_pee" th:value="${hotel.price}">
                     <input type="hidden" th:if="${#authorization.authentication.isAuthenticated()}"
                            name="user_send" th:value="${#authorization.authentication.name}">
                     <input type="hidden" name="checkin" th:value="${reservation_checkin_date}">

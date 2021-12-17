@@ -52,7 +52,7 @@ public class AdminController {
             model.addAttribute("hotelroomCount", hotel_rooms.size());
             return "admin/hotel_crud";
         }
-       hotelRoomService.save(hotel_roomDto,multipartFile);
+        hotelRoomService.save(hotel_roomDto, multipartFile);
 
         return "redirect:/admin/hotel_crud";
     }
@@ -105,45 +105,66 @@ public class AdminController {
         hotel_roomDto.setId((String) hotel_room.get("idx"));
         hotel_roomDto.setMaxpeople(Integer.valueOf((String) hotel_room.get("max")));
         hotel_roomDto.setMinpeople(Integer.valueOf((String) hotel_room.get("min")));
-        hotel_roomDto.setPrice(Integer.valueOf((String)hotel_room.get("price")));
+        hotel_roomDto.setPrice(Integer.valueOf((String) hotel_room.get("price")));
         hotel_roomDto.setContent((String) hotel_room.get("content"));
         hotel_roomDto.setRoomname((String) hotel_room.get("roomname"));
-        hotel_roomDto.setRoomcount(Integer.valueOf((String)hotel_room.get("roomcount")));
+        hotel_roomDto.setRoomcount(Integer.valueOf((String) hotel_room.get("roomcount")));
 
-        hotelRoomService.update_Room(hotel_roomDto,multipartFile);
+        hotelRoomService.update_Room(hotel_roomDto, multipartFile);
 
         return "redirect:/admin/hotel_crud";
     }
 
     @GetMapping("/s3test")
-    public String s3test(){
+    public String s3test() {
         return "s3test";
     }
 
     //Payment
     @GetMapping("/payment")
-    public String payment_Test(Model model){
-        List<Hotel_Room> hotel_rooms= hotelRoomService.all_find();
+    public String payment_Test(Model model) {
+        List<Hotel_Room> hotel_rooms = hotelRoomService.all_find();
         model.addAttribute("test_hotel_room", hotel_rooms);
         return "import_test";
     }
 
+    @GetMapping("/payment/test")
+    public @ResponseBody String test_aaa(){
+
+        System.out.println("asdf");
+        return "OK";
+    }
+
+
+    @PostMapping("/payment/test")
+    public @ResponseBody String test_payment(Model model){
+        System.out.println("aaaa");
+        return "OK";
+    }
+
+    @PostMapping("/payment/create")
+    public @ResponseBody String payment_cerate_test(Model model) {
+        System.out.println("test finish");
+        return "OK";
+    }
+
+
     //Hotel Admin Reservation
     @GetMapping("admin/reservation")
-    public String reservation(Model model, @PageableDefault(size = 5)Pageable pageable){
+    public String reservation(Model model, @PageableDefault(size = 5) Pageable pageable) {
         Page<Hotel_Reservation> hotel_reservation = hotelReservationService.find_all_Reservation(pageable);
         int pee = 0;
-        for(Hotel_Reservation hotel_reservation1 : hotel_reservation){
-            pee+= hotel_reservation1.getReHotelRoom().getPrice();
+        for (Hotel_Reservation hotel_reservation1 : hotel_reservation) {
+            pee += hotel_reservation1.getReHotelRoom().getPrice();
         }
 
         model.addAttribute("hotel_reservation", hotel_reservation);
-        model.addAttribute("hotel_reservation_count",hotel_reservation.getTotalElements());
-        model.addAttribute("all_pee",hotelReservationService.all_get_pee(hotel_reservation));
-        int startPage = Math.max(0,hotel_reservation.getPageable().getPageNumber() - 4);
-        int endPage = Math.min(hotel_reservation.getTotalPages(), hotel_reservation.getPageable().getPageNumber()+4);
+        model.addAttribute("hotel_reservation_count", hotel_reservation.getTotalElements());
+        model.addAttribute("all_pee", hotelReservationService.all_get_pee(hotel_reservation));
+        int startPage = Math.max(0, hotel_reservation.getPageable().getPageNumber() - 4);
+        int endPage = Math.min(hotel_reservation.getTotalPages(), hotel_reservation.getPageable().getPageNumber() + 4);
         model.addAttribute("startPage", startPage);
-        model.addAttribute("endPage",endPage);
+        model.addAttribute("endPage", endPage);
 
         return "admin/hotel_reservation";
 
@@ -151,19 +172,21 @@ public class AdminController {
 
     //search ajax Controller
     @PostMapping("admin/reservation")
-    public String reservation(Model model,@RequestBody Map<String, String> vv,
-                              @PageableDefault(size = 5)Pageable pageable){
-        String ajax_string  = vv.get("vv");
+    public String reservation(Model model, @RequestBody Map<String, String> vv,
+                              @PageableDefault(size = 5) Pageable pageable) {
+        String ajax_string = vv.get("vv");
         Page<Hotel_Reservation> hotel_reservation =
                 hotelReservationService.find_By_Search_Phone(ajax_string, pageable);
 
-        int startPage = Math.max(0,hotel_reservation.getPageable().getPageNumber() - 4);
-        int endPage = Math.min(hotel_reservation.getTotalPages(), hotel_reservation.getPageable().getPageNumber()+4);
+        int startPage = Math.max(0, hotel_reservation.getPageable().getPageNumber() - 4);
+        int endPage = Math.min(hotel_reservation.getTotalPages(), hotel_reservation.getPageable().getPageNumber() + 4);
         model.addAttribute("hotel_reservation", hotel_reservation);
         model.addAttribute("startPage", startPage);
-        model.addAttribute("endPage",endPage);
+        model.addAttribute("endPage", endPage);
         return "admin/hotel_reservation::#testReplace";
 
     }
+
+
 
 }
