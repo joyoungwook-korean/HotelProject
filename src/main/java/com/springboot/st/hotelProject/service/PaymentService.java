@@ -43,8 +43,6 @@ public class PaymentService {
                     .build();
 
         }else{
-            System.out.println("null");
-
             Map<String,Object> get_User_Map = (Map<String, Object>) params.get("user");
             User user = userRepository.findById(Long.parseLong((String) get_User_Map.get("id")))
                     .orElseThrow(NullPointerException::new);
@@ -62,6 +60,7 @@ public class PaymentService {
                     .build();
         }
 
+        System.out.println(payment.getPhoneNum());
         Payment payment1=paymentRepository.save(payment);
 
         return payment1;

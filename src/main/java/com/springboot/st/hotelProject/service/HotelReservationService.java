@@ -50,35 +50,35 @@ public class HotelReservationService {
         User user =null;
         String another_user=null;
 
+        Map<String,Object> params = (Map<String, Object>) reservation_map.get("params");
+
         Hotel_Room hotel_room = hotelRoomService.find_room_name((String)reservation_map.get("room"));
 
         //Payment create
         Payment payment = paymentService.save(reservation_map);
 
-        System.out.println(payment.getId());
-        System.out.println(payment.getAnotherUser());
-        System.out.println(payment.getPayContent());
-
         List<Hotel_Reservation_AllDay> hotel_reservation_allDays =
-               hotelReservationAllDayService.save((String)reservation_map.get("checkin"),
-                       (String) reservation_map.get("checkout"),
-                       (String)reservation_map.get("room"));
+               hotelReservationAllDayService.save((String)params.get("checkin"),
+                       (String) params.get("checkout"),
+                       (String)params.get("room"));
 
+        
+        //수정 필요 user id로 가져와야함
         if(reservation_map.get("user")!=null){
-            Map<String,Object> user_map = (Map<String, Object>) reservation_map.get("user");
-            user = userService.get_user_for_userid((String)user_map.get("userid"));
+            Map<String,Object> user_map = (Map<String, Object>) params.get("user");
+            user = userService.find_User_Id(Long.parseLong((String) user_map.get("id")));
 
         }else{
             another_user = (String)reservation_map.get("another_user");
         }
 
         hotel_reservation = new Hotel_Reservation().builder().another_user(another_user)
-                .people(Integer.parseInt((String)reservation_map.get("people")) )
-                .startDay((String) reservation_map.get("checkin"))
-                .finishDay((String) reservation_map.get("checkout"))
+                .people(Integer.parseInt((String)params.get("people")) )
+                .startDay((String) params.get("checkin"))
+                .finishDay((String) params.get("checkout"))
                 .user(user)
                 .re_hotel_room(hotel_room)
-                .phoneNum((String)reservation_map.get("phone"))
+                .phoneNum(payment.getPhoneNum())
                 .payment(payment)
                 .hotel_reservation_allDays(hotel_reservation_allDays)
                 .build();

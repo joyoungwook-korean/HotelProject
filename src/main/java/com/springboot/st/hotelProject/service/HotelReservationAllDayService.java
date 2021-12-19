@@ -51,6 +51,7 @@ public class HotelReservationAllDayService {
         Date checkin_for_in = null;
         Date checkout_for_in = null;
         ArrayList<String> arrayList = new ArrayList<>();
+
         Date current_Date = null;
         try {
             checkin_for_in = df.parse(checkin);

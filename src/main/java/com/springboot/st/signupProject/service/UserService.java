@@ -34,6 +34,10 @@ public class UserService {
         return userRepository.findByUserid(userid);
     }
 
+    public User find_User_Id(Long id){
+        return  userRepository.findById(id).orElseThrow(NullPointerException::new);
+    }
+
     public String check_id_for_js(String userid){
         if(userRepository.findByUserid(userid) !=null){
             return "1";
