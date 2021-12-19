@@ -40,6 +40,8 @@ public class SignupIndexController {
     @PostMapping("/signup/joinform")
     public String join(@Valid UserFormDto userFormDto, BindingResult bindingResult, Model model){
 
+
+
         if(bindingResult.hasErrors()){
 
             return "signup/signup_Joinform";
