@@ -18,6 +18,7 @@ import java.util.HashMap;
 
 
 @Getter
+@Service
 public class SMSService {
     @Value("${sms.key}")
     private String key;
@@ -30,7 +31,12 @@ public class SMSService {
 
     //sms_send logic
     public void sms_Send(Hotel_Reservation hotel_reservation){
+        System.out.println("inin");
         Message message = new Message(key,secretKey);
+        System.out.println(key);
+        System.out.println(phoneNum);
+        System.out.println(secretKey);
+        System.out.println(hotel_reservation.getPhoneNum());
 
 
         HashMap<String,String> hashMap = new HashMap<>();
