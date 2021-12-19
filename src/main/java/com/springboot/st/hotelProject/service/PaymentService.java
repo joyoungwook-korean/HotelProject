@@ -44,8 +44,9 @@ public class PaymentService {
 
         }else{
             Map<String,Object> get_User_Map = (Map<String, Object>) params.get("user");
-            System.out.println((Long)get_User_Map.get("id"));
-            User user = userRepository.findById((Long) get_User_Map.get("id"))
+            System.out.println((int)get_User_Map.get("id"));
+            Long longaa =  new Long((int)get_User_Map.get("id"));
+            User user = userRepository.findById(longaa)
                     .orElseThrow(NullPointerException::new);
 
             payment = new Payment().builder()
