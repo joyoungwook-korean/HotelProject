@@ -20,17 +20,34 @@ public class Payment extends BaseTimeEntity {
     private Long id;
 
     @OneToOne
-    private User pay_User;
+    private User payUser;
 
-    private String phone_Num;
+    private String anotherUser;
 
-    private String pay_content;
+    private String roomName;
+
+    private String phoneNum;
+
+    private String payContent;
+
+    private String receiptId;
+
+    private String methondName;
+
+    private String payPrice;
+
+    private String payTid;
 
     @Builder
-    public Payment(User pay_User, String phone_Num, String pay_content) {
-        this.pay_User = pay_User;
-        this.phone_Num = phone_Num;
-        this.pay_content = pay_content;
+    public Payment(User payUser,String roomName, String phoneNum, String payContent, String receiptId, String methondName, String payPrice, String payTid,String anotherUser) {
+        this.payUser = payUser;
+        this.roomName = roomName;
+        this.phoneNum = phoneNum;
+        this.payContent = payContent;
+        this.anotherUser = anotherUser;
+        this.receiptId = receiptId;
+        this.methondName = methondName;
+        this.payPrice = payPrice;
+        this.payTid = payTid;
     }
-
 }

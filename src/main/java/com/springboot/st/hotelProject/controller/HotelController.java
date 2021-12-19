@@ -118,14 +118,15 @@ public class HotelController {
         return "hotel/reservation";
     }
 
-    @PostMapping("/hotel/reservation/test")
-    public @ResponseBody
-    String
-    add_reservation(@RequestBody Map<String, Object> test) {
-        Hotel_Reservation hotel_reservation = hotelReservationService.save(test);
-        smsService.sms_Send(hotel_reservation);
-        return "予約成功しました";
-    }
+    //test
+//    @PostMapping("/hotel/reservation/test")
+//    public @ResponseBody
+//    String
+//    add_reservation(@RequestBody Map<String, Object> test) {
+//        Hotel_Reservation hotel_reservation = hotelReservationService.save(test);
+//        smsService.sms_Send(hotel_reservation);
+//        return "予約成功しました";
+//    }
 
 
 
@@ -136,6 +137,20 @@ public class HotelController {
         List<Hotel_Room> hotel_rooms = hotelRoomService.all_find();
         model.addAttribute("test_hotel_room", hotel_rooms);
         return "import_test";
+    }
+
+    //payment submit
+    @PostMapping("/payment/submit")
+    @ResponseBody String payment_submit(@RequestBody Map<String,Object> request){
+
+        Hotel_Reservation hotel_reservation = hotelReservationService.save(request);
+
+        Map<String,Object> receipt = (Map<String, Object>) request.get("params");
+
+
+        System.out.println(request.toString());
+
+        return "OK";
     }
 
 }

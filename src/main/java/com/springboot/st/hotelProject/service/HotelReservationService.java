@@ -1,5 +1,6 @@
 package com.springboot.st.hotelProject.service;
 
+import com.springboot.st.domain.pay.Payment;
 import com.springboot.st.domain.user.User;
 import com.springboot.st.hotelProject.domain.Hotel_Reservation;
 import com.springboot.st.hotelProject.domain.Hotel_ReservationRepository;
@@ -35,16 +36,24 @@ public class HotelReservationService {
     @Autowired
     HotelRoomService hotelRoomService;
 
+    @Autowired
+    PaymentService paymentService;
+
 
     public List<Hotel_Room> find_hotel_Room_rest(String startDay, String finishDay, int people, String room){
         return null;
     }
 
     public Hotel_Reservation save(Map<String, Object> reservation_map){
+
         Hotel_Reservation hotel_reservation = null;
         User user =null;
         String another_user=null;
+
         Hotel_Room hotel_room = hotelRoomService.find_room_name((String)reservation_map.get("room"));
+
+        //Payment create
+        Payment payment = paymentService.save(reservation_map);
 
         List<Hotel_Reservation_AllDay> hotel_reservation_allDays =
                hotelReservationAllDayService.save((String)reservation_map.get("checkin"),
@@ -58,6 +67,7 @@ public class HotelReservationService {
         }else{
             another_user = (String)reservation_map.get("another_user");
         }
+
         hotel_reservation = new Hotel_Reservation().builder().another_user(another_user)
                 .people(Integer.parseInt((String)reservation_map.get("people")) )
                 .startDay((String) reservation_map.get("checkin"))
@@ -65,10 +75,11 @@ public class HotelReservationService {
                 .user(user)
                 .re_hotel_room(hotel_room)
                 .phoneNum((String)reservation_map.get("phone"))
-                .payment(null)
+                .payment(payment)
                 .hotel_reservation_allDays(hotel_reservation_allDays)
                 .build();
         hotel_reservationRepository.save(hotel_reservation);
+
         return hotel_reservation;
     }
 
