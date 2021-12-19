@@ -24,7 +24,12 @@ public class PaymentService {
         Map<String,Object> params = (Map<String, Object>) receipt.get("params");
         Payment payment =null;
 
+        System.out.println(params.toString());
+        System.out.println(receipt.toString());
+
         if(params.get("another_user")!=null){
+            System.out.println("not null");
+
             payment = new Payment().builder()
                     .receiptId((String)receipt.get("receipt_id"))
                     .methondName((String)receipt.get("method_name"))
@@ -38,6 +43,7 @@ public class PaymentService {
                     .build();
 
         }else{
+            System.out.println("null");
 
             Map<String,Object> get_User_Map = (Map<String, Object>) params.get("user");
             User user = userRepository.findById(Long.parseLong((String) get_User_Map.get("id")))
@@ -56,9 +62,9 @@ public class PaymentService {
                     .build();
         }
 
-        paymentRepository.save(payment);
+        Payment payment1=paymentRepository.save(payment);
 
-        return payment;
+        return payment1;
     }
 
 

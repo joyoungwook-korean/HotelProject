@@ -55,7 +55,9 @@ public class HotelReservationService {
         //Payment create
         Payment payment = paymentService.save(reservation_map);
 
-        System.out.println(payment.toString());
+        System.out.println(payment.getId());
+        System.out.println(payment.getAnotherUser());
+        System.out.println(payment.getPayContent());
 
         List<Hotel_Reservation_AllDay> hotel_reservation_allDays =
                hotelReservationAllDayService.save((String)reservation_map.get("checkin"),
