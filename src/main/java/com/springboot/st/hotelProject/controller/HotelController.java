@@ -32,7 +32,6 @@ public class HotelController {
 
     private final HotelReservationService hotelReservationService;
 
-    private final SMSService smsService;
 
     private final HotelReservationAllDayService hotelReservationAllDayService;
 
@@ -143,7 +142,8 @@ public class HotelController {
     @PostMapping("/payment/submit")
     @ResponseBody String payment_submit(@RequestBody Map<String,Object> request){
         Hotel_Reservation hotel_reservation = hotelReservationService.save(request);
-        smsService.sms_Send(hotel_reservation);
+        SMSService sms_service = new SMSService();
+        sms_service.sms_Send(hotel_reservation);
         return "OK";
     }
 

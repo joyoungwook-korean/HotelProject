@@ -17,10 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.HashMap;
 
 
-@NoArgsConstructor
-@Service
 @Getter
-@Transactional
 public class SMSService {
     @Value("${sms.key}")
     private String key;
@@ -33,8 +30,6 @@ public class SMSService {
 
     //sms_send logic
     public void sms_Send(Hotel_Reservation hotel_reservation){
-
-
         Message message = new Message(key,secretKey);
 
 
@@ -49,12 +44,13 @@ public class SMSService {
         }else{
             name = hotel_reservation.getAnotherUser();
         }
+
         String text_send = "Name : "+ name +"\n"+
                 "Num : " +hotel_reservation.getId()+"\n"+
                 "CheckIn : " + hotel_reservation.getStartDay()+"\n"+
                 "CheckOut : " + hotel_reservation.getFinishDay()+"\n"+
                 "People : " + hotel_reservation.getPeople()+"\n"+
-                "Pee : "+"$ " +String.valueOf(hotel_reservation.getHotel_reservation_allDays().size()*hotel_reservation.getReHotelRoom().getPrice());
+                "Pee : "+"$ " +hotel_reservation.getPayment().getPayPrice();
 //        hashMap.put("image","https://rbwsn-s3-image.s3.ap-northeast-2.amazonaws.com/710b6ad1-dbda-438f-af5d-86db8151b0a5executive_hotel5.jpg");
         hashMap.put("text",text_send);
         hashMap.put("app_version","test app 1.2");
