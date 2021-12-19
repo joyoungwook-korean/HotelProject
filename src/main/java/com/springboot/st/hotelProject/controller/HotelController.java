@@ -142,7 +142,8 @@ public class HotelController {
     //payment submit
     @PostMapping("/payment/submit")
     @ResponseBody String payment_submit(@RequestBody Map<String,Object> request){
-        hotelReservationService.save(request);
+        Hotel_Reservation hotel_reservation = hotelReservationService.save(request);
+        smsService.sms_Send(hotel_reservation);
         return "OK";
     }
 

@@ -182,8 +182,7 @@
                         unique : reservation_info.room,
                     }
                 ],
-
-                order_id: '고유order_id_1234', //고유 주문번호로, 생성하신 값을 보내주셔야 합니다.
+                order_id: Date.now(), //고유 주문번호로, 생성하신 값을 보내주셔야 합니다.
                 params: reservation_info,
                 account_expire_at: '2020-10-25', // 가상계좌 입금기간 제한 ( yyyy-mm-dd 포멧으로 입력해주세요. 가상계좌만 적용됩니다. )
                 extra: {
@@ -218,10 +217,8 @@
                 console.log(data);
             }).done(function (data) {
 
+                location.href='/hotel/index';
                 alert('予約しました');
-
-                if(data!=null){
-                }
 
                 //결제가 정상적으로 완료되면 수행됩니다
                 //비즈니스 로직을 수행하기 전에 결제 유효성 검증을 하시길 추천합니다.

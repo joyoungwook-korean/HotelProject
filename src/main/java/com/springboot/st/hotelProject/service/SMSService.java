@@ -22,7 +22,6 @@ import java.util.HashMap;
 @Getter
 @Transactional
 public class SMSService {
-
     @Value("${sms.key}")
     private String key;
 
@@ -34,6 +33,8 @@ public class SMSService {
 
     //sms_send logic
     public void sms_Send(Hotel_Reservation hotel_reservation){
+
+
         Message message = new Message(key,secretKey);
 
 

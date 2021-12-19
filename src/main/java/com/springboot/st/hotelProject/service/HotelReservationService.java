@@ -69,7 +69,7 @@ public class HotelReservationService {
             user = userService.find_User_Id(Long.parseLong((String) user_map.get("id")));
 
         }else{
-            another_user = (String)reservation_map.get("another_user");
+            another_user = (String)params.get("another_user");
         }
 
         hotel_reservation = new Hotel_Reservation().builder().another_user(another_user)
