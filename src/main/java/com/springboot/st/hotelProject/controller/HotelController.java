@@ -36,6 +36,8 @@ public class HotelController {
     private final HotelReservationAllDayService hotelReservationAllDayService;
 
 
+    private final SMSService smsService;
+
     @GetMapping("/hotel/index")
     public String aaa() {
         return "hotel/index";
@@ -139,12 +141,18 @@ public class HotelController {
 //    }
 
     //payment submit
-    @PostMapping("/payment/submit")
+    @RequestMapping(value="/payment/submit" , method = {RequestMethod.GET, RequestMethod.POST})
     @ResponseBody String payment_submit(@RequestBody Map<String,Object> request){
         Hotel_Reservation hotel_reservation = hotelReservationService.save(request);
         SMSService sms_service = new SMSService();
         sms_service.sms_Send(hotel_reservation);
         return "OK";
+    }
+
+    @GetMapping("/smstest")
+    public @ResponseBody String aa(){
+        smsService.sms_Send();
+        return "ok";
     }
 
 }

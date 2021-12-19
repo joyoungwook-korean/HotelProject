@@ -28,6 +28,32 @@ public class SMSService {
     @Value("${sms.phonenum}")
     private String phoneNum;
 
+
+    public void sms_Send(){
+        Message message = new Message(key,secretKey);
+        System.out.println(key);
+        System.out.println(phoneNum);
+        System.out.println(secretKey);
+        HashMap<String,String> hashMap = new HashMap<>();
+        hashMap.put("to",phoneNum);
+        hashMap.put("from",phoneNum);
+        hashMap.put("type","SMS");
+
+        hashMap.put("text","vv");
+        hashMap.put("app_version","test app 1.2");
+
+        try{
+            System.out.println("try in");
+            JSONObject obj = (JSONObject) message.send(hashMap);
+            System.out.println(obj.toString());
+        } catch (CoolsmsException e) {
+            System.out.println("error-----------------");
+            System.out.println(e.getMessage());
+            System.out.println(e.getCode());
+            System.out.println("---------------");
+        }
+
+    }
     //sms_send logic
     public void sms_Send(Hotel_Reservation hotel_reservation){
         System.out.println("inin");
