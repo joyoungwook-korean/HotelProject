@@ -132,24 +132,17 @@ public class HotelController {
 
 
     //bootpay test
-    @GetMapping("/hotel/aa")
-    public String aa(Model model) {
-        List<Hotel_Room> hotel_rooms = hotelRoomService.all_find();
-        model.addAttribute("test_hotel_room", hotel_rooms);
-        return "import_test";
-    }
+//    @GetMapping("/hotel/aa")
+//    public String aa(Model model) {
+//        List<Hotel_Room> hotel_rooms = hotelRoomService.all_find();
+//        model.addAttribute("test_hotel_room", hotel_rooms);
+//        return "import_test";
+//    }
 
     //payment submit
     @PostMapping("/payment/submit")
     @ResponseBody String payment_submit(@RequestBody Map<String,Object> request){
-
-        Hotel_Reservation hotel_reservation = hotelReservationService.save(request);
-
-        Map<String,Object> receipt = (Map<String, Object>) request.get("params");
-
-
-        System.out.println(request.toString());
-
+        hotelReservationService.save(request);
         return "OK";
     }
 
