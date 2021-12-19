@@ -1,10 +1,7 @@
 package com.springboot.st.hotelProject.service;
 
 import com.springboot.st.hotelProject.domain.Hotel_Reservation;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import net.nurigo.java_sdk.api.Image;
 import net.nurigo.java_sdk.api.Message;
 import net.nurigo.java_sdk.exceptions.CoolsmsException;
@@ -19,7 +16,9 @@ import java.util.HashMap;
 
 @Getter
 @Service
+@RequiredArgsConstructor
 public class SMSService {
+
     @Value("${sms.key}")
     private String key;
 
@@ -62,11 +61,14 @@ public class SMSService {
         hashMap.put("app_version","test app 1.2");
 
         try{
+            System.out.println("try in");
             JSONObject obj = (JSONObject) message.send(hashMap);
             System.out.println(obj.toString());
         } catch (CoolsmsException e) {
+            System.out.println("error-----------------");
             System.out.println(e.getMessage());
             System.out.println(e.getCode());
+            System.out.println("---------------");
         }
 
 
