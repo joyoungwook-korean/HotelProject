@@ -154,4 +154,9 @@ public class HotelController {
         return "ok";
     }
 
+    //Contact
+    @GetMapping("/contact")
+    public String contact_aa(){
+        return "hotel/contact";
+    }
 }
