@@ -19,7 +19,10 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.annotation.PostConstruct;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 @Service
 @NoArgsConstructor
@@ -62,8 +65,31 @@ public class S3Service {
         return amazonS3.getUrl(bucket,server_name).toString();
     }
 
-    public void delete_Img(Hotel_Room_Img hotel_room_img){
-        amazonS3.deleteObject(bucket,hotel_room_img.getImg_Server_Name());
+    public void delete_Img(String serverPath){
+        amazonS3.deleteObject(bucket,serverPath);
 
     }
+
+    public Map<String, String> serverSaveMap(MultipartFile multipartFile){
+        Map<String, String> serverSave = new HashMap<>();
+        String uuid = UUID.randomUUID().toString();
+        String origin_name = multipartFile.getOriginalFilename();
+        String server_name = uuid + origin_name;
+
+        String server_url=null;
+        try {
+            server_url = upload(multipartFile,server_name);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        serverSave.put("uuid", uuid);
+        serverSave.put("originName",origin_name);
+        serverSave.put("serverName",server_name);
+        serverSave.put("serverURL",server_url);
+
+        return serverSave;
+    }
+
+
 }

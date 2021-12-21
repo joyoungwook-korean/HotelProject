@@ -9,9 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 @AllArgsConstructor
@@ -27,16 +25,14 @@ public class Room_Img_S3DBService {
         System.out.println(multipartFiles.size());
         if(!multipartFiles.isEmpty()){
             for(MultipartFile multipartFile : multipartFiles) {
-                String uuid = UUID.randomUUID().toString();
+                Map<String, String> saveImgMap = service.serverSaveMap(multipartFile);
                 Hotel_Room_Img save_Img = new Hotel_Room_Img();
-                String origin_name = multipartFile.getOriginalFilename();
-                String server_name = uuid + origin_name;
-                String path = service.upload(multipartFile, server_name);
 
-                save_Img.setImg_UUID(uuid);
-                save_Img.setImg_Server_Path(path);
-                save_Img.setImg_Server_Name(server_name);
-                save_Img.setImg_Name(origin_name);
+                save_Img.setImg_UUID(saveImgMap.get("uuid"));
+                save_Img.setImg_Server_Path(saveImgMap.get("serverURL"));
+                save_Img.setImg_Server_Name(saveImgMap.get("serverName"));
+                save_Img.setImg_Name(saveImgMap.get("originName"));
+
                 Hotel_Room_Img hotel_room_img = hotel_room_imgRepository.save(save_Img);
 
                 hotel_room_imgs.add(hotel_room_img);
@@ -50,7 +46,7 @@ public class Room_Img_S3DBService {
     public void delete_S3Img(List<Hotel_Room_Img> hotel_room_imgs){
         if(!hotel_room_imgs.isEmpty()){
             for(Hotel_Room_Img hotel_room_img : hotel_room_imgs){
-                service.delete_Img(hotel_room_img);
+                service.delete_Img(hotel_room_img.getImg_Server_Path());
                 hotel_room_imgRepository.delete(hotel_room_img);
             }
         }
