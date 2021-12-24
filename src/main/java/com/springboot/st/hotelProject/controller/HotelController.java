@@ -149,9 +149,9 @@ public class HotelController {
     }
 
     @GetMapping("/smstest")
-    public @ResponseBody String aa(){
-        smsService.sms_Send();
-        return "ok";
+    public String aa(){
+
+        return "/s3test";
     }
 
     //Contact
@@ -159,4 +159,15 @@ public class HotelController {
     public String contact_aa(){
         return "hotel/contact";
     }
+
+
+    @PostMapping("/smstestnaver")
+    public @ResponseBody String test_sms(){
+        Long id = 56L;
+        Hotel_Reservation hotel_reservation = hotelReservationService.findById(id);
+        System.out.println(hotel_reservation.toString());
+        smsService.naverSmsSendService(hotel_reservation);
+        return "OK";
+    }
+
 }

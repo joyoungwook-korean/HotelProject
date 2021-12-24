@@ -122,6 +122,13 @@ public class HotelReservationService {
         return "aa";
     }
 
+    //hotel find by Id
+
+    public Hotel_Reservation findById(Long id){
+        Hotel_Reservation hotel_reservation = hotel_reservationRepository.findById(id).orElseThrow(IllegalAccessError::new);
+        return hotel_reservation;
+    }
+
 
 
 
