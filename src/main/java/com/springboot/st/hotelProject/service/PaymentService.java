@@ -44,7 +44,7 @@ public class PaymentService {
 
         }else{
             System.out.println(params.get("user"));
-            Long longaa = Long.parseLong((String) params.get("user"));
+            Long longaa = Long.parseLong(String.valueOf(params.get("user")));
             User user = userRepository.findById(longaa)
                     .orElseThrow(NullPointerException::new);
 

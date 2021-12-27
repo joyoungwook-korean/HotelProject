@@ -66,7 +66,7 @@ public class HotelReservationService {
         //수정 필요 user id로 가져와야함
         if(params.get("user")!=null){
             System.out.println("userHHHHave&&&&&&&&&&&&&&&&&&&&&&&&&&&&&" + reservation_map.get("user"));
-            user = userService.find_User_Id(Long.parseLong((String) params.get("user")));
+            user = userService.find_User_Id(Long.parseLong(String.valueOf(params.get("user"))));
             System.out.println("testestestestesteststest"+user.toString());
 
         }else{
