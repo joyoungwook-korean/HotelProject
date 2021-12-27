@@ -39,7 +39,7 @@
         <div class="container">
             <div class="row">
                 <form class="form-control">
-                    <input hidden="user_re" th:value="${user}">
+                    <input hidden="user_re" th:value="${user.id}">
                     <div>
                         <label>Name</label>
                         <input readonly sec:authorize="isAuthenticated()" type="text" th:value="${user.name}" >
@@ -74,7 +74,7 @@
                         <label for="phone">Phone Number</label>
                         <input id="phone" type="text" class="form-group">
                     </div>
-                    <button type="button" th:onclick=" requestPay([[${user}]])" class="btn btn-primary">お支払い</button>
+                    <button type="button" th:onclick=" requestPay([[${user.id}]])" class="btn btn-primary">お支払い</button>
                 </form>
             </div>
         </div>
@@ -142,12 +142,11 @@
 
         function requestPay(user) {
 
-            var aa = JSON.stringify(user);
-            var user_re = JSON.parse(aa);
+
 
             var reservation_info = null;
 
-            if(user_re===null){
+            if(user===null){
                 reservation_info = {
                     room : $('#roomname').val(),
                     another_user :$('#another_user').val(),
@@ -160,7 +159,7 @@
             }else{
                 reservation_info = {
                     room : $('#roomname').val(),
-                    user : user_re,
+                    user : user,
                     checkin : $('#checkin').val(),
                     checkout : $('#checkout').val(),
                     people : $('#people').val(),
