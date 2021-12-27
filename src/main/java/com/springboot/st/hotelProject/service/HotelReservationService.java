@@ -65,8 +65,11 @@ public class HotelReservationService {
         
         //수정 필요 user id로 가져와야함
         if(reservation_map.get("user")!=null){
+            System.out.println("userHHHHave");
             Map<String,Object> user_map = (Map<String, Object>) params.get("user");
+            System.out.println(user_map.toString());
             user = userService.find_User_Id(Long.parseLong((String) user_map.get("id")));
+            System.out.println(user.toString());
 
         }else{
             another_user = (String)params.get("another_user");
@@ -117,10 +120,7 @@ public class HotelReservationService {
         return find;
     }
 
-    public String reservation_pee(String time, String price){
 
-        return "aa";
-    }
 
     //hotel find by Id
 
