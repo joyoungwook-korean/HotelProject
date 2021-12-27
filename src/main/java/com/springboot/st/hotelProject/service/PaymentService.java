@@ -43,9 +43,7 @@ public class PaymentService {
                     .build();
 
         }else{
-            Map<String,Object> get_User_Map = (Map<String, Object>) params.get("user");
-            System.out.println((int)get_User_Map.get("id"));
-            Long longaa =  new Long((int)get_User_Map.get("id"));
+            Long longaa = Long.parseLong((String) receipt.get("user"));
             User user = userRepository.findById(longaa)
                     .orElseThrow(NullPointerException::new);
 
