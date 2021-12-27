@@ -9,6 +9,7 @@ import org.apache.commons.codec.binary.Hex;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,6 +23,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
@@ -55,20 +57,20 @@ public class SMSService {
     private String naverSmsSecretKey;
 
 
-    public void sms_Send(){
-        Message message = new Message(key,secretKey);
+    public void sms_Send() {
+        Message message = new Message(key, secretKey);
         System.out.println(key);
         System.out.println(phoneNum);
         System.out.println(secretKey);
-        HashMap<String,String> hashMap = new HashMap<>();
-        hashMap.put("to",phoneNum);
-        hashMap.put("from",phoneNum);
-        hashMap.put("type","SMS");
+        HashMap<String, String> hashMap = new HashMap<>();
+        hashMap.put("to", phoneNum);
+        hashMap.put("from", phoneNum);
+        hashMap.put("type", "SMS");
 
-        hashMap.put("text","vv");
-        hashMap.put("app_version","test app 1.2");
+        hashMap.put("text", "vv");
+        hashMap.put("app_version", "test app 1.2");
 
-        try{
+        try {
             System.out.println("try in");
             JSONObject obj = (JSONObject) message.send(hashMap);
             System.out.println(obj.toString());
@@ -80,38 +82,39 @@ public class SMSService {
         }
 
     }
+
     //sms_send logic
-    public void sms_Send(Hotel_Reservation hotel_reservation){
-        Message message = new Message(key,secretKey);
+    public void sms_Send(Hotel_Reservation hotel_reservation) {
+        Message message = new Message(key, secretKey);
         System.out.println(key);
         System.out.println(phoneNum);
         System.out.println(secretKey);
         System.out.println(hotel_reservation.getPhoneNum());
 
 
-        HashMap<String,String> hashMap = new HashMap<>();
-        hashMap.put("to",hotel_reservation.getPhoneNum());
-        hashMap.put("from",phoneNum);
-        hashMap.put("type","SMS");
+        HashMap<String, String> hashMap = new HashMap<>();
+        hashMap.put("to", hotel_reservation.getPhoneNum());
+        hashMap.put("from", phoneNum);
+        hashMap.put("type", "SMS");
 
         String name = null;
-        if(hotel_reservation.getUser()!=null){
+        if (hotel_reservation.getUser() != null) {
             name = hotel_reservation.getUser().getName();
-        }else{
+        } else {
             name = hotel_reservation.getAnotherUser();
         }
 
-        String text_send = "Name : "+ name +"\n"+
-                "Num : " +hotel_reservation.getId()+"\n"+
-                "CheckIn : " + hotel_reservation.getStartDay()+"\n"+
-                "CheckOut : " + hotel_reservation.getFinishDay()+"\n"+
-                "People : " + hotel_reservation.getPeople()+"\n"+
-                "Pee : "+"$ " +hotel_reservation.getPayment().getPayPrice();
+        String text_send = "Name : " + name + "\n" +
+                "Num : " + hotel_reservation.getId() + "\n" +
+                "CheckIn : " + hotel_reservation.getStartDay() + "\n" +
+                "CheckOut : " + hotel_reservation.getFinishDay() + "\n" +
+                "People : " + hotel_reservation.getPeople() + "\n" +
+                "Pee : " + "$ " + hotel_reservation.getPayment().getPayPrice();
 //        hashMap.put("image","https://rbwsn-s3-image.s3.ap-northeast-2.amazonaws.com/710b6ad1-dbda-438f-af5d-86db8151b0a5executive_hotel5.jpg");
-        hashMap.put("text",text_send);
-        hashMap.put("app_version","test app 1.2");
+        hashMap.put("text", text_send);
+        hashMap.put("app_version", "test app 1.2");
 
-        try{
+        try {
             System.out.println("try in");
             JSONObject obj = (JSONObject) message.send(hashMap);
             System.out.println(obj.toString());
@@ -125,7 +128,7 @@ public class SMSService {
 
     }
 
-    public void naverSmsSendService(Hotel_Reservation hotel_reservation){
+    public void naverSmsSendService(Hotel_Reservation hotel_reservation) {
         String host = "https://sens.apigw.ntruss.com";
         String requestUrl = "/sms/v2/services/";
         String serviceId = naverServiceId;
@@ -134,29 +137,50 @@ public class SMSService {
         String secretKey = naverSmsSecretKey;
         String method = "POST";
         String timestamp = Long.toString(System.currentTimeMillis());
-        requestUrl +=serviceId + "/messages";
+        requestUrl += serviceId + "/messages";
         String urlFull = host + requestUrl;
+
+        String name = null;
+        if (hotel_reservation.getUser() != null) {
+            name = hotel_reservation.getUser().getName();
+        } else {
+            name = hotel_reservation.getAnotherUser();
+        }
+
+        String contents =
+                "Num : " + hotel_reservation.getId() +
+                "\nName : " + name +
+                "\nRoom : " + hotel_reservation.getPayment().getRoomName()+
+                "\nCheckIn : " + hotel_reservation.getStartDay() +
+                "\nCheckOut : " + hotel_reservation.getFinishDay() +
+                "\nPeople : " + hotel_reservation.getPeople()+
+                "\nPee : " + "$ "+hotel_reservation.getPayment().getPayPrice();
+
+
 
         JSONObject naverJSON = new JSONObject();
         JSONObject messages = new JSONObject();
         JSONArray messagesArray = new JSONArray();
         JSONObject file = new JSONObject();
         try {
-            naverJSON.put("type","SMS");
-            naverJSON.put("contentType","COMM");
-            naverJSON.put("from","01023364961");
-            naverJSON.put("countryCode","82");
+            naverJSON.put("type", "LMS");
+            naverJSON.put("contentType", "COMM");
+            naverJSON.put("from", "01023364961");
+            naverJSON.put("countryCode", "82");
+            naverJSON.put("content", "test");
 
-            messages.put("to",hotel_reservation.getPhoneNum());
+
+
+
+            messages.put("to", hotel_reservation.getPhoneNum());
 //            messages.put("subject",
-//                    hotel_reservation.getReHotelRoom().getRoomName() +"의 예약 정보");
-            messages.put("content","잘 부탁드립니다.");
-
+//                    hotel_reservation.getReHotelRoom().getRoomName() + "의 예약 정보");
+            messages.put("content", contents);
 
             messagesArray.add(messages);
             naverJSON.put("messages", messagesArray);
 
-        }catch (Exception e){
+        } catch (Exception e) {
             e.getStackTrace();
         }
 
@@ -164,18 +188,19 @@ public class SMSService {
         System.out.println(naverJSON);
 
         URL url = null;
+
         try {
             url = new URL(urlFull);
-            HttpURLConnection con = (HttpURLConnection)url.openConnection();
+            HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setUseCaches(false);
             con.setDoOutput(true);
             con.setDoInput(true);
-            con.setRequestProperty("Content-Type","application/json; charset=utf-8");
-            con.setRequestProperty("x-ncp-apigw-timestamp",timestamp);
-            con.setRequestProperty("x-ncp-iam-access-key",accessKey);
+            con.setRequestProperty("content-type", "application/json");
+            con.setRequestProperty("x-ncp-apigw-timestamp", timestamp);
+            con.setRequestProperty("x-ncp-iam-access-key", accessKey);
 
-            String space = " ";					// one space
-            String newLine = "\n";					// new line
+            String space = " ";                    // one space
+            String newLine = "\n";                    // new line
 
             String me = new StringBuilder()
                     .append(method)
@@ -188,37 +213,38 @@ public class SMSService {
                     .toString();
 
             Mac mac = Mac.getInstance("HmacSHA256");
-            mac.init(new SecretKeySpec(accessSecretKey.getBytes("UTF-8"),"HmacSHA256"));
-
+            SecretKeySpec singKey = new SecretKeySpec(accessSecretKey.getBytes("UTF-8"), "HmacSHA256");
+            mac.init(singKey);
             byte[] hash = mac.doFinal(me.getBytes("UTF-8"));
             String encode = Base64.getEncoder().encodeToString(hash);
 
+            System.out.println(encode);
+
             con.setRequestProperty("x-ncp-apigw-signature-v2", encode);
             con.setRequestMethod("POST");
-            DataOutputStream wr = new DataOutputStream(con.getOutputStream());
+            con.setDoOutput(true);
 
+            DataOutputStream wr = new DataOutputStream(con.getOutputStream());
             wr.write(naverJSON.toString().getBytes());
             wr.flush();
             wr.close();
 
             int recode = con.getResponseCode();
-            BufferedReader br ;
+            BufferedReader br;
             System.out.println(recode);
-            if(recode==202){
+            if (recode == 202) {
                 br = new BufferedReader(new InputStreamReader(con.getInputStream()));
-            }else{
+            } else {
                 br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
             }
 
             String inputline;
             StringBuffer response = new StringBuffer();
-            while ((inputline = br.readLine())!=null){
+            while ((inputline = br.readLine()) != null) {
                 response.append(inputline);
             }
             br.close();
             System.out.println(response.toString());
-
-
 
 
         } catch (MalformedURLException e) {
