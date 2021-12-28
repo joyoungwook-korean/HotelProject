@@ -1,5 +1,10 @@
 package com.springboot.st.hotelProject.service;
 
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.WriterException;
+import com.google.zxing.client.j2se.MatrixToImageWriter;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
 import com.springboot.st.hotelProject.domain.Hotel_Reservation;
 import lombok.*;
 import net.nurigo.java_sdk.api.Image;
@@ -16,10 +21,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -128,6 +132,7 @@ public class SMSService {
 
     }
 
+
     public void naverSmsSendService(Hotel_Reservation hotel_reservation) {
         String host = "https://sens.apigw.ntruss.com";
         String requestUrl = "/sms/v2/services/";
@@ -139,6 +144,9 @@ public class SMSService {
         String timestamp = Long.toString(System.currentTimeMillis());
         requestUrl += serviceId + "/messages";
         String urlFull = host + requestUrl;
+        String fileUrl="http://ec2-3-34-227-211.ap-northeast-2.compute.amazonaws.com/hotel/inquiry/details/";
+
+        fileUrl += hotel_reservation.getPayment().getReceiptId() +"/"+hotel_reservation.getPhoneNum();
 
         String name = null;
         if (hotel_reservation.getUser() != null) {
@@ -149,35 +157,35 @@ public class SMSService {
 
         String contents =
                 "Num : " + hotel_reservation.getId() +
-                "\nName : " + name +
-                "\nRoom : " + hotel_reservation.getPayment().getRoomName()+
-                "\nCheckIn : " + hotel_reservation.getStartDay() +
-                "\nCheckOut : " + hotel_reservation.getFinishDay() +
-                "\nPeople : " + hotel_reservation.getPeople()+
-                "\nPrice : " + "$ "+hotel_reservation.getPayment().getPayPrice();
-
+                        "\nName : " + name +
+                        "\nRoom : " + hotel_reservation.getPayment().getRoomName() +
+                        "\nCheckIn : " + hotel_reservation.getStartDay() +
+                        "\nCheckOut : " + hotel_reservation.getFinishDay() +
+                        "\nPeople : " + hotel_reservation.getPeople() +
+                        "\nPrice : " + "$ " + hotel_reservation.getPayment().getPayPrice();
 
 
         JSONObject naverJSON = new JSONObject();
         JSONObject messages = new JSONObject();
         JSONArray messagesArray = new JSONArray();
+        JSONArray fileArray = new JSONArray();
         JSONObject file = new JSONObject();
         try {
-            naverJSON.put("type", "LMS");
+            naverJSON.put("type", "MMS");
             naverJSON.put("contentType", "COMM");
             naverJSON.put("from", "01023364961");
             naverJSON.put("countryCode", "82");
             naverJSON.put("content", "test");
 
-
-
-
             messages.put("to", hotel_reservation.getPhoneNum());
-//            messages.put("subject",
-//                    hotel_reservation.getReHotelRoom().getRoomName() + "의 예약 정보");
             messages.put("content", contents);
 
             messagesArray.add(messages);
+
+            file.put("name", "QRCode.jpg");
+            file.put("body",bas(fileUrl));
+            fileArray.add(file);
+            naverJSON.put("files", fileArray);
             naverJSON.put("messages", messagesArray);
 
         } catch (Exception e) {
@@ -259,5 +267,49 @@ public class SMSService {
 
 
     }
+
+    private File generateQRCodeImage(String reservation_url)
+            throws WriterException, IOException {
+        QRCodeWriter qrCodeWriter = new QRCodeWriter();
+        BitMatrix bitMatrix = qrCodeWriter.encode(reservation_url, BarcodeFormat.QR_CODE, 250, 250);
+
+        BufferedImage image = MatrixToImageWriter.toBufferedImage(bitMatrix);
+
+        File output = new File("QRCode.jpg");
+
+        ImageIO.write(image, "jpg", output);
+
+
+
+
+        return output;
+    }
+
+    private String bas(String reservation_url) throws IOException, WriterException {
+
+        byte[] binary = getFileBinary(generateQRCodeImage(reservation_url).toString());
+        // base64의 라이브러리에서 encodeToString를 이용해서 byte[] 형식을 String 형식으로 변환합니다.
+
+        String base64data = Base64.getEncoder().encodeToString(binary);
+
+        // 콘솔에 결과 출력
+        System.out.println(base64data);
+
+        return base64data;
+    }
+
+
+    // 파일 읽어드리는 함수
+    private static byte[] getFileBinary(String filepath) {
+        File file = new File(filepath);
+        byte[] data = new byte[(int) file.length()];
+        try (FileInputStream stream = new FileInputStream(file)) {
+            stream.read(data, 0, data.length);
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
+        return data;
+    }
+
 
 }

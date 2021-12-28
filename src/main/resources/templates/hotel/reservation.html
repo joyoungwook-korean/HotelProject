@@ -241,9 +241,6 @@
                 console.log(data);
             }).done(function (data) {
 
-                alert(data.receipt_id);
-                alert(data.params.phone);
-
                 location.href='/hotel/inquiry/details/'+data.receipt_id+'/'+data.params.phone;
                 alert('予約しました');
 

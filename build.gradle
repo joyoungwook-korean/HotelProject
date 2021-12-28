@@ -66,4 +66,8 @@ dependencies {
     implementation group: 'commons-fileupload', name: 'commons-fileupload', version: '1.3.3'
     implementation 'org.springframework.boot:spring-boot-starter-mail'
 
+    //QRCode
+    implementation 'com.google.zxing:core:3.4.0'
+    implementation 'com.google.zxing:javase:3.4.0'
+
 }

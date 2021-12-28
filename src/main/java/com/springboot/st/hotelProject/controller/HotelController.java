@@ -181,14 +181,14 @@ public class HotelController {
     }
 
 
-//    @PostMapping("/smstestnaver")
-//    public @ResponseBody String test_sms(){
-//        Long id = 56L;
-//        Hotel_Reservation hotel_reservation = hotelReservationService.findById(id);
-//        System.out.println(hotel_reservation.toString());
-//        smsService.naverSmsSendService(hotel_reservation);
-//        return "OK";
-//    }
+    @PostMapping("/smstestnaver")
+    public @ResponseBody String test_sms(){
+        Long id = 68L;
+       Hotel_Reservation hotel_reservation = hotelReservationService.findById(id);
+        System.out.println(hotel_reservation.toString());
+      smsService.naverSmsSendService(hotel_reservation);
+        return "OK";
+    }
 
 
     //blog
