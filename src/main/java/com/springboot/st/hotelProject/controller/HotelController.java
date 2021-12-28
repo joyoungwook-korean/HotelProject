@@ -186,7 +186,7 @@ public class HotelController {
 
 
     //blog
-    @GetMapping("hotel/blog")
+    @GetMapping("/hotel/blog")
     public String blog(Model model, @PageableDefault(size = 5) Pageable pageable) {
         Page<Hotel_Board> hotel_board = hotelBoardService.find_all_board(pageable);
 
@@ -207,7 +207,7 @@ public class HotelController {
         HotelBoardDto hotelBoardDto = hotelBoardService.hotelBoardDto(id);
         model.addAttribute("blog", hotelBoardDto);
         model.addAttribute("id", id);
-        return "/hotel/blog_details";
+        return "hotel/blog_details";
     }
 
     // blog write
@@ -242,7 +242,7 @@ public class HotelController {
         model.addAttribute("payment", paymentDto);
         model.addAttribute("price", price);
 
-        return "/hotel/inquiry_details";
+        return "hotel/inquiry_details";
     }
 
 
