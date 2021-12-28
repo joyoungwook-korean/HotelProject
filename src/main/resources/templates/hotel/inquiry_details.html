@@ -5,7 +5,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Invoice</title>
-    <script src="https://cdn.bootpay.co.kr/js/bootpay-3.3.2.min.js" type="application/javascript"></script>
 </head>
 <style>
     body{
@@ -146,7 +145,7 @@
     <div class="location-house section-padding">
         <div class="container">
             <div class="row">
-                <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+<!--                <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">-->
                 <div class="container">
                     <div class="col-md-12">
                         <div class="invoice">
@@ -176,7 +175,7 @@
                                     </div>
 
                                     <div class="invoice-detail">
-                                        <span th:if="${invoice.user!=null}"th:text="${invoice.user.name}">Kim</span><br>
+                                        <span th:if="${invoice.user!=null}" th:text="${invoice.user.name}">Kim</span><br>
                                         <span th:if="${invoice.user==null}" th:text="${invoice.anotherUser}">Kim</span><br>
                                     </div>
                                     <div class="invoice-detail">
