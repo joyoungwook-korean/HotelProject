@@ -4,9 +4,8 @@
       layout:decorate="~{layout/hotel_layout1}">
 <head>
     <meta charset="UTF-8">
-    <title>Hotel-reservation</title>
+    <title>Hotel Reservation</title>
     <script src="https://cdn.bootpay.co.kr/js/bootpay-3.3.2.min.js" type="application/javascript"></script>
-
 </head>
 <body>
 <div layout:fragment="content">
@@ -38,57 +37,83 @@
         </div>
         <div class="container">
             <div class="row">
-                <form class="form-control">
+                <form class="form-contact contact_form">
                     <input hidden="user_re" th:value="${user.id}">
-                    <div>
-                        <label>Name</label>
-                        <input readonly sec:authorize="isAuthenticated()" type="text" th:value="${user.name}" >
-                        <input sec:authorize="isAnonymous()" type="text" id="another_user" name="anonymous_name">
-                    </div>
-                    <div>
-                        <label for="roomname">Room</label>
-                        <input readonly id="roomname" type="text" class="form-group"
-                               th:value="${reservation.get('room')}">
-                    </div>
-                    <div>
-                        <label for="checkin">CheckIn</label>
-                        <input readonly id="checkin" type="text" class="form-group"
-                               th:value="${reservation.get('checkin')}">
-                    </div>
-                    <div>
-                        <label for="checkout">CheckOut</label>
-                        <input readonly id="checkout" type="text" class="form-group"
-                               th:value="${reservation.get('checkout')}">
-                    </div>
-                    <div>
-                        <label for="people">People</label>
-                        <input readonly id="people" type="text" class="form-group"
-                               th:value="${reservation.get('people')}">
-                    </div>
-                    <div>
-                        <label for="pee">Pee</label>
-                        <input readonly id="pee" type="text" class="form-group"
-                               th:value="${pee}">
-                    </div>
-                    <div>
-                        <label for="phone">Phone Number</label>
-                        <input id="phone" type="text" class="form-group">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <input readonly sec:authorize="isAuthenticated()" class="form-control valid" type="text"
+                                       th:value="${user.name}" onfocus="this.placeholder = ''"
+                                       onblur="this.placeholder = 'Name'" placeholder="Name">
+
+                                <input sec:authorize="isAnonymous()" id="another_user" name="anonymous_name"
+                                       class="form-control valid" type="text"
+                                       onfocus="this.placeholder = ''" onblur="this.placeholder = 'Name'"
+                                       placeholder="Name">
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <input readonly class="form-control valid" type="text"
+                                       id="roomname" th:value="${reservation.get('room')}" onfocus="this.placeholder = ''"
+                                       onblur="this.placeholder = 'Room'" placeholder="Room Info">
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <input readonly class="form-control valid" type="text"
+                                       id="checkin" th:value="${reservation.get('checkin')}" onfocus="this.placeholder = ''"
+                                       onblur="this.placeholder = 'Check In'" placeholder="Check In">
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <input readonly class="form-control valid" type="text"
+                                       id="checkout" th:value="${reservation.get('checkout')}" onfocus="this.placeholder = ''"
+                                       onblur="this.placeholder = 'Check Out'" placeholder="Check Out">
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <input readonly class="form-control valid" type="text"
+                                       id="people" th:value="${reservation.get('people')}" onfocus="this.placeholder = ''"
+                                       onblur="this.placeholder = 'People'" placeholder="People">
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <input readonly class="form-control valid" type="text"
+                                       id="pee" th:value="${pee}" onfocus="this.placeholder = ''"
+                                       onblur="this.placeholder = 'Price'" placeholder="Price">
+                            </div>
+                        </div>
+
+                        <div class="col-sm-2">
+                            <div class="form-group">
+                                <input class="form-control valid" type="text" id="phone1" maxlength="3"
+                                       min="0" max="9" placeholder="Phone" onlynumber>
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <div class="form-group">
+                                <input class="form-control valid" type="text" maxlength="4"
+                                       min="0" max="9" id="phone2" placeholder="1234" onlynumber>
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <div class="form-group">
+                                <input class="form-control valid" type="text" maxlength="4"
+                                       min="0" max="9" id="phone3" placeholder="5678" onlynumber>
+                            </div>
+                        </div>
                     </div>
                     <button type="button" th:onclick=" requestPay([[${user.id}]])" class="btn btn-primary">お支払い</button>
                 </form>
-            </div>
-        </div>
-    </div>
-    <div class="video-area section-img-bg2 d-flex align-items-center"
-         data-background="/hotel/assets/img/gallery/video-bg.jpg}">
-        <div class="container">
-            <div class="video-wrap position-relative">
-                <!-- Video icon -->
-                <div class="video-icon">
-                    <a class="popup-video btn-icon" href="https://www.youtube.com/watch?v=up68UAfH0d0">
-                        <img th:src="@{/hotel/assets/img/icon/video-icon.svg}" alt="">
-                    </a>
-                </div>
             </div>
         </div>
     </div>
@@ -142,7 +167,7 @@
 
         function requestPay(user) {
 
-
+      
 
             var reservation_info = null;
 
@@ -154,7 +179,7 @@
                     checkout : $('#checkout').val(),
                     people : $('#people').val(),
                     pee : $('#pee').val(),
-                    phone : $('#phone').val()
+                    phone : $('#phone1').val() + $('#phone2').val() + $('#phone3').val()
                 };
             }else{
                 reservation_info = {
@@ -164,7 +189,7 @@
                     checkout : $('#checkout').val(),
                     people : $('#people').val(),
                     pee : $('#pee').val(),
-                    phone : $('#phone').val()
+                    phone : $('#phone1').val() + $('#phone2').val() + $('#phone3').val()
                 };
             };
 

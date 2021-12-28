@@ -54,6 +54,7 @@ dependencies {
     //CoolSMS
     compile group: 'net.nurigo', name: 'javaSDK', version: '2.2'
 
+    implementation 'org.modelmapper:modelmapper:2.3.8'
 
     //bootPay
     compile group: 'org.apache.httpcomponents', name: 'httpclient', version: '+'

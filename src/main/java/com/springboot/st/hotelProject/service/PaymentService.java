@@ -4,10 +4,12 @@ import com.springboot.st.domain.pay.Payment;
 import com.springboot.st.domain.pay.PaymentRepository;
 import com.springboot.st.domain.user.User;
 import com.springboot.st.domain.user.UserRepository;
+import com.springboot.st.hotelProject.domain.dto.PaymentDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.Map;
 
 @Service
@@ -66,6 +68,15 @@ public class PaymentService {
 
         return payment1;
     }
+
+    @Transactional(readOnly = true)
+    public PaymentDto paymentDto(Long id) {
+        Payment payment = paymentRepository.findById(id)
+                .orElseThrow(EntityNotFoundException::new);
+        PaymentDto paymentDto = PaymentDto.of(payment);
+        return paymentDto;
+    }
+
 
 
 }

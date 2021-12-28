@@ -2,6 +2,14 @@
 <html class="no-js" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/hotel_layout1}">
 
+<th:block layout:fragment="script">
+    <script th:inline="javascript">
+        let result = [[${message}]];
+        if (result != null) {
+            alert(result);
+        }
+    </script>
+</th:block>
 <!--? Preloader Start -->
 <!--<div id="preloader-active">-->
 <!--    <div class="preloader d-flex align-items-center justify-content-center">-->
@@ -31,7 +39,7 @@
                 </div>
             </div>
             <div class="container">
-                <form action="/hotel/search" method="post"  class="search-box pb-45">
+                <form action="/hotel/search" method="post" name="searchFrom" class="search-box pb-45">
                     <div class="row align-items-end">
                         <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
                             <!-- select in date -->
@@ -77,7 +85,7 @@
                         </div>
                         <div class="col-xl-2 col-lg-4 col-md-4 col-sm-6">
                             <div class="search-form">
-                                <a href="#"><input type="submit" value="Search" style="text-decoration: none"></a>
+                                <a href="javascript:document.searchFrom.submit();">Search</a>
                             </div>
                         </div>
                     </div>

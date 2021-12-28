@@ -24,7 +24,6 @@ public class MailController {
 
         MailDto mailDto = new MailDto();
 
-        System.out.println("1111");
 
         //받는 메일 주소
         String sendEmail = "rlatjsgh1000@naver.com";

@@ -10,4 +10,5 @@ public interface Hotel_ReservationRepository extends JpaRepository<Hotel_Reserva
     Page<Hotel_Reservation> findByPhoneNumContains(String search, Pageable pageable);
     Page<Hotel_Reservation> findByStartDayContains(String search, Pageable pageable);
 
+    Hotel_Reservation findByIdAndPhoneNum(Long id, String phone);
 }

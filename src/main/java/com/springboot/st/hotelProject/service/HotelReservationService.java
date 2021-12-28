@@ -6,6 +6,7 @@ import com.springboot.st.hotelProject.domain.Hotel_Reservation;
 import com.springboot.st.hotelProject.domain.Hotel_ReservationRepository;
 import com.springboot.st.hotelProject.domain.Hotel_Reservation_AllDay;
 import com.springboot.st.hotelProject.domain.Hotel_Room;
+import com.springboot.st.hotelProject.domain.dto.HotelReservationDto;
 import com.springboot.st.signupProject.service.UserService;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
@@ -127,6 +128,13 @@ public class HotelReservationService {
         return hotel_reservation;
     }
 
+
+    @Transactional(readOnly = true)
+    public HotelReservationDto hotelReservationDto(Long id, String phone) {
+        Hotel_Reservation hotel_reservation = hotel_reservationRepository.findByIdAndPhoneNum(id, phone);
+        HotelReservationDto hotelReservationDto = HotelReservationDto.of(hotel_reservation);
+        return hotelReservationDto;
+    }
 
 
 

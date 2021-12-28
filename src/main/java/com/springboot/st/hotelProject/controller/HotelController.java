@@ -2,20 +2,25 @@ package com.springboot.st.hotelProject.controller;
 
 import com.springboot.st.config.auth.PrincipalDetails;
 import com.springboot.st.domain.user.User;
+import com.springboot.st.hotelProject.domain.Hotel_Board;
 import com.springboot.st.hotelProject.domain.Hotel_Reservation;
 import com.springboot.st.hotelProject.domain.Hotel_Room;
+import com.springboot.st.hotelProject.domain.dto.HotelBoardDto;
+import com.springboot.st.hotelProject.domain.dto.HotelReservationDto;
 import com.springboot.st.hotelProject.domain.dto.Hotel_RoomDto;
-import com.springboot.st.hotelProject.service.HotelReservationAllDayService;
-import com.springboot.st.hotelProject.service.HotelReservationService;
-import com.springboot.st.hotelProject.service.HotelRoomService;
-import com.springboot.st.hotelProject.service.SMSService;
+import com.springboot.st.hotelProject.domain.dto.PaymentDto;
+import com.springboot.st.hotelProject.service.*;
 import com.springboot.st.signupProject.service.UserService;
 import com.springboot.st.signupProject.web.dto.UserFormDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -37,6 +42,10 @@ public class HotelController {
 
 
     private final SMSService smsService;
+
+    private final HotelBoardService hotelBoardService;
+
+    private final PaymentService paymentService;
 
     @GetMapping("/hotel/index")
     public String aaa() {
@@ -88,15 +97,20 @@ public class HotelController {
     @PostMapping("/hotel/search")
     public String search(Model model, @RequestParam("checkin_date") String checkin,
                          @RequestParam("checkout_date") String checkout, @RequestParam("select1") String people) {
+        if(checkin.equals("") || checkout.equals("")){
+            model.addAttribute("message","Please select the date");
+            return ("hotel/index");
+        }else{
+            List<Hotel_Room> hotel_rooms_check_people = hotelRoomService.minPeopleGreaterThan(Integer.parseInt(people));
+            List<Hotel_Room> hotel_rooms = hotelRoomService.search_Room_for_day(hotel_rooms_check_people,checkin,checkout);
+            model.addAttribute("hotel_room", hotel_rooms);
+            model.addAttribute("hotel_send", new Hotel_Room());
+            model.addAttribute("reservation_checkin_date", checkin);
+            model.addAttribute("reservation_checkout_date", checkout);
+            model.addAttribute("people", people);
+            return "hotel/search";
+        }
 
-        List<Hotel_Room> hotel_rooms_check_people = hotelRoomService.minPeopleGreaterThan(Integer.parseInt(people));
-        List<Hotel_Room> hotel_rooms = hotelRoomService.search_Room_for_day(hotel_rooms_check_people,checkin,checkout);
-        model.addAttribute("hotel_room", hotel_rooms);
-        model.addAttribute("hotel_send", new Hotel_Room());
-        model.addAttribute("reservation_checkin_date", checkin);
-        model.addAttribute("reservation_checkout_date", checkout);
-        model.addAttribute("people", people);
-        return "hotel/search";
     }
 
     @GetMapping("/hotel/reservation")
@@ -155,7 +169,7 @@ public class HotelController {
     }
 
     //Contact
-    @GetMapping("/contact")
+    @GetMapping("/hotel/contact")
     public String contact_aa(){
         return "hotel/contact";
     }
@@ -169,5 +183,69 @@ public class HotelController {
 //        smsService.naverSmsSendService(hotel_reservation);
 //        return "OK";
 //    }
+
+
+    //blog
+    @GetMapping("hotel/blog")
+    public String blog(Model model, @PageableDefault(size = 5) Pageable pageable) {
+        Page<Hotel_Board> hotel_board = hotelBoardService.find_all_board(pageable);
+
+
+        model.addAttribute("hotel_board", hotel_board);
+        model.addAttribute("hotel_board_count", hotel_board.getTotalElements());
+        int startPage = Math.max(0, hotel_board.getPageable().getPageNumber() - 4);
+        int endPage = Math.min(hotel_board.getTotalPages(), hotel_board.getPageable().getPageNumber() + 4);
+        model.addAttribute("startPage", startPage);
+        model.addAttribute("endPage", endPage);
+
+        return "hotel/blog";
+
+    }
+
+    @GetMapping(value = "/hotel/blog/{id}")
+    public String hotelDetail(Model model, @PathVariable("id") Long id){
+        HotelBoardDto hotelBoardDto = hotelBoardService.hotelBoardDto(id);
+        model.addAttribute("blog", hotelBoardDto);
+        model.addAttribute("id", id);
+        return "/hotel/blog_details";
+    }
+
+    // blog write
+    @GetMapping("/hotel/blog/write")
+    public String blogWrite() { return "hotel/blog_insert"; }
+
+    @PostMapping("/hotel/blog/write")
+    public String blogForm(@RequestParam("title") String title, @RequestParam("content") String content, @RequestParam("attachment") MultipartFile file) {
+        Hotel_Board hotel_board = hotelBoardService.save(file, title, content);
+        System.out.println(hotel_board.toString());
+        return "redirect:/hotel/blog";
+    }
+
+
+    //조회
+    @GetMapping("/hotel/inquiry")
+    public String inquiry() { return "hotel/inquiry"; }
+
+    @PostMapping(value = "/hotel/inquiry/details")
+    public String inquiry(Model model, @RequestParam("userid") String userid, @RequestParam("phone1") String phone1, @RequestParam("phone2") String phone2, @RequestParam("phone3") String phone3){
+        Long id = Long.parseLong(userid);
+        String phone = phone1 + phone2 + phone3;
+        HotelReservationDto hotelReservationDto = hotelReservationService.hotelReservationDto(id, phone);
+        PaymentDto paymentDto = paymentService.paymentDto(hotelReservationDto.getPaymentId());
+
+        int totalPrice = Integer.parseInt(paymentDto.getPayPrice());
+        int person = hotelReservationDto.getPeople();
+
+        int price = totalPrice/person;
+
+        model.addAttribute("invoice", hotelReservationDto);
+        model.addAttribute("payment", paymentDto);
+        model.addAttribute("price", price);
+
+        return "/hotel/inquiry_details";
+    }
+
+
+
 
 }

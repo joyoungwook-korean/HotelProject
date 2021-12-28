@@ -1,0 +1,62 @@
+<!doctype html>
+<html class="no-js" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/hotel_layout1}"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<body>
+<div layout:fragment="content">
+    <main>
+        <!-- Hero Area Start-->
+        <div class="slider-area hero-bg1  hero-overly">
+            <div class="single-slider  slider-height3 d-flex align-items-center">
+                <div class="container">
+                    <div class="row justify-content-center ">
+                        <div class="col-xl-7 col-lg-11">
+                            <!-- Hero Caption -->
+                            <div class="hero-caption hero-caption3">
+                                <h1>Write Form</h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Hero Area End-->
+        <!--  Contact Area start  -->
+        <section class="contact-section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <h2 class="contact-title">Update News</h2>
+                    </div>
+                    <div class="col-lg-8">
+                        <form class="form-contact contact_form" role="form" action="/hotel/blog/write" method="post" enctype="multipart/form-data">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <input class="form-control" name="title" id="title" type="text" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Subject'" placeholder="Enter Subject">
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <textarea class="form-control w-100" name="content" id="content" cols="30" rows="9" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Message'" placeholder=" Enter Message"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <input style="font-weight: unset;" name="attachment" id="attachment" type="file" onfocus="this.placeholder = ''" onblur="this.placeholder = 'File'">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group mt-3">
+                                <input type="submit" id="sendButton" class="button button-contactForm boxed-btn">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Contact Area End -->
+    </main>
+</div>
+</body>
+</html>

@@ -1,0 +1,71 @@
+<html class="no-js" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{layout/hotel_layout1}">
+<head>
+    <meta charset="UTF-8">
+    <title>Inquiry</title>
+    <script src="https://cdn.bootpay.co.kr/js/bootpay-3.3.2.min.js" type="application/javascript"></script>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="slider-area hero-bg1  hero-overly">
+        <div class="single-slider  slider-height2 d-flex align-items-center">
+            <div class="container">
+                <div class="row justify-content-center ">
+                    <div class="col-xl-7 col-lg-11">
+                        <!-- Hero Caption -->
+                        <div class="hero-caption hero-caption2 pt-10">
+                            <h1>My Reservation</h1>
+                            <p></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="location-house section-padding">
+        <div class="container">
+            <div class="row">
+                <form class="form-contact contact_form" method="POST" action="/hotel/inquiry/details">
+                    <div class="row justify-content-center ">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <input class="form-control valid" type="text" name="userid" id="userid" onfocus="this.placeholder = ''" onblur="this.placeholder = 'ID'" placeholder="ID">
+                            </div>
+                        </div>
+                            <div class="form-group">
+                            </div>
+                        <div class="col-sm-2">
+                            <div class="form-group">
+                                <input class="form-control valid" type="text" name="phone1" id="phone1" maxlength="3"
+                                       min="0" max="9" placeholder="Phone" onlynumber>
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <div class="form-group">
+                                <input class="form-control valid" type="text" maxlength="4"
+                                       min="0" max="9" name="phone2" id="phone2" placeholder="1234" onlynumber>
+                            </div>
+                        </div>
+                        <div class="col-sm-2">
+                            <div class="form-group">
+                                <input class="form-control valid" type="text" maxlength="4"
+                                       min="0" max="9" name="phone3" id="phone3" placeholder="5678" onlynumber>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                        </div>
+                    <div class="col-sm-6" style="text-align: right;">
+                        <button type="submit" name="submit" class="button-contactForm" style="color: black;">
+                            Search
+                        </button>
+                    </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -127,9 +127,11 @@
             }, true)
 
             function onceSubmit() {
+
+                document.getElementById('sendButton').hidden=true;
                 alert("Please wait a few seconds...");
-                document.getElementById("sendButton").onclick = null;
-                document.getElementById("contactForm").submit();
+
+
             }
         </script>
     </th:block>
@@ -192,7 +194,7 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <textarea class="form-control w-100" name="message" id="message" cols="30" rows="9" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Message'" placeholder=" Enter Message"></textarea>
+                                        <textarea class="form-control" name="message"  cols="30" rows="9" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Message'" placeholder=" Enter Message"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -217,7 +219,7 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <textarea class="form-control w-100" name="message" id="message" cols="30" rows="9" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Message'" placeholder=" Enter Message"></textarea>
+                                        <textarea class="form-control w-100" name="message"  cols="30" rows="9" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Message'" placeholder=" Enter Message"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -227,9 +229,9 @@
                                 </div>
                             </div>
                             <div class="form-group mt-3">
-                                <input type="submit" id="sendButton" class="button button-contactForm boxed-btn">
-                                <input id="authName" sec:authorize="isAuthenticated()" type="hidden" th:value="${#authorization.authentication.principal.user.name}">
-                                <input id="authEmail" sec:authorize="isAuthenticated()" type="hidden" th:value="${#authorization.authentication.principal.user.email}">
+                                <input id="authName" name="authName" sec:authorize="isAuthenticated()" type="hidden" th:value="${#authorization.authentication.principal.user.name}">
+                                <input id="authEmail" name="authEmail" sec:authorize="isAuthenticated()" type="hidden" th:value="${#authorization.authentication.principal.user.email}">
+                                <input type="submit" id="sendButton" class="button button-contactForm boxed-btn" onclick="onceSubmit()">
                             </div>
                         </form>
                     </div>
