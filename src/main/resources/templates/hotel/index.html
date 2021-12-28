@@ -142,15 +142,15 @@
             <div class="container-fluid">
                 <div class="rows">
                     <div class="location-active owl-carousel">
-                        <div class="col-lg-12">
+                        <div class="col-lg-12" th:each="hotel, i : ${hotelRoom}">
                             <!-- Single -->
                             <div class="single-location">
-                                <img th:src="@{/hotel/assets/img/gallery/hotel1.jpg}" alt="">
+                                <img th:src="${hotel.hotel_room_img.get(0).img_Server_Path}" alt="">
                                 <div class="location-contents">
-                                    <h3><a href="#">Luxurious Room </a></h3>
-                                    <p>2 Adult 1 Children</p>
+                                    <h3 ><a href="#" th:text="${hotel.roomName}"></a></h3>
+                                    <p th:text="${hotel.maxPeople}"></p>
                                     <div class="price">
-                                        <span>Started from<span>$500</span></span>
+                                        <span>Started from $ <span th:text="${hotel.price}"></span></span>
                                     </div>
                                 </div>
                             </div>

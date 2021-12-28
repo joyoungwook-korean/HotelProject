@@ -48,7 +48,9 @@ public class HotelController {
     private final PaymentService paymentService;
 
     @GetMapping("/hotel/index")
-    public String aaa() {
+    public String aaa(Model model) {
+        List<Hotel_Room> hotel_room = hotelRoomService.all_find();
+        model.addAttribute("hotelRoom",hotel_room);
         return "hotel/index";
     }
 
