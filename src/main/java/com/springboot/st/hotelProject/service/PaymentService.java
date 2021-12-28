@@ -4,6 +4,7 @@ import com.springboot.st.domain.pay.Payment;
 import com.springboot.st.domain.pay.PaymentRepository;
 import com.springboot.st.domain.user.User;
 import com.springboot.st.domain.user.UserRepository;
+import com.springboot.st.hotelProject.domain.dto.HotelReservationDto;
 import com.springboot.st.hotelProject.domain.dto.PaymentDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -75,6 +76,10 @@ public class PaymentService {
                 .orElseThrow(EntityNotFoundException::new);
         PaymentDto paymentDto = PaymentDto.of(payment);
         return paymentDto;
+    }
+
+    public Payment findByReceiptIdToId(String receiptId){
+        return paymentRepository.findByReceiptId(receiptId);
     }
 
 

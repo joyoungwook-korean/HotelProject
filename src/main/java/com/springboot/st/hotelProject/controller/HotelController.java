@@ -1,6 +1,7 @@
 package com.springboot.st.hotelProject.controller;
 
 import com.springboot.st.config.auth.PrincipalDetails;
+import com.springboot.st.domain.pay.Payment;
 import com.springboot.st.domain.user.User;
 import com.springboot.st.hotelProject.domain.Hotel_Board;
 import com.springboot.st.hotelProject.domain.Hotel_Reservation;
@@ -47,6 +48,8 @@ public class HotelController {
     private final HotelBoardService hotelBoardService;
 
     private final PaymentService paymentService;
+
+
 
     @GetMapping("/hotel/index")
     public String aaa(Model model) {
@@ -232,11 +235,12 @@ public class HotelController {
     }
 
     //조회
-    @GetMapping(value = "/hotel/inquiry/details/{id}/{phone}")
-    public String inquiryDetails(Model model,@PathVariable String id, @PathVariable String phone){
-        Long ida = Long.parseLong(id);
-        HotelReservationDto hotelReservationDto = hotelReservationService.hotelReservationDto(ida,phone);
-        PaymentDto paymentDto = paymentService.paymentDto(hotelReservationDto.getPaymentId());
+    @GetMapping(value = "/hotel/inquiry/details/{receiptid}/{phone}")
+    public String inquiryDetails(Model model,@PathVariable String receiptid, @PathVariable String phone){
+        Payment payment = paymentService.findByReceiptIdToId(receiptid);
+        HotelReservationDto hotelReservationDto = hotelReservationService.findByPaymentIdPhone(payment,phone);
+        System.out.println(hotelReservationDto.toString());
+        PaymentDto paymentDto = PaymentDto.of(payment);
 
 
         int totalPrice = Integer.parseInt(paymentDto.getPayPrice());

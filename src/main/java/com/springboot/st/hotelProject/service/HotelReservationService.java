@@ -121,6 +121,8 @@ public class HotelReservationService {
 
 
 
+
+
     //hotel find by Id
 
     public Hotel_Reservation findById(Long id){
@@ -134,6 +136,13 @@ public class HotelReservationService {
         Hotel_Reservation hotel_reservation = hotel_reservationRepository.findByIdAndPhoneNum(id, phone);
         HotelReservationDto hotelReservationDto = HotelReservationDto.of(hotel_reservation);
         return hotelReservationDto;
+    }
+
+    public HotelReservationDto findByPaymentIdPhone(Payment payment, String phone){
+        Hotel_Reservation hotel_reservation = hotel_reservationRepository.findByPaymentAndPhoneNum(payment,phone);
+        HotelReservationDto hotelReservationDto = HotelReservationDto.of(hotel_reservation);
+        return hotelReservationDto;
+
     }
 
 
