@@ -38,7 +38,7 @@
         <div class="container">
             <div class="row">
                 <form class="form-contact contact_form">
-                    <input hidden="user_re" th:value="${user.id}">
+
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group">
@@ -240,9 +240,11 @@
                 // 결제창이 닫힐때 수행됩니다. (성공,실패,취소에 상관없이 모두 수행됨)
                 console.log(data);
             }).done(function (data) {
-                alert(JSON.stringify(data));
-                alert(data);
-                location.href='/hotel/index';
+
+                alert(data.params.id);
+                alert(data.params.phone);
+
+                location.href='/hotel/inquiry/details/'+data.params.id+'/'+data.params.phone;
                 alert('予約しました');
 
                 //결제가 정상적으로 완료되면 수행됩니다
