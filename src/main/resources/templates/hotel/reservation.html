@@ -240,7 +240,8 @@
                 // 결제창이 닫힐때 수행됩니다. (성공,실패,취소에 상관없이 모두 수행됨)
                 console.log(data);
             }).done(function (data) {
-
+                alert(JSON.stringify(data));
+                alert(data);
                 location.href='/hotel/index';
                 alert('予約しました');
 

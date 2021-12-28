@@ -109,7 +109,7 @@ public class SMSService {
                 "CheckIn : " + hotel_reservation.getStartDay() + "\n" +
                 "CheckOut : " + hotel_reservation.getFinishDay() + "\n" +
                 "People : " + hotel_reservation.getPeople() + "\n" +
-                "Pee : " + "$ " + hotel_reservation.getPayment().getPayPrice();
+                "Price : " + "$ " + hotel_reservation.getPayment().getPayPrice();
 //        hashMap.put("image","https://rbwsn-s3-image.s3.ap-northeast-2.amazonaws.com/710b6ad1-dbda-438f-af5d-86db8151b0a5executive_hotel5.jpg");
         hashMap.put("text", text_send);
         hashMap.put("app_version", "test app 1.2");
@@ -154,7 +154,7 @@ public class SMSService {
                 "\nCheckIn : " + hotel_reservation.getStartDay() +
                 "\nCheckOut : " + hotel_reservation.getFinishDay() +
                 "\nPeople : " + hotel_reservation.getPeople()+
-                "\nPee : " + "$ "+hotel_reservation.getPayment().getPayPrice();
+                "\nPrice : " + "$ "+hotel_reservation.getPayment().getPayPrice();
 
 
 

@@ -22,6 +22,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.jws.WebParam;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
@@ -221,12 +222,34 @@ public class HotelController {
         Hotel_Board hotel_board = hotelBoardService.save(file, title, content);
         System.out.println(hotel_board.toString());
         return "redirect:/hotel/blog";
+
+
     }
 
+    @GetMapping("/hotel/inquiry")
+    public String inquiry(){
+        return "hotel/inquiry";
+    }
 
     //조회
-    @GetMapping("/hotel/inquiry")
-    public String inquiry() { return "hotel/inquiry"; }
+    @GetMapping(value = "/hotel/inquiry/details/{id}/{phone}")
+    public String inquiryDetails(Model model,@PathVariable String id, @PathVariable String phone){
+        Long ida = Long.parseLong(id);
+        HotelReservationDto hotelReservationDto = hotelReservationService.hotelReservationDto(ida,phone);
+        PaymentDto paymentDto = paymentService.paymentDto(hotelReservationDto.getPaymentId());
+
+
+        int totalPrice = Integer.parseInt(paymentDto.getPayPrice());
+        int person = hotelReservationDto.getPeople();
+
+        int price = totalPrice/person;
+
+        model.addAttribute("invoice", hotelReservationDto);
+        model.addAttribute("payment", paymentDto);
+        model.addAttribute("price", price);
+
+        return "hotel/inquiry_details";
+    }
 
     @PostMapping(value = "/hotel/inquiry/details")
     public String inquiry(Model model, @RequestParam("userid") String userid, @RequestParam("phone1") String phone1, @RequestParam("phone2") String phone2, @RequestParam("phone3") String phone3){

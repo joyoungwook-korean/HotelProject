@@ -42,6 +42,7 @@ public class HotelBoardService {
 
         Map<String, String> imgPath = s3service.serverSaveMap(multipartFile);
 
+
         Hotel_Board hotel_board =
                 new Hotel_Board().builder().
                         content(content).
