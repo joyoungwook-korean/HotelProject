@@ -56,7 +56,7 @@
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <input readonly class="form-control valid" type="text"
-                                       id="roomname" th:value="${reservation.get('room')}" onfocus="this.placeholder = ''"
+                                       id="roomName" th:value="${reservation.get('room')}" onfocus="this.placeholder = ''"
                                        onblur="this.placeholder = 'Room'" placeholder="Room Info">
                             </div>
                         </div>
@@ -129,7 +129,7 @@
         //
         //     if(user_re===null){
         //         reservation_info = {
-        //             room : $('#roomname').val(),
+        //             room : $('#roomName').val(),
         //             another_user :$('#another_user').val(),
         //             checkin : $('#checkin').val(),
         //             checkout : $('#checkout').val(),
@@ -139,7 +139,7 @@
         //         };
         //     }else{
         //         reservation_info = {
-        //             room : $('#roomname').val(),
+        //             room : $('#roomName').val(),
         //             user : user_re,
         //             checkin : $('#checkin').val(),
         //             checkout : $('#checkout').val(),
@@ -173,7 +173,7 @@
 
             if(user===null){
                 reservation_info = {
-                    room : $('#roomname').val(),
+                    room : $('#roomName').val(),
                     another_user :$('#another_user').val(),
                     checkin : $('#checkin').val(),
                     checkout : $('#checkout').val(),
@@ -183,7 +183,7 @@
                 };
             }else{
                 reservation_info = {
-                    room : $('#roomname').val(),
+                    room : $('#roomName').val(),
                     user : user,
                     checkin : $('#checkin').val(),
                     checkout : $('#checkout').val(),

@@ -53,7 +53,7 @@ public class HotelReservationService {
 
         Map<String,Object> params = (Map<String, Object>) reservation_map.get("params");
 
-        Hotel_Room hotel_room = hotelRoomService.find_room_name((String)reservation_map.get("room"));
+        Hotel_Room hotel_room = hotelRoomService.find_room_name((String)params.get("room"));
 
         //Payment create
         Payment payment = paymentService.save(reservation_map);
@@ -64,11 +64,10 @@ public class HotelReservationService {
                        (String)params.get("room"));
 
         
-        //수정 필요 user id로 가져와야함
+
         if(params.get("user")!=null){
-            System.out.println("userHHHHave&&&&&&&&&&&&&&&&&&&&&&&&&&&&&" + reservation_map.get("user"));
             user = userService.find_User_Id(Long.parseLong(String.valueOf(params.get("user"))));
-            System.out.println("testestestestesteststest"+user.toString());
+
 
         }else{
             another_user = (String)params.get("another_user");
@@ -98,7 +97,8 @@ public class HotelReservationService {
         for(Hotel_Reservation hotel_reservation: hotel_reservations){
 
             int all_day = hotel_reservation.getHotel_reservation_allDays().size();
-            int room_pee = hotel_reservation.getReHotelRoom().getPrice();
+            Hotel_Room hotel_room = hotelRoomService.find_room_name(hotel_reservation.getPayment().getRoomName());
+            int room_pee = hotel_room.getPrice();
             pee+=all_day*room_pee;
         }
         return pee;

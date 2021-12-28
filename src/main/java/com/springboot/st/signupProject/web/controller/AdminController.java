@@ -149,12 +149,12 @@ public class AdminController {
 
 
     //Hotel Admin Reservation
-    @GetMapping("admin/reservation")
+    @GetMapping("/admin/reservation")
     public String reservation(Model model, @PageableDefault(size = 5) Pageable pageable) {
         Page<Hotel_Reservation> hotel_reservation = hotelReservationService.find_all_Reservation(pageable);
         int pee = 0;
         for (Hotel_Reservation hotel_reservation1 : hotel_reservation) {
-            pee += hotel_reservation1.getReHotelRoom().getPrice();
+            pee += Integer.parseInt(hotel_reservation1.getPayment().getPayPrice());
         }
 
         model.addAttribute("hotel_reservation", hotel_reservation);
