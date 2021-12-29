@@ -1,19 +1,20 @@
 package com.springboot.st.hotelProject.controller;
 
-import com.springboot.st.config.auth.PrincipalDetails;
 import com.springboot.st.domain.pay.Payment;
 import com.springboot.st.domain.user.User;
+import com.springboot.st.domain.user.UserRepository;
 import com.springboot.st.hotelProject.domain.Hotel_Board;
+import com.springboot.st.hotelProject.domain.Hotel_BoardRepository;
 import com.springboot.st.hotelProject.domain.Hotel_Reservation;
 import com.springboot.st.hotelProject.domain.Hotel_Room;
 import com.springboot.st.hotelProject.domain.dto.HotelBoardDto;
 import com.springboot.st.hotelProject.domain.dto.HotelReservationDto;
-import com.springboot.st.hotelProject.domain.dto.Hotel_RoomDto;
 import com.springboot.st.hotelProject.domain.dto.PaymentDto;
 import com.springboot.st.hotelProject.service.*;
 import com.springboot.st.signupProject.service.UserService;
 import com.springboot.st.signupProject.web.dto.UserFormDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.data.ConditionalOnRepositoryType;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -23,11 +24,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.jws.WebParam;
+import javax.persistence.EntityNotFoundException;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Map;
-
 
 @Controller
 @RequiredArgsConstructor
@@ -39,9 +39,9 @@ public class HotelController {
 
     private final HotelReservationService hotelReservationService;
 
+    private final UserRepository userRepository;
 
     private final HotelReservationAllDayService hotelReservationAllDayService;
-
 
     private final SMSService smsService;
 
@@ -49,6 +49,7 @@ public class HotelController {
 
     private final PaymentService paymentService;
 
+    private final Hotel_BoardRepository hotel_boardRepository;
 
 
     @GetMapping("/hotel/index")
@@ -184,9 +185,9 @@ public class HotelController {
     @PostMapping("/smstestnaver")
     public @ResponseBody String test_sms(){
         Long id = 68L;
-       Hotel_Reservation hotel_reservation = hotelReservationService.findById(id);
+        Hotel_Reservation hotel_reservation = hotelReservationService.findById(id);
         System.out.println(hotel_reservation.toString());
-      smsService.naverSmsSendService(hotel_reservation);
+        smsService.naverSmsSendService(hotel_reservation);
         return "OK";
     }
 
@@ -211,8 +212,12 @@ public class HotelController {
     @GetMapping(value = "/hotel/blog/{id}")
     public String hotelDetail(Model model, @PathVariable("id") Long id){
         HotelBoardDto hotelBoardDto = hotelBoardService.hotelBoardDto(id);
+        String userid = hotelBoardDto.getUser().getUserid();
+
+        model.addAttribute("userid", userid);
         model.addAttribute("blog", hotelBoardDto);
         model.addAttribute("id", id);
+
         return "hotel/blog_details";
     }
 
@@ -221,9 +226,12 @@ public class HotelController {
     public String blogWrite() { return "hotel/blog_insert"; }
 
     @PostMapping("/hotel/blog/write")
-    public String blogForm(@RequestParam("title") String title, @RequestParam("content") String content, @RequestParam("attachment") MultipartFile file) {
-        Hotel_Board hotel_board = hotelBoardService.save(file, title, content);
-        System.out.println(hotel_board.toString());
+    public String blogForm(@RequestParam("title") String title, @RequestParam("content") String content, @RequestParam("attachment") MultipartFile file, @RequestParam("authId") Long userId) {
+
+        System.out.println(userId);
+        User user = userRepository.findById(userId).orElseThrow(EntityNotFoundException::new);
+        ;
+        Hotel_Board hotel_board = hotelBoardService.save(file, title, content, user);
         return "redirect:/hotel/blog";
 
 
@@ -241,6 +249,7 @@ public class HotelController {
         HotelReservationDto hotelReservationDto = hotelReservationService.findByPaymentIdPhone(payment,phone);
         System.out.println(hotelReservationDto.toString());
         PaymentDto paymentDto = PaymentDto.of(payment);
+
 
 
         int totalPrice = Integer.parseInt(paymentDto.getPayPrice());
@@ -274,7 +283,10 @@ public class HotelController {
         return "hotel/inquiry_details";
     }
 
-
-
-
+    @PostMapping(value = "/hotel/blog/delete")
+    public String blogDelete(@RequestParam("blogId") Long id){
+        Hotel_Board hotel_board = hotel_boardRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+        hotelBoardService.delete(hotel_board);
+        return "redirect:/hotel/blog";
+    }
 }

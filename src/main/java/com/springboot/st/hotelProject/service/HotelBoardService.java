@@ -1,5 +1,6 @@
 package com.springboot.st.hotelProject.service;
 
+import com.springboot.st.domain.user.User;
 import com.springboot.st.hotelProject.domain.Hotel_Board;
 import com.springboot.st.hotelProject.domain.Hotel_BoardRepository;
 import com.springboot.st.hotelProject.domain.dto.HotelBoardDto;
@@ -38,7 +39,7 @@ public class HotelBoardService {
     }
 
     public Hotel_Board save(MultipartFile multipartFile,
-                            String title, String content) {
+                            String title, String content, User user) {
 
         Map<String, String> imgPath = s3service.serverSaveMap(multipartFile);
 
@@ -50,6 +51,7 @@ public class HotelBoardService {
                         imgOriginName(imgPath.get("originName")).
                         imgUuid(imgPath.get("uuid")).
                         title(title).
+                        user(user).
                                 build();
 
         hotel_boardRepository.save(hotel_board);

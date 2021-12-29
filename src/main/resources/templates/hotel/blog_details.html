@@ -56,16 +56,16 @@
                                 </ul>
                             </div>
                         </div>
-                    </div>
-                </div>
-                <div style="padding-top:10px; text-align: right !important;"
-                     th:if="${#authorization.authentication.principal.user.userid} == ${userid}" sec:authorize="isAuthenticated()">
+                <div sec:authorize="isAuthenticated()" style="padding-top:10px; text-align: right !important;"
+                     th:if="${#authorization.authentication.principal.user.userid} == ${userid}">
                      <form name="deleteForm" action="/hotel/blog/delete" method="POST">
                          <input type="hidden" name="blogId" th:value="${blog.id}">
                          <input style="border: none; background-color: #E29C89; color: white; font-weight: unset;"
                             class="boxed-btn2" type="submit" value="Delete">
                     </input>
                      </form>
+                </div>
+                    </div>
                 </div>
             </div>
         </section>

@@ -1,5 +1,6 @@
 package com.springboot.st.hotelProject.domain.dto;
 
+import com.springboot.st.domain.user.User;
 import com.springboot.st.hotelProject.domain.Hotel_Board;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,6 +16,8 @@ public class HotelBoardDto {
     private String content;
 
     private String imgPath;
+
+    private User user;
 
     private static ModelMapper modelMapper = new ModelMapper();
 
