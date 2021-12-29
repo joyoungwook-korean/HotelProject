@@ -85,7 +85,8 @@
                                         <a class="page-link" th:href="@{/hotel/blog(page=${i})}" th:text="${i+1}"></a>
                                     </li>
                                     <li class="page-item">
-                                        <a th:href="@{/hotel/blog(page=${hotel_board.pageable.pageNumber +1})}" class="page-link" aria-label="Next">
+                                        <a th:href="@{/hotel/blog(page=${hotel_board.pageable.pageNumber +1})}"
+                                           th:classappend="${hotel_board.pageable.pageNumber==endPage - 1} ? 'disabled'" class="page-link" aria-label="Next">
                                             <i class="ti-angle-right"></i>
                                         </a>
                                     </li>
