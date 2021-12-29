@@ -50,32 +50,27 @@
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="mb-5 mb-lg-0">
-                        <div class="blog_left_sidebar" style="width: 70% !important; margin: auto">
+                        <div class="blog_left_sidebar" style="width: 65% !important; margin: auto">
                             <div th:each="blog, status: ${hotel_board.getContent()}">
                                 <article class="blog_item">
                                     <div class="blog_item_img">
                                         <img class="card-img rounded-0" th:src="${blog.imgPath}" alt="">
-                                        <a href="#" class="blog_item_date">
-                                            <p th:text="${blog.createdDate}">test</p>
-                                        </a>
                                     </div>
                                     <div class="blog_details">
                                         <a class="d-inline-block" th:href="'/hotel/blog/'+${blog.id}">
                                             <h2 class="blog-head" style="color: #2d2d2d;"><span th:text="${blog.title}">title</span>
                                             </h2>
                                         </a>
-                                        <p><span th:text="${blog.content}">content</span></p>
+                                        <p><span style="display: inline-block;" th:text="${blog.content}">content</span></p>
                                         <ul class="blog-info-link">
-                                            <li><i class="fa fa-user"></i> Travel, Lifestyle</li>
-                                            <li><i class="fa fa-comments"></i> 0 Comments</li>
-                                            <li><i class="fa fa-calendar-day" th:text="${blog.createdDate}"></i></li>
+                                            <li><i class="fa fa-user"></i>Review</li>
+                                            <li><i class="fa fa-calendar-day"></i><span th:text="${blog.createdDate}"></span></li>
                                         </ul>
                                     </div>
                                 </article>
                             </div>
-                            <div style="text-align: right !important;;">
-                                <sec:authorize access="hasRole('ADMIN')"><button style="border: none; background-color: #E29C89; color: white;" onclick="location.href='/hotel/blog/write'" class="boxed-btn2" type="button">Write</button>
-                                </sec:authorize>
+                            <div style="text-align: right !important;;" sec:authorize="isAuthenticated()" >
+                                <button style="border: none; background-color: #E29C89; color: white;" onclick="location.href='/hotel/blog/write'" class="boxed-btn2" type="button">Write</button>
                             </div>
 
                             <nav class="blog-pagination justify-content-center d-flex">

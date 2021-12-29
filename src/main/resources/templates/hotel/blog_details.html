@@ -24,7 +24,7 @@
         <!-- Blog Area Start -->
         <section class="blog_area single-post-area section-padding">
             <div class="container">
-                <div class="row">
+                <div class="row justify-content-center">
                     <div class="col-lg-8 posts-list">
                         <div class="single-post">
                             <div class="feature-img">
@@ -35,8 +35,7 @@
                                 <h2 style="color: #2d2d2d;"><span th:text="${blog.title}">title</span>
                                 </h2>
                                 <ul class="blog-info-link mt-3 mb-4">
-                                    <li><a href="#"><i class="fa fa-user"></i> Travel, Lifestyle</a></li>
-                                    <li><a href="#"><i class="fa fa-comments"></i> 0 Comments</a></li>
+                                    <li><a href="#"><i class="fa fa-user"></i> Review</a></li>
                                 </ul>
                                 <p class="excert">
                                     <span th:text="${blog.content}">content</span>
@@ -58,6 +57,15 @@
                             </div>
                         </div>
                     </div>
+                </div>
+                <div style="padding-top:10px; text-align: right !important;"
+                     th:if="${#authorization.authentication.principal.user.userid} == ${userid}" sec:authorize="isAuthenticated()">
+                     <form name="deleteForm" action="/hotel/blog/delete" method="POST">
+                         <input type="hidden" name="blogId" th:value="${blog.id}">
+                         <input style="border: none; background-color: #E29C89; color: white; font-weight: unset;"
+                            class="boxed-btn2" type="submit" value="Delete">
+                    </input>
+                     </form>
                 </div>
             </div>
         </section>
