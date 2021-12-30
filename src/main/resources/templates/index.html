@@ -264,8 +264,9 @@
                 <input sec:authorize="isAnonymous()" type="button" value="Sign up Project" th:onclick="'location.href=\''+ @{/signup}+ '\''">
                 <div sec:authorize="isAnonymous()" style="width: 183px; padding-top: 10px;">
                   <img style="cursor: pointer" th:onclick="'location.href=\''+ @{/oauth2/authorization/google}+ '\''" src="https://rbwsn-s3-image.s3.ap-northeast-2.amazonaws.com/google_icon.png">
-                  <img style="cursor: pointer" th:onclick="'location.href=\''+ @{/oauth2/authorization/naver}+ '\''" src="https://rbwsn-s3-image.s3.ap-northeast-2.amazonaws.com/naver_icon.png">
                   <img style="cursor: pointer" th:onclick="'location.href=\''+ @{/oauth2/authorization/kakao}+ '\''" src="https://rbwsn-s3-image.s3.ap-northeast-2.amazonaws.com/kakao_icon.png">
+                  <img style="cursor: pointer" th:onclick="'location.href=\''+ @{/oauth2/authorization/naver}+ '\''" src="https://rbwsn-s3-image.s3.ap-northeast-2.amazonaws.com/naver_icon.png">
+
 <!--              <input type="button" value="Kakao Login" th:onclick="'location.href=\''+ @{/oauth2/authorization/kakao}+ '\''">-->
                 </div>
               </form>
