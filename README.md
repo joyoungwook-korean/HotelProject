@@ -3,6 +3,8 @@
 
 HOTEL　予約システムです。
 
+server : http://ec2-3-34-227-211.ap-northeast-2.compute.amazonaws.com/ (접속 가능합니다.)
+
 ## 紹介
 ## 소개
 
