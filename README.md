@@ -78,4 +78,6 @@ Backend : Java, Springboot, SpringJPA, Spring Security
 その他 : AWS S3, AWS EC2, OAuth2(Social Login)-[Kakao, naver, google], Google Map, Mail(google SMTP), Naver Sens(MMS), QRCOde
 
 
+[![Hotel Project](https://youtu.be/iDZ5_dUCReo/0.jpg)](https://youtu.be/iDZ5_dUCReo?t=0s) 
+
 
