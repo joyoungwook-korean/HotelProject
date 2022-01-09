@@ -12,9 +12,9 @@ HOTEL　予約システムです。
 
 ## 機能
 ## 기능
-1. 결제시스템을 구현했습니다.
+1. 결제시스템을 구현했습니다. (현재 결제가 가능하고 서버에 저장 되지만 자동으로 취소 됩니다.)
 
-2. 예약완료시 예약 정보를 휴대폰 SMS로 발신하는 서비스를 구현하였습니다.
+2. 결제 완료시 예약 정보와 예약정보가 담겨있는 QR코드를 생성하여 휴대폰 MMS로 발신하는 서비스를 구현하였습니다. 
 
 3.  AWS를 이용하여 실제로 운영 가능한 EC2 서비스를 만들었습니다.
 
@@ -75,4 +75,7 @@ DB : AWS RDS( MariaDB )
 
 Backend : Java, Springboot, SpringJPA, Spring Security
 
-その他 : AWS S3, AWS EC2, OAuth2(Social Login)-[Kakao, naver, google], Google Map, Mail(google SMTP)
+その他 : AWS S3, AWS EC2, OAuth2(Social Login)-[Kakao, naver, google], Google Map, Mail(google SMTP), Naver Sens(MMS), QRCOde
+
+
+
