@@ -13,6 +13,9 @@ HOTEL　予約システムです。
 ## 시연 영상
 [![Hotel Project](http://img.youtube.com/vi/iDZ5_dUCReo/0.jpg)](https://youtu.be/iDZ5_dUCReo?t=0s) 
 
+##ppt File
+https://github.com/joyoungwook-korean/SpringBootSt_0706/files/7835296/Track2_4.1.pdf
+
 ## 機能
 ## 기능
 1. 결제시스템을 구현했습니다. (현재 결제가 가능하고 서버에 저장 되지만 자동으로 취소 됩니다.)
