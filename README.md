@@ -13,7 +13,7 @@ HOTEL　予約システムです。
 ## 시연 영상
 [![Hotel Project](http://img.youtube.com/vi/iDZ5_dUCReo/0.jpg)](https://youtu.be/iDZ5_dUCReo?t=0s) 
 
-##ppt File
+## PPT File
 https://github.com/joyoungwook-korean/SpringBootSt_0706/files/7835296/Track2_4.1.pdf
 
 ## 機能
