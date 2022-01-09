@@ -10,6 +10,9 @@ HOTEL　予約システムです。
 
 ホテル予約システムを利用して希望日の残っているルームを検索して予約ができるようにするシステムでする。
 
+## 시연 영상
+[![Hotel Project](http://img.youtube.com/vi/iDZ5_dUCReo/0.jpg)](https://youtu.be/iDZ5_dUCReo?t=0s) 
+
 ## 機能
 ## 기능
 1. 결제시스템을 구현했습니다. (현재 결제가 가능하고 서버에 저장 되지만 자동으로 취소 됩니다.)
@@ -78,6 +81,6 @@ Backend : Java, Springboot, SpringJPA, Spring Security
 その他 : AWS S3, AWS EC2, OAuth2(Social Login)-[Kakao, naver, google], Google Map, Mail(google SMTP), Naver Sens(MMS), QRCOde
 
 
-[![Hotel Project](http://img.youtube.com/vi/iDZ5_dUCReo/0.jpg)](https://youtu.be/iDZ5_dUCReo?t=0s) 
+
 
 
