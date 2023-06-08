@@ -1,4 +1,4 @@
-# HotelProject
+# Hotel Reservation Project
 호텔 예약 시스템
 
 HOTEL　予約システムです。
