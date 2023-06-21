@@ -49,3 +49,43 @@
 백엔드: Java, Spring Boot, Spring JPA, Spring Security
 
 기타: AWS S3, AWS EC2, OAuth2(Social Login)-[Kakao, Naver, Google], Google Map, 메일(google SMTP), Naver Sens(MMS), QR 코드
+
+---
+
+## 機能です
+
+1. 決済システムを実装しました。 現在支払いが可能でサーバーに保存されますが、自動的にキャンセルされます。
+
+2. 決済完了時に予約情報と予約情報が含まれたQRコードを生成し、携帯電話MMSに発送するサービスを具現しました。
+
+3. AWSを使って実際に運営可能なEC2サービスを構築しました。
+
+4. AWS S3 サーバーを利用して、ファイルおよび画像を実際のサーバーからインポートできます。
+
+5. AWS RDS(MariaDB)を利用してDBサーバーを構築しました。
+
+6. Spring SecurityのOAuth2を利用してソーシャル自動ログインおよび会員登録(Kakao、Naver、Google)および権限設定を実装しました。
+
+7. Spring JPAを利用してEntityを生成し、関連関係をマッピングしました。
+
+8. 管理者ページを実装して、ユーザーとの権限を設定しました。
+
+9. 管理者と問い合わせ可能なメール機能を実装しました。
+
+10. 管理者ページで客室情報、予約システム、ユーザー情報のCRUD(Create, Read, Update, Delete)が可能なページを実装しました。
+
+11. Google Map APIを利用してホテルの位置情報と自分の位置情報を見つけられるように具現しました。
+
+12. スケジュールと人数を指定して、残りの部屋を検索して予約できるロジックを実装しました。
+
+13. AJAXを利用して非同期的にCRUDを実行できるように作りました。
+
+## 開発言語です
+
+フロント: Thymeleaf, HTML, JavaScript, jQuery, Bootstrap, Ajax
+
+データベース:AWS RDS（MariaDB）
+
+Backend: Java, Spring Boot, Spring JPA, Spring Security
+
+その他: AWS S3, AWS EC2, OAuth2(Social Login)-[Kakao, Naver, Google], Google Map, 메일(google SMTP), Naver Sens(MMS), QR 코드
